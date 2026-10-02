@@ -49,7 +49,16 @@ to the scaffold CLI, so `--template` has to come after it:
 npm create scaffold-hbar@latest my-autonr -- --template NetLayerLabs/Autonr
 ```
 
-The CLI asks which package manager to use. Commands in this file are written as `yarn <script>`, with flags after
+The CLI asks which package manager to use. To skip the question, add `--package-manager npm` or
+`--package-manager yarn`. With `--yes` the CLI takes the template's default (npm), but it reads that default through
+GitHub's anonymous API; if that call fails or is rate limited it falls back to Yarn and stops when Yarn is not
+installed, so naming the package manager is the safe choice in scripts:
+
+```bash
+npx create-scaffold-hbar@latest my-autonr --template NetLayerLabs/Autonr --package-manager npm --yes
+```
+
+Commands in this file are written as `yarn <script>`, with flags after
 `--` (`yarn verify -- <tx>`). If you scaffold with npm, the CLI rewrites them to the `npm run <script> -- <flags>` form.
 
 ### Prerequisites

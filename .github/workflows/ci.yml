@@ -61,7 +61,7 @@ jobs:
       - name: Dashboard - lint, types, build
         working-directory: packages/nextjs
         run: |
-          npx next lint --max-warnings=0
+          npx eslint --max-warnings=0 app components hooks lib services utils
           npx tsc --noEmit
           npx next build
 

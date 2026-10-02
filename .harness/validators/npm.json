@@ -14,7 +14,7 @@
       "command": "npm run lint",
       "timeoutMs": 300000,
       "tier": "static",
-      "purpose": "next lint, eslint on the agent (max-warnings 0) and forge fmt --check plus prettier on the foundry scripts."
+      "purpose": "eslint on the dashboard and the agent (max-warnings 0) and forge fmt --check plus prettier on the foundry scripts."
     },
     {
       "name": "check-types",

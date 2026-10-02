@@ -34,6 +34,7 @@ Run them from the repository root. Flags go after `--`.
 | `yarn agent:dry-run`    | `src/cli/tick.ts`         | agent + vault + topic         | A tick that publishes and sends nothing.                                                |
 | `yarn agent:tick`       | `src/cli/tick.ts`         | agent + vault + topic         | One tick. `-- --buy <usd>`, `-- --sell <usd>` or `-- --dry-run`.                         |
 | `yarn agent:loop`       | `src/cli/loop.ts`         | agent + vault + topic         | Ticks every `-- --interval <s>` (default 60, at least 10).                              |
+| `yarn agent:hak`        | `src/cli/hak-agent.ts`    | agent + vault + topic + `ANTHROPIC_API_KEY` | A Hedera Agent Kit agent whose only tools are the Autonr plugin. `-- --dry-run`, `-- --prompt <text>`. |
 | `yarn agent:red-team`   | `src/cli/red-team.ts`     | a vault                       | Six rule-breaking `eth_call`s. `-- --scenario <id>` or `all`.                            |
 | `yarn vault:fund`       | `src/cli/fund-vault.ts`   | `OPERATOR_*` + vault          | `-- --hbar <n>` wraps HBAR to WHBAR for the vault; `--usdc <n>` buys USDC paid to the vault; `--dry-run` prints the plan. |
 | `yarn market:inspect`   | `src/cli/inspect-market.ts` | nothing                     | Pool vs oracle, and whether a $1 buy and a $1 sell would pass. `-- --json`.              |
@@ -57,6 +58,7 @@ is dropped.
 | `src/vault/`               | Vault reads, `eth_call` simulation, execution, revert decoding (`decodeVaultError`).                            |
 | `src/hcs/`                 | SDK client, topic creation, `publishDecision` (single chunk, waits for the consensus record).                   |
 | `src/decision/`            | The `autonr.decision/v1` schema, `encodeDecisionFitting`, `decodeDecision`.                                     |
+| `src/hak/`                 | Hedera Agent Kit plugin `autonrPlugin` (market snapshot, vault state, propose trade via `runTick`, verify) and `hederaAiSdkTools`. |
 | `src/agent/`               | `tick.ts` (one cycle), `red-team.ts`, `log.ts` (CLI output and `describeError`).                                |
 | `src/ops/`                 | `setup.ts`, `doctor.ts`, `market/fund-vault.ts`.                                                                |
 | `src/mirror/`              | Typed Mirror Node client: zod-validated, retries on 429/5xx, historical `contracts/call`.                        |
@@ -69,6 +71,7 @@ is dropped.
 | --------------------- | ---------------------------------------------------------------------- |
 | `@sh/agent`           | Server code (Next.js API routes): config, `runTick`, `readVaultState`, `fetchMarketSnapshot`, `runRedTeam`, `decodeVaultError`. |
 | `@sh/agent/verify`    | Server code: `verifyTrade`, `fetchTradeEvidence`, `buildTradeProof`, `listTrades`, `listDecisions`, `replayRejection`, `auditDecisionLog`. |
+| `@sh/agent/hak`       | Server code: `autonrPlugin`, `autonrToolNames`, `hederaAiSdkTools`. Loads HAK, so `@sh/agent` never imports it. |
 | `@sh/agent/evaluate`  | Browser: `evaluateTradeEvidence`, `buildTradeProof`, `TRACE_SELECTORS`.  |
 | `@sh/agent/decision`, `/networks`, `/hedera`, `/abi` | Browser-safe shared modules.                            |
 

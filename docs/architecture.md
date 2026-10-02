@@ -38,6 +38,7 @@ and an independent verifier checks the result from public data.
 | --------------------- | ------------------------------------------------------------------------ | ------------------- |
 | `@sh/agent`           | Config, market snapshot, vault state, `runTick`, red team, error decoding | no (server only)    |
 | `@sh/agent/verify`    | `verifyTrade`, `fetchTradeEvidence`, listings, replay, audit              | no (does I/O)       |
+| `@sh/agent/hak`       | Hedera Agent Kit plugin `autonrPlugin`, `hederaAiSdkTools`                | no (server only)    |
 | `@sh/agent/evaluate`  | `evaluateTradeEvidence`, `buildTradeProof`, `TRACE_SELECTORS`             | yes (pure)          |
 | `@sh/agent/decision`  | Decision record schema, encode/decode                                    | yes                 |
 | `@sh/agent/networks`  | Per-network addresses                                                    | yes                 |

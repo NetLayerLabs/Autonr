@@ -13,7 +13,10 @@ verifier checks trades from Mirror Node data only.
 
 Stack: Foundry (Solidity 0.8.33, OpenZeppelin v5), TypeScript with viem, `@hiero-ledger/sdk` for HCS and accounts, zod,
 the Vercel AI SDK (`ai` + `@ai-sdk/anthropic`) for the optional LLM strategy, and Next.js for the dashboard.
-There is no Pyth, ethers or LangChain in the agent. See the README for why Pyth is not used.
+`@sh/agent/hak` is a Hedera Agent Kit plugin (`@hashgraph/hedera-agent-kit`): any HAK agent trades only through the
+vault, with its reasoning on HCS first. HAK's audit-trail hook logs after execution and is best-effort; Autonr's
+reasoning commitment is a precondition the vault enforces. There is no Pyth or LangChain in the agent, and ethers
+arrives only through HAK. See the README for why Pyth is not used.
 
 ## Layout and ownership
 
@@ -25,6 +28,7 @@ There is no Pyth, ethers or LangChain in the agent. See the README for why Pyth 
 | `packages/foundry/script/` | Deploy (`Deploy.s.sol` → `DeployAgentVault.s.sol`), `HelperConfig.s.sol` | Addresses must match `packages/agent/src/networks.ts`. |
 | `packages/foundry/test/` | Unit, fuzz, invariant (offline), `fork/` (live Hedera), `vectors/oracle-math.json` | |
 | `packages/agent/src/` | Agent runtime, SaucerSwap tools, Mirror Node client, verifier, CLIs | See [packages/agent/README.md](packages/agent/README.md). |
+| `packages/agent/src/hak/` | Hedera Agent Kit plugin (`autonrPlugin`) and AI SDK adapter, `cli/hak-agent.ts` example | Wraps existing `@sh/agent` functions only; never imported by `src/index.ts`. |
 | `packages/agent/src/abi/agentVault.ts` | Generated ABI | Never edit by hand. |
 | `packages/nextjs/app/` | Pages (`/`, `/proof/[tx]`, `/audit`, `/playground`, `/owner`, `/debug`) and `api/` routes | |
 | `packages/nextjs/lib/server/` | Server-only glue to `@sh/agent` | `import "server-only"`. |
@@ -73,7 +77,8 @@ There is no Pyth, ethers or LangChain in the agent. See the README for why Pyth 
     log ranges.
 14. **Dependencies.** Each workspace imports only what its own `package.json` declares (hoisting is per workspace).
     Versions are pinned exactly. There is one prettier, 3.8.1, everywhere. The LLM strategy stays behind
-    `await import("./llm")`, so the AI SDK is only loaded when `AUTONR_STRATEGY=llm`.
+    `await import("./llm")`, so the AI SDK is only loaded when `AUTONR_STRATEGY=llm`. HAK is only reachable through
+    the `@sh/agent/hak` entry, so the dashboard never loads it.
 15. **Package-manager neutrality.** Workspace scripts call binaries directly, never through the package manager. Code
     strings never name a package manager (`lib/commands.ts` is the one deliberate exception). Use
     `scriptCommand()` to print commands.
@@ -104,6 +109,17 @@ apply:
 - The gate: start `yarn start` with no env file and load every page.
 
 Forge must be below 1.8 (`foundryup -i v1.7.1`).
+
+### Hedera Harness
+
+[`.harness/spec.yaml`](.harness/spec.yaml) is a [Hedera Harness](https://github.com/hedera-dev/hedera-harness) recipe
+for this repo: the PRD, the acceptance contract and tiered validators. `yarn harness:validate` runs the static tier
+(install, lint, check-types, forge tests, agent tests, build) and then a keyless live tier against the reference
+testnet deployment (a valid `autonr.decision/v1` message on the topic, a `SUCCESS` `executeSwap` with `TradeExecuted`,
+`yarn verify -- <reference tx>`, and `yarn agent:red-team` all refused). `yarn harness:validate:offline` skips the
+live tier. The recipe forbids `packages/agent/.env`, so run it in a fresh scaffold or a `git worktree`. Keep
+`.harness/` in yarn form: the scaffold CLI copies it without rewriting it for npm. See
+[.harness/README.md](.harness/README.md).
 
 ## Recipes
 

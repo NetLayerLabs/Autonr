@@ -27,6 +27,7 @@ dashboard shows it with no keys configured.
 | What | Evidence |
 | ---- | -------- |
 | AgentVault | [`0x037b24d5…a472`](https://hashscan.io/testnet/contract/0x037b24d59836e1C0cb9Fe571f004409D81eba472) |
+| Contract source | Verified on Sourcify ([exact match](https://sourcify.dev/#/lookup/0x037b24d59836e1C0cb9Fe571f004409D81eba472), chain 296) |
 | Agent account (only submit key on the topic) | [`0.0.10821548`](https://hashscan.io/testnet/account/0.0.10821548) |
 | HCS decision topic | [`0.0.10821549`](https://hashscan.io/testnet/topic/0.0.10821549) |
 | Decision record published before the trade | [message 1](https://hashscan.io/testnet/topic/0.0.10821549/message/1) |
@@ -34,6 +35,29 @@ dashboard shows it with no keys configured.
 | Independent verification | `yarn verify -- 0x61430295e8342246ec6e432921017c0a49fa961fc814ded1e7c2065d9d514158` returns `VERIFIED: 12 checks passed` (decision published 5.16 s before the trade) |
 | Refused buy (the testnet pool prices HBAR about 20x above the oracles) | [message 3](https://hashscan.io/testnet/topic/0.0.10821549/message/3): the pool would pay 1.00 WHBAR where the vault's oracle-derived minimum is 18.61, so the agent held instead of trading |
 | Vault rules enforced on-chain | `yarn agent:red-team`: all six rule-breaking calls refused with their expected custom errors |
+
+## Screenshots
+
+Mission control: oracle consensus, the vault's policy and balances, the HCS decision log and every trade.
+
+![Mission control](docs/images/mission-control.png)
+
+The proof page re-checks one trade from public Mirror Node data: 12 checks, the decision-to-trade timeline and the call
+trace showing the oracle reads before the swap.
+
+![Trade proof](docs/images/proof.png)
+
+The Tamper lab flips one byte of the published reasoning and re-runs the checks in the browser: `hash-match` fails.
+
+![Tamper lab](docs/images/tamper-lab.png)
+
+The guardrail playground asks the live vault to break each rule; every call is refused with its custom error.
+
+![Guardrail playground](docs/images/playground.png)
+
+The gapless audit matches every trade to exactly one earlier decision.
+
+![Audit](docs/images/audit.png)
 
 ## Quickstart
 
@@ -304,6 +328,7 @@ Run these from the repository root. Flags go after `--`.
 | `yarn agent:dry-run`                                                 | One tick that decides and simulates but publishes and sends nothing.                                           |
 | `yarn agent:tick` (`-- --buy <usd>`, `-- --sell <usd>`, `-- --dry-run`) | One tick: decide, check the pool, simulate, publish to HCS, trade.                                           |
 | `yarn agent:loop` (`-- --interval <s>`, default 60)                  | Tick repeatedly. Ctrl-C finishes the current cycle.                                                            |
+| `yarn agent:hak` (`-- --dry-run`, `-- --prompt <text>`)              | A Hedera Agent Kit agent (Claude) whose only tools are the Autonr plugin. Needs `ANTHROPIC_API_KEY`.           |
 | `yarn agent:red-team` (`-- --scenario <id>`, default `all`)          | Six rule-breaking `eth_call`s: `oversize`, `unlisted-token`, `unapproved-fee`, `no-reasoning`, `replayed-reasoning`, `not-agent`. Exits 1 if any is not refused with its expected error. |
 | `yarn vault:fund -- --hbar <n>` (`--usdc <n>`, `--dry-run`)          | Wrap HBAR into WHBAR for the vault, and/or buy USDC on SaucerSwap paid straight to the vault.                  |
 | `yarn market:inspect` (`-- --json`)                                  | Pool address, liquidity, pool price vs oracle, and whether the vault would accept a $1 buy and a $1 sell.      |
@@ -314,6 +339,34 @@ Run these from the repository root. Flags go after `--`.
 
 `verify` also takes `--network testnet|mainnet`, `--vault <address>`, `--topic <id>` and `--json`. Every agent CLI
 takes `-h`, prints failures as one line with the fix, and exits 0 on success, 1 on failure and 2 on bad usage.
+
+## Hedera Agent Kit
+
+`@sh/agent/hak` is a [Hedera Agent Kit](https://github.com/hashgraph/hedera-agent-kit-js) plugin. With it, any HAK
+agent can trade, but only through the `AgentVault`, and only after its reasoning is on HCS. HAK's audit-trail hook
+logs after execution and is best-effort; Autonr's reasoning commitment is a precondition the vault enforces.
+
+| Tool                     | Does                                                                                                     |
+| ------------------------ | -------------------------------------------------------------------------------------------------------- |
+| `autonr_market_snapshot` | Chainlink and Supra prices as the vault reads them, and whether the pool would clear a $1 buy and sell.   |
+| `autonr_vault_state`     | Holdings at oracle prices, policy, remaining daily cap, cooldown, last cited HCS sequence.                |
+| `autonr_propose_trade`   | Takes `side`, `usd` and `rationale`, never a price. Runs one tick: checks, simulation, HCS publish, then `executeSwap`. |
+| `autonr_verify_trade`    | The 12 Mirror Node checks for a trade.                                                                    |
+
+```ts
+import { autonrPlugin, hederaAiSdkTools } from "@sh/agent/hak";
+
+const tools = hederaAiSdkTools(client, { plugins: [autonrPlugin({ model: "hak/my-agent" })] });
+// pass `tools` to generateText, or register autonrPlugin() with any other HAK toolkit
+```
+
+The tools extend HAK's `BaseTool`, so the host's hooks and policies run before a trade is published. The input
+schema is strict, so a price or minimum output from the model is rejected before anything runs. The trade tool
+refuses `RETURN_BYTES` mode, because the vault's agent key signs here. `yarn agent:hak` runs a complete example:
+Claude through the Vercel AI SDK (`AUTONR_LLM_MODEL`, default `claude-sonnet-5-5`), and a HAK client built with the
+agent's key over gRPC-web. Add `-- --dry-run` to publish and send nothing. The plugin uses the core
+`@hashgraph/hedera-agent-kit` package with a small AI SDK adapter (`src/hak/ai-sdk.ts`). HAK's
+`@hashgraph/hedera-agent-kit-ai-sdk` 2.x needs AI SDK 7 and Node.js 22, so the template does not use it.
 
 ## Why Chainlink and Supra, not Pyth
 
@@ -390,6 +443,9 @@ from a WHBAR-only vault sells first, so the default flow trades on testnet.
 ## Further reading
 
 - [AGENTS.md](AGENTS.md): conventions and invariants for AI coding agents (and humans) changing this repo.
+- [.harness/](.harness/README.md): the [Hedera Harness](https://github.com/hedera-dev/hedera-harness) recipe (spec,
+  PRD, acceptance contract, validators). `yarn harness:validate` runs the static tier and a keyless live tier against
+  the testnet deployment above.
 - [docs/architecture.md](docs/architecture.md): components, data flow, units and trust boundaries.
 - [docs/hedera-gotchas.md](docs/hedera-gotchas.md): Hedera behaviour found while building this.
 - [docs/threat-model.md](docs/threat-model.md): each threat, its mitigation and the test that covers it.

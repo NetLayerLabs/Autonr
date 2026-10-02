@@ -1,0 +1,62 @@
+[profile.default]
+src = "contracts"
+out = "out"
+libs = ["lib"]
+test = "test"
+script = "script"
+solc_version = "0.8.33"
+evm_version = "cancun"
+optimizer = true
+optimizer_runs = 200
+# `forge test` stays offline and deterministic; the Hedera fork tests run with FOUNDRY_PROFILE=fork. They are not even
+# compiled by default: they pull in hedera-forking's HTS emulator, which is far over the EIP-170 size limit that
+# `forge build --sizes` enforces. Fuzz inputs depend on how parallel tests interleave, so tests run on one thread to
+# make the fixed seed below reproduce every run.
+no_match_path = "test/fork/**"
+skip = ["test/fork/**"]
+threads = 1
+fs_permissions = [
+    { access = "read", path = "out" },
+    { access = "read", path = "test/vectors" },
+    { access = "read", path = "../agent/src/networks.ts" },
+    { access = "read-write", path = "deployments" },
+]
+
+[profile.default.fuzz]
+runs = 256
+seed = "0x6175746f6e72"
+
+[profile.default.invariant]
+runs = 64
+depth = 128
+
+[profile.fork]
+match_path = "test/fork/**"
+# Lifts the default profile's exclusion of test/fork (an empty pattern would exclude every file).
+no_match_path = "NO_MATCHING_TEST_PATHS"
+skip = []
+# hedera-forking fetches HTS token state from the Mirror Node through curl.
+ffi = true
+
+# Suppress style lints for API/modifier names we don't control. Cooldowns and price ages are minutes long and Hedera
+# block timestamps come from hashgraph consensus, so comparing against block.timestamp is intended.
+[lint]
+exclude_lints = ["mixed-case-variable", "mixed-case-function", "block-timestamp"]
+
+[rpc_endpoints]
+localhost = "http://127.0.0.1:8545"
+hedera_testnet = "https://testnet.hashio.io/api"
+hedera_mainnet = "https://mainnet.hashio.io/api"
+
+# Contracts are verified on Sourcify, which HashScan reads (there is no Etherscan-style API for Hedera):
+# forge verify-contract <ADDRESS> <CONTRACT> --chain-id 296 --verifier sourcify
+# See: https://hedera.com/blog/smart-contract-verification-sourcify-dev-now-supported
+
+[fmt]
+line_length = 120
+tab_width = 4
+quote_style = "double"
+bracket_spacing = true
+int_types = "long"
+
+# See more config options https://book.getfoundry.sh/reference/config/overview

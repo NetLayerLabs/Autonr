@@ -1,0 +1,38 @@
+{
+  "name": "@sh/foundry",
+  "version": "0.0.1",
+  "type": "module",
+  "scripts": {
+    "account": "make account",
+    "account:generate": "node scripts-js/generateKeystore.js",
+    "account:import": "node scripts-js/importAccount.js",
+    "account:reveal-pk": "node scripts-js/revealPK.js",
+    "chain": "make chain",
+    "clean": "forge clean",
+    "compile": "make compile",
+    "deploy": "node scripts-js/parseArgs.js",
+    "deploy:testnet": "node scripts-js/parseArgs.js --network hedera_testnet",
+    "export-abi": "forge build && node scripts-js/exportAgentAbi.js",
+    "flatten": "make flatten",
+    "fork": "make fork",
+    "format": "make format",
+    "lint": "make lint",
+    "lint-staged": "yarn lint",
+    "test": "forge test",
+    "test:fork": "FOUNDRY_PROFILE=fork forge test",
+    "verify:testnet": "forge verify-contract --chain-id 296 --verifier sourcify",
+    "verify:mainnet": "forge verify-contract --chain-id 295 --verifier sourcify",
+    "postinstall": "shx cp -n .env.example .env"
+  },
+  "dependencies": {
+    "dotenv": "16.3.2",
+    "envfile": "6.18.0",
+    "ethers": "5.7.2",
+    "prettier": "3.8.1",
+    "qrcode": "1.5.4",
+    "toml": "3.0.0"
+  },
+  "devDependencies": {
+    "shx": "0.3.4"
+  }
+}

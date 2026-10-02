@@ -95,7 +95,7 @@ export const Header = () => {
         </ul>
       </div>
       <div className="navbar-end grow gap-3 mr-4">
-        <ProofSearch className="hidden md:block w-full max-w-72" />
+        <ProofSearch className="hidden md:block xl:hidden 2xl:block w-full max-w-72" />
         <RainbowKitCustomConnectButton />
       </div>
     </div>

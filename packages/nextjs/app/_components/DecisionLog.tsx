@@ -103,7 +103,7 @@ const DecisionRow = ({ entry, network, topicId, agentAccountId, tradeTx, token }
     <li className="grid grid-cols-[4.75rem_minmax(0,1fr)] gap-3 py-3 first:pt-0 last:pb-0">
       <div className="flex flex-col gap-0.5 text-xs">
         <ExternalLink
-          href={hashscanTopicMessageUrl(network, topicId, entry.sequence)}
+          href={hashscanTopicMessageUrl(network, topicId, entry.sequence, entry.consensusTimestamp)}
           className="font-mono font-semibold"
         >
           #{entry.sequence}

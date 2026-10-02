@@ -40,7 +40,12 @@ export function tickSummary(cfg: ReadOnlyConfig, result: TickResult): string[] {
       : "trade";
   const lines = [`${outcome}${result.dryRun ? " (dry run: nothing published or sent)" : ""} in ${seconds} s`];
   if (result.hcs) {
-    lines.push(line("decision", hashscanTopicMessageUrl(cfg.network, result.hcs.topicId, result.hcs.sequence)));
+    lines.push(
+      line(
+        "decision",
+        hashscanTopicMessageUrl(cfg.network, result.hcs.topicId, result.hcs.sequence, result.hcs.consensusTimestamp),
+      ),
+    );
   } else if (result.kind === "hold" && !result.dryRun) {
     lines.push(line("decision", "not published (AUTONR_LOG_HOLDS=false)"));
   }

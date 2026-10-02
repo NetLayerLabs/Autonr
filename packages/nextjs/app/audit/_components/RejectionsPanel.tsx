@@ -69,7 +69,7 @@ const RejectionRow = ({ entry, network, topicId }: RejectionRowProps) => {
     <li id={`decision-${entry.sequence}`} className="flex flex-col gap-2 py-3 first:pt-0 last:pb-0 target:bg-primary/5">
       <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-sm">
         <ExternalLink
-          href={hashscanTopicMessageUrl(network, topicId, entry.sequence)}
+          href={hashscanTopicMessageUrl(network, topicId, entry.sequence, entry.consensusTimestamp)}
           className="font-mono font-semibold"
         >
           #{entry.sequence}

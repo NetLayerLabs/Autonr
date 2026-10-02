@@ -22,6 +22,7 @@ import {
   deployedVaultCode,
   FEED,
   holdRecord,
+  MESSAGE_AT,
   MIRROR_URL,
   ROUTER,
   stubView,
@@ -112,7 +113,7 @@ describe("verifyTrade on an honest trade", () => {
       decision: record,
       links: {
         tx: `https://hashscan.io/testnet/transaction/${TX_HASH}`,
-        topicMessage: `https://hashscan.io/testnet/topic/${TOPIC_ID}/message/42`,
+        topicMessage: `https://hashscan.io/testnet/transaction/${MESSAGE_AT}/message`,
         vault: `https://hashscan.io/testnet/contract/${VAULT}`,
       },
     });

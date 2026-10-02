@@ -99,7 +99,7 @@ export function buildTradeProof(evidence: TradeEvidence): TradeProof {
     decisionJson: context.bytes && messageText(context.bytes),
     links: {
       tx: hashscanUrl(network, "transaction", txHash),
-      topicMessage: hashscanTopicMessageUrl(network, context.topicId, receipt.hcsSequence),
+      topicMessage: hashscanTopicMessageUrl(network, context.topicId, receipt.hcsSequence, message?.consensusTimestamp),
       vault: hashscanUrl(network, "contract", vault),
     },
     ...evaluate(context),

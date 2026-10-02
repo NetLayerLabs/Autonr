@@ -91,6 +91,15 @@ export function hashscanUrl(network: HederaNetworkName, kind: HashscanKind, id: 
 }
 
 /** Deep link to one HCS message. */
-export function hashscanTopicMessageUrl(network: HederaNetworkName, topicId: string, sequence: number): string {
-  return `https://hashscan.io/${network}/topic/${topicId}/message/${sequence}`;
+export function hashscanTopicMessageUrl(
+  network: HederaNetworkName,
+  topicId: string,
+  sequence: number,
+  consensusTimestamp?: string | null,
+): string {
+  // HashScan shows a message under the transaction that submitted it, addressed by consensus timestamp; it has no
+  // per-sequence route. Without the timestamp, link the topic's message list, where the sequence number is listed.
+  return consensusTimestamp
+    ? `https://hashscan.io/${network}/transaction/${consensusTimestamp}/message`
+    : `https://hashscan.io/${network}/topic/${topicId}/messages#${sequence}`;
 }

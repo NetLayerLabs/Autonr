@@ -132,7 +132,7 @@ const TickOutcome = ({ result, network }: { result: TickResult; network: Network
       )}
       <div className="flex flex-wrap gap-x-4 gap-y-1 text-xs">
         {hcs && (
-          <ExternalLink href={hashscanTopicMessageUrl(network, hcs.topicId, hcs.sequence)}>
+          <ExternalLink href={hashscanTopicMessageUrl(network, hcs.topicId, hcs.sequence, hcs.consensusTimestamp)}>
             HCS message #{hcs.sequence}
           </ExternalLink>
         )}

@@ -38,7 +38,7 @@ dashboard shows it with no keys configured.
 ## Quickstart
 
 ```bash
-npx create-scaffold-hbar@latest my-autonr --template mrnetwork0001/autonr
+npx create-scaffold-hbar@latest my-autonr --template NetLayerLabs/Autonr
 cd my-autonr
 ```
 
@@ -46,7 +46,7 @@ The `npm create` form also works, but there every flag written before a bare `--
 to the scaffold CLI, so `--template` has to come after it:
 
 ```bash
-npm create scaffold-hbar@latest my-autonr -- --template mrnetwork0001/autonr
+npm create scaffold-hbar@latest my-autonr -- --template NetLayerLabs/Autonr
 ```
 
 The CLI asks which package manager to use. Commands in this file are written as `yarn <script>`, with flags after

@@ -123,6 +123,11 @@ export async function tick(cfg: AgentConfig, opts: TickOptions, deps: TickDeps):
   const portfolio = portfolioOf(cfg, snapshot, state);
   run.emit("vault", describeVault(portfolio, state, cfg));
 
+  // Waiting out the cooldown is not a decision, so nothing is published: logging it would only spend HBAR on noise.
+  // fetchedAt is chain time, which trails the wall clock by a few seconds; the vault enforces the same clock.
+  if (snapshot.fetchedAt < state.nextTradeAt) {
+    return run.hold(`The vault's cooldown ends in ${state.nextTradeAt - snapshot.fetchedAt} s.`, undefined, false);
+  }
   const refusal = vaultWouldRefuse(cfg, snapshot, state);
   if (refusal) return run.hold(refusal);
 
@@ -310,11 +315,11 @@ class TickRun {
     );
   }
 
-  /** Holds are published only when the operator wants them in the log. */
-  async hold(rationale: string, model?: string): Promise<TickResult> {
+  /** Holds are published only when the operator wants them in the log and the hold is a decision worth recording. */
+  async hold(rationale: string, model?: string, publish = true): Promise<TickResult> {
     const encoded = encodeDecisionFitting(this.record("hold", { rationale, model }));
     this.emit("decision", `hold: ${encoded.record.rationale}`);
-    const hcs = this.cfg.logHolds && !this.dryRun ? await this.publish(encoded) : undefined;
+    const hcs = publish && this.cfg.logHolds && !this.dryRun ? await this.publish(encoded) : undefined;
     return this.finish({ kind: "hold", decision: encoded.record, hcs });
   }
 
@@ -355,9 +360,6 @@ function vaultWouldRefuse(cfg: AgentConfig, snapshot: MarketSnapshot, state: Vau
   if (state.paused) return "The vault is paused by its owner.";
   if (state.poolFee === 0) {
     return `The vault's owner has not approved a SaucerSwap fee tier for ${cfg.baseToken.symbol}/${cfg.quoteToken.symbol}.`;
-  }
-  if (snapshot.fetchedAt < state.nextTradeAt) {
-    return `The vault's cooldown runs until ${new Date(state.nextTradeAt * 1000).toISOString()}.`;
   }
   for (const oracle of [snapshot.base, snapshot.quote]) {
     const readings = [oracle, ...(oracle.crossCheck ? [oracle.crossCheck] : [])];

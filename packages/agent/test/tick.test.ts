@@ -122,9 +122,17 @@ describe("tick", () => {
     expect(fakes.publish).not.toHaveBeenCalled();
   });
 
+  it("waits out a cooldown without asking the strategy or publishing anything", async () => {
+    const { deps, strategy, cfg, fakes } = setup({ state: vaultState({ nextTradeAt: NOW + 30 }) });
+    const result = await tick(cfg, {}, deps);
+    expect(result).toMatchObject({ kind: "hold", hcs: undefined });
+    expect(result.decision.rationale).toBe("The vault's cooldown ends in 30 s.");
+    expect(strategy.decide).not.toHaveBeenCalled();
+    expect(fakes.publish).not.toHaveBeenCalled();
+  });
+
   it.each([
     ["the vault is paused", { state: vaultState({ paused: true }) }, "paused"],
-    ["a cooldown runs", { state: vaultState({ nextTradeAt: NOW + 30 }) }, "cooldown runs until"],
     [
       "the pair has no approved fee tier",
       { state: vaultState({ poolFee: 0 }) },

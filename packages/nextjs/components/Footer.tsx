@@ -16,10 +16,11 @@ export const Footer = () => {
   const base = useMarket().data?.snapshot.base;
 
   return (
-    <div className="min-h-0 py-5 px-1 mb-11 lg:mb-0">
+    <div className="min-h-0 py-5 px-4">
+      {/* In the page flow rather than fixed to the viewport: the dashboard's tables run the full height of the page. */}
       <div>
-        <div className="fixed flex justify-between items-center w-full z-10 p-4 bottom-0 left-0 pointer-events-none">
-          <div className="flex flex-col md:flex-row gap-2 pointer-events-auto">
+        <div className="flex flex-wrap justify-between items-center gap-2 w-full pb-2">
+          <div className="flex flex-col md:flex-row gap-2">
             {base && (
               <div>
                 <div
@@ -33,14 +34,14 @@ export const Footer = () => {
             )}
             {isTestnet && <HederaPortalFaucet showIcon />}
           </div>
-          <SwitchTheme className="pointer-events-auto" />
+          <SwitchTheme />
         </div>
       </div>
       <div className="w-full">
         <ul className="menu menu-horizontal w-full">
           <div className="flex justify-center items-center gap-3 text-sm w-full text-base-content/60">
             <a
-              href="https://github.com/hedera-dev/scaffold-hbar"
+              href="https://github.com/NetLayerLabs/Autonr"
               target="_blank"
               rel="noreferrer"
               className="link hover:text-primary"

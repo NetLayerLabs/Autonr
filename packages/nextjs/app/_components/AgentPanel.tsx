@@ -2,6 +2,7 @@
 
 import { TickControl } from "./TickControl";
 import { hashscanUrl } from "@sh/agent/hedera";
+import { NETWORKS } from "@sh/agent/networks";
 import { CommandLine } from "~~/components/autonr/CommandLine";
 import { EmptyState } from "~~/components/autonr/EmptyState";
 import { EntityId } from "~~/components/autonr/EntityId";
@@ -15,8 +16,17 @@ import { formatPercent, formatUsd } from "~~/lib/format";
 /** What this dashboard is connected to, and how to run the agent. */
 export const AgentPanel = () => {
   const health = useHealth();
+  const reference = health.data ? isReferenceDeployment(health.data) : false;
   return (
-    <Panel title="Deployment" description="Read from packages/agent/.env on the server." className="shadow-lg">
+    <Panel
+      title="Deployment"
+      description={
+        reference
+          ? "The Autonr reference deployment on testnet, shown read-only until you configure your own."
+          : "Read from packages/agent/.env on the server."
+      }
+      className="shadow-lg"
+    >
       <QueryBoundary query={health} skeletonLines={6}>
         {data => (
           <div className="flex flex-col gap-4">
@@ -28,6 +38,12 @@ export const AgentPanel = () => {
     </Panel>
   );
 };
+
+/** True when no vault of your own is configured, so the dashboard falls back to the built-in reference deployment. */
+const isReferenceDeployment = ({ network, vaultAddress, agent }: HealthResponse) =>
+  !agent.ready &&
+  vaultAddress !== null &&
+  NETWORKS[network].reference?.vault.toLowerCase() === vaultAddress.toLowerCase();
 
 const NotSet = ({ name }: { name: string }) => (
   <span className="text-xs text-base-content/70">
@@ -88,7 +104,9 @@ const DeploymentFacts = ({ health }: { health: HealthResponse }) => {
             </span>
           </>
         ) : (
-          <span className="text-xs text-base-content/70">the agent is not configured yet</span>
+          <span className="text-xs text-base-content/70">
+            {isReferenceDeployment(health) ? "rebalance (reference agent)" : "the agent is not configured yet"}
+          </span>
         )}
       </dd>
     </dl>
@@ -99,6 +117,16 @@ const TickSection = ({ health }: { health: HealthResponse }) => {
   const { agent, tickApiEnabled, tickApiSecretRequired, network, vaultAddress } = health;
   if (!agent.ready) {
     const needsDeploy = vaultAddress === null && network === "testnet";
+    if (isReferenceDeployment(health)) {
+      return (
+        <div className="border-t border-base-300 pt-4">
+          <EmptyState
+            reason="You are looking at the reference vault: browse its decisions and trades, verify any trade, or run the guardrail playground against it. To run an agent of your own, deploy a vault and set it up."
+            commands={[COMMANDS.deploy, COMMANDS.setup]}
+          />
+        </div>
+      );
+    }
     return (
       <div className="border-t border-base-300 pt-4">
         <EmptyState

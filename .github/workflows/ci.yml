@@ -1,0 +1,97 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  contracts:
+    name: Contracts (forge build, fmt, unit tests)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Install Foundry
+        uses: foundry-rs/foundry-toolchain@v1
+        with:
+          # forge >= 1.8 breaks `forge script` against the Hedera JSON-RPC relay (hiero-json-rpc-relay#5826).
+          version: v1.7.1
+
+      - name: Build
+        working-directory: packages/foundry
+        run: forge build --sizes
+
+      - name: Check formatting
+        working-directory: packages/foundry
+        run: forge fmt --check
+
+      - name: Unit and fuzz tests (offline)
+        working-directory: packages/foundry
+        run: forge test -vv
+
+  typescript:
+    name: Agent + dashboard on Node ${{ matrix.node }}
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node: ["20.18.3", "22"]
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node }}
+
+      - name: Install
+        run: npm install --legacy-peer-deps
+        env:
+          HUSKY: "0"
+
+      - name: Agent - lint, types, tests
+        working-directory: packages/agent
+        run: |
+          npx eslint . --max-warnings=0
+          npx tsc --noEmit
+          npx vitest run
+
+      - name: Dashboard - lint, types, build
+        working-directory: packages/nextjs
+        run: |
+          npx next lint --max-warnings=0
+          npx tsc --noEmit
+          npx next build
+
+  scaffold:
+    name: Fresh scaffold with create-scaffold-hbar (${{ matrix.pm }})
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        pm: [npm, yarn]
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - uses: foundry-rs/foundry-toolchain@v1
+        with:
+          version: v1.7.1
+
+      - name: Scaffold this repo as a template
+        working-directory: ${{ runner.temp }}
+        run: |
+          git config --global user.name ci && git config --global user.email ci@example.com
+          [ "${{ matrix.pm }}" = yarn ] && npm i -g yarn@1.22.22
+          CI=true CREATE_SCAFFOLD_HBAR_TEMPLATE_DIR=$GITHUB_WORKSPACE npx -y create-scaffold-hbar@0.4.1 app \
+            -t blank -s foundry -f nextjs-app --package-manager ${{ matrix.pm }} --ci --skip-hedera-skills
+
+      - name: Lint, types, tests, build
+        working-directory: ${{ runner.temp }}/app
+        run: |
+          if [ "${{ matrix.pm }}" = yarn ]; then R="yarn"; else R="npm run"; fi
+          $R lint && $R check-types && $R foundry:test && $R agent:test && $R build

@@ -40,6 +40,7 @@
     "agent:loop": "yarn workspace @sh/agent loop",
     "agent:red-team": "yarn workspace @sh/agent red-team",
     "agent:doctor": "yarn workspace @sh/agent doctor",
+    "agent:hak": "yarn workspace @sh/agent hak-agent",
     "agent:check-types": "yarn workspace @sh/agent check-types",
     "agent:format": "yarn workspace @sh/agent format",
     "agent:lint": "yarn workspace @sh/agent lint",
@@ -62,10 +63,15 @@
     "test": "yarn foundry:test && yarn agent:test",
     "postinstall": "husky",
     "precommit": "lint-staged",
-    "lint-staged": "lint-staged"
+    "lint-staged": "lint-staged",
+    "harness:doctor": "hedera-harness doctor .harness/spec.yaml",
+    "harness:validate": "hedera-harness validate .harness/spec.yaml",
+    "harness:validate:offline": "hedera-harness validate .harness/spec.offline.yaml",
+    "harness:run": "hedera-harness run .harness/spec.yaml"
   },
   "packageManager": "yarn@3.2.3",
   "devDependencies": {
+    "hedera-harness": "1.2.2",
     "husky": "^9.1.6",
     "lint-staged": "^15.2.10"
   },

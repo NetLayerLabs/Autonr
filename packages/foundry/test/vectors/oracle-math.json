@@ -1,0 +1,230 @@
+[
+  {
+    "name": "sell 10 WHBAR for USDC (Chainlink HBAR/USD + Supra HBAR_USDT; Supra USDC_USD)",
+    "amountIn": "1000000000",
+    "decimalsIn": 8,
+    "decimalsOut": 6,
+    "maxSlippageBps": 300,
+    "oracleIn": {
+      "primary": {
+        "value": "10245000",
+        "decimals": 8
+      },
+      "crossCheck": {
+        "value": "103280000000000000",
+        "decimals": 18
+      },
+      "expected": {
+        "priceE18": "102450000000000000",
+        "crossCheckE18": "103280000000000000",
+        "divergenceBps": 81
+      }
+    },
+    "oracleOut": {
+      "primary": {
+        "value": "99997000",
+        "decimals": 8
+      },
+      "crossCheck": null,
+      "expected": {
+        "priceE18": "999970000000000000",
+        "crossCheckE18": "0",
+        "divergenceBps": 0
+      }
+    },
+    "expected": {
+      "usdValue": "1024500000000000000",
+      "expectedOut": "1024530",
+      "minAmountOut": "993794"
+    }
+  },
+  {
+    "name": "buy WHBAR with 25 USDC",
+    "amountIn": "25000000",
+    "decimalsIn": 6,
+    "decimalsOut": 8,
+    "maxSlippageBps": 100,
+    "oracleIn": {
+      "primary": {
+        "value": "99997000",
+        "decimals": 8
+      },
+      "crossCheck": null,
+      "expected": {
+        "priceE18": "999970000000000000",
+        "crossCheckE18": "0",
+        "divergenceBps": 0
+      }
+    },
+    "oracleOut": {
+      "primary": {
+        "value": "10245000",
+        "decimals": 8
+      },
+      "crossCheck": {
+        "value": "103280000000000000",
+        "decimals": 18
+      },
+      "expected": {
+        "priceE18": "102450000000000000",
+        "crossCheckE18": "103280000000000000",
+        "divergenceBps": 81
+      }
+    },
+    "expected": {
+      "usdValue": "24999250000000000000",
+      "expectedOut": "24401415324",
+      "minAmountOut": "24157401170"
+    }
+  },
+  {
+    "name": "tiny trade rounds down to zero output",
+    "amountIn": "1",
+    "decimalsIn": 8,
+    "decimalsOut": 6,
+    "maxSlippageBps": 300,
+    "oracleIn": {
+      "primary": {
+        "value": "10245000",
+        "decimals": 8
+      },
+      "crossCheck": {
+        "value": "103280000000000000",
+        "decimals": 18
+      },
+      "expected": {
+        "priceE18": "102450000000000000",
+        "crossCheckE18": "103280000000000000",
+        "divergenceBps": 81
+      }
+    },
+    "oracleOut": {
+      "primary": {
+        "value": "99997000",
+        "decimals": 8
+      },
+      "crossCheck": null,
+      "expected": {
+        "priceE18": "999970000000000000",
+        "crossCheckE18": "0",
+        "divergenceBps": 0
+      }
+    },
+    "expected": {
+      "usdValue": "1024500000",
+      "expectedOut": "0",
+      "minAmountOut": "0"
+    }
+  },
+  {
+    "name": "18-decimal token priced by an 18-decimal feed",
+    "amountIn": "5000000000000000000",
+    "decimalsIn": 18,
+    "decimalsOut": 8,
+    "maxSlippageBps": 50,
+    "oracleIn": {
+      "primary": {
+        "value": "2500000000000000000",
+        "decimals": 18
+      },
+      "crossCheck": {
+        "value": "2510000000000000000",
+        "decimals": 18
+      },
+      "expected": {
+        "priceE18": "2500000000000000000",
+        "crossCheckE18": "2510000000000000000",
+        "divergenceBps": 40
+      }
+    },
+    "oracleOut": {
+      "primary": {
+        "value": "10245000",
+        "decimals": 8
+      },
+      "crossCheck": null,
+      "expected": {
+        "priceE18": "102450000000000000",
+        "crossCheckE18": "0",
+        "divergenceBps": 0
+      }
+    },
+    "expected": {
+      "usdValue": "12500000000000000000",
+      "expectedOut": "12201073694",
+      "minAmountOut": "12140068325"
+    }
+  },
+  {
+    "name": "feed with more than 18 decimals",
+    "amountIn": "100000000",
+    "decimalsIn": 8,
+    "decimalsOut": 6,
+    "maxSlippageBps": 300,
+    "oracleIn": {
+      "primary": {
+        "value": "102450000000000000000",
+        "decimals": 21
+      },
+      "crossCheck": null,
+      "expected": {
+        "priceE18": "102450000000000000",
+        "crossCheckE18": "0",
+        "divergenceBps": 0
+      }
+    },
+    "oracleOut": {
+      "primary": {
+        "value": "99997000",
+        "decimals": 8
+      },
+      "crossCheck": null,
+      "expected": {
+        "priceE18": "999970000000000000",
+        "crossCheckE18": "0",
+        "divergenceBps": 0
+      }
+    },
+    "expected": {
+      "usdValue": "102450000000000000",
+      "expectedOut": "102453",
+      "minAmountOut": "99379"
+    }
+  },
+  {
+    "name": "zero slippage tolerance",
+    "amountIn": "3000000",
+    "decimalsIn": 6,
+    "decimalsOut": 6,
+    "maxSlippageBps": 0,
+    "oracleIn": {
+      "primary": {
+        "value": "100000000",
+        "decimals": 8
+      },
+      "crossCheck": null,
+      "expected": {
+        "priceE18": "1000000000000000000",
+        "crossCheckE18": "0",
+        "divergenceBps": 0
+      }
+    },
+    "oracleOut": {
+      "primary": {
+        "value": "100000000",
+        "decimals": 8
+      },
+      "crossCheck": null,
+      "expected": {
+        "priceE18": "1000000000000000000",
+        "crossCheckE18": "0",
+        "divergenceBps": 0
+      }
+    },
+    "expected": {
+      "usdValue": "3000000000000000000",
+      "expectedOut": "3000000",
+      "minAmountOut": "3000000"
+    }
+  }
+]

@@ -1,0 +1,86 @@
+{
+  "name": "autonr",
+  "description": "Let an AI agent trade without trusting it: an on-chain AgentVault on Hedera prices every SaucerSwap V2 trade with Chainlink, requires Supra to agree, enforces caps on-chain, and only trades against reasoning the agent published to HCS first. Foundry + Next.js + TypeScript agent with an independent verifier.",
+  "version": "0.1.0",
+  "create-scaffold-hbar": {
+    "capabilities": {
+      "frontend": [
+        "nextjs-app"
+      ],
+      "solidityFramework": [
+        "foundry"
+      ],
+      "packageManager": [
+        "npm",
+        "yarn"
+      ]
+    },
+    "defaults": {
+      "frontend": "nextjs-app",
+      "solidityFramework": "foundry",
+      "packageManager": "npm"
+    },
+    "requirements": {
+      "node": ">=20.18.3",
+      "forge": ">=1.4.0 <1.8.0"
+    },
+    "outro": {
+      "sections": [
+        {
+          "title": "Try it (no keys needed)",
+          "steps": [
+            {
+              "label": "Run the vault test suite",
+              "command": "{run:foundry:test}"
+            },
+            {
+              "label": "Start the dashboard: live Chainlink and Supra prices, the guardrail playground and trade proofs",
+              "command": "{run:start}"
+            },
+            {
+              "label": "See how the vault's oracle guard judges the live SaucerSwap pool (read-only)",
+              "command": "{run:market:inspect}"
+            }
+          ]
+        },
+        {
+          "title": "Run your own guarded agent on Hedera testnet",
+          "steps": [
+            {
+              "label": "Create an ECDSA testnet account and fund it",
+              "url": "https://portal.hedera.com"
+            },
+            {
+              "label": "Import that key as the deployer",
+              "command": "{run:account:import}"
+            },
+            {
+              "label": "Deploy AgentVault",
+              "command": "{run:deploy:testnet}"
+            },
+            {
+              "label": "Create the agent account and its HCS decision topic, and wire them into the vault",
+              "command": "{run:agent:setup}",
+              "text": "Put OPERATOR_ACCOUNT_ID and OPERATOR_PRIVATE_KEY in packages/agent/.env first (see packages/agent/.env.example)."
+            },
+            {
+              "label": "Check everything before the first trade",
+              "command": "{run:agent:doctor}"
+            },
+            {
+              "label": "Run one decision: publish the reasoning to HCS, then trade through the vault",
+              "command": "{run:agent:tick}"
+            }
+          ]
+        },
+        {
+          "steps": [
+            {
+              "text": "Deploys and fork tests need Foundry below 1.8 (foundryup -i v1.7.1): the Hedera JSON-RPC relay rejects the block parameters newer forge sends."
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

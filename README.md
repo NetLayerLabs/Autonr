@@ -30,10 +30,10 @@ dashboard shows it with no keys configured.
 | Contract source | Verified on Sourcify ([exact match](https://sourcify.dev/#/lookup/0x037b24d59836e1C0cb9Fe571f004409D81eba472), chain 296) |
 | Agent account (only submit key on the topic) | [`0.0.10821548`](https://hashscan.io/testnet/account/0.0.10821548) |
 | HCS decision topic | [`0.0.10821549`](https://hashscan.io/testnet/topic/0.0.10821549) |
-| Decision record published before the trade | [message 1](https://hashscan.io/testnet/topic/0.0.10821549/message/1) |
+| Decision record published before the trade | [message 1](https://hashscan.io/testnet/transaction/1790925277.135686486/message) |
 | Executed trade (`TradeExecuted`, 47.96 WHBAR sold through SaucerSwap V2) | [`0x61430295…4158`](https://hashscan.io/testnet/transaction/0x61430295e8342246ec6e432921017c0a49fa961fc814ded1e7c2065d9d514158) |
 | Independent verification | `yarn verify -- 0x61430295e8342246ec6e432921017c0a49fa961fc814ded1e7c2065d9d514158` returns `VERIFIED: 12 checks passed` (decision published 5.16 s before the trade) |
-| Refused buy (the testnet pool prices HBAR about 20x above the oracles) | [message 3](https://hashscan.io/testnet/topic/0.0.10821549/message/3): the pool would pay 1.00 WHBAR where the vault's oracle-derived minimum is 18.61, so the agent held instead of trading |
+| Refused buy (the testnet pool prices HBAR about 20x above the oracles) | [message 3](https://hashscan.io/testnet/transaction/1790925377.082255638/message): the pool would pay 1.00 WHBAR where the vault's oracle-derived minimum is 18.61, so the agent held instead of trading |
 | Vault rules enforced on-chain | `yarn agent:red-team`: all six rule-breaking calls refused with their expected custom errors |
 
 ## Screenshots
@@ -439,6 +439,11 @@ from a WHBAR-only vault sells first, so the default flow trades on testnet.
   key for real funds.
 - The contracts are tested (100% line and branch coverage of `AgentVault`, fuzz, invariants, mainnet fork) but not
   audited.
+- A Hedera Agent Kit agent publishes a decision only when it calls `autonr_propose_trade`, so its holds are not in the
+  decision log (`yarn agent:tick` logs holds). Every Agent Kit trade still has its reasoning on HCS first; those
+  records name the strategy `hak` and the model that decided.
+- Waiting out the vault's cooldown is not logged. The agent reads time from the chain, which trails the wall clock by a
+  few seconds, so a tick right at the end of a cooldown may report a few seconds still to go.
 
 ## Further reading
 

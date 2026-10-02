@@ -11,7 +11,8 @@
     "./decision": "./src/decision/index.ts",
     "./networks": "./src/networks.ts",
     "./hedera": "./src/hedera.ts",
-    "./abi": "./src/abi/agentVault.ts"
+    "./abi": "./src/abi/agentVault.ts",
+    "./hak": "./src/hak/index.ts"
   },
   "scripts": {
     "tick": "tsx src/cli/tick.ts",
@@ -23,6 +24,7 @@
     "inspect-market": "tsx src/cli/inspect-market.ts",
     "red-team": "tsx src/cli/red-team.ts",
     "doctor": "tsx src/cli/doctor.ts",
+    "hak-agent": "tsx src/cli/hak-agent.ts",
     "test": "vitest run",
     "lint": "eslint . --max-warnings=0",
     "check-types": "tsc --noEmit",
@@ -30,6 +32,7 @@
   },
   "dependencies": {
     "@ai-sdk/anthropic": "3.0.127",
+    "@hashgraph/hedera-agent-kit": "4.1.0",
     "@hiero-ledger/sdk": "2.89.1",
     "ai": "6.0.299",
     "dotenv": "16.6.1",

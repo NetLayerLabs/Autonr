@@ -1,0 +1,18 @@
+name: autonr-harness-spec
+version: 1.0
+description: "Validators for the Autonr AI Agent Template"
+
+tasks:
+  - id: verify-hcs-log
+    description: "Ensure the AI agent logged its reasoning to HCS"
+    validation:
+      type: mirror-node-query
+      endpoint: "/api/v1/topics/${TOPIC_ID}/messages"
+      condition: "response.messages.length > 0"
+
+  - id: verify-saucerswap-trade
+    description: "Ensure the HSCS contract executed the SaucerSwap trade"
+    validation:
+      type: mirror-node-query
+      endpoint: "/api/v1/contracts/${CONTRACT_ID}/results"
+      condition: "response.results[0].result == 'SUCCESS'"

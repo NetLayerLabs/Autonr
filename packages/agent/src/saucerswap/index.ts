@@ -3,6 +3,7 @@ export {
   formatBps,
   inspectPool,
   poolHealth,
+  type PoolHealth,
   type PoolInspection,
   type TradeProbe,
 } from "./health";

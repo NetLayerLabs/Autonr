@@ -38,7 +38,7 @@ export type TickResult = {
 type TickStepName = "market" | "vault" | "decision" | "pool" | "simulate" | "publish" | "execute";
 export type TickStep = { step: TickStepName; detail: string };
 
-type TickOptions = {
+export type TickOptions = {
   /** Decide and simulate, but publish nothing and send nothing. */
   dryRun?: boolean;
   manual?: ManualAction;
@@ -410,7 +410,7 @@ function formatBalance(holding: Holding): string {
   return formatAmount(BigInt(holding.token.balance), holding);
 }
 
-function describeMarket(snapshot: MarketSnapshot): string {
+export function describeMarket(snapshot: MarketSnapshot): string {
   return [snapshot.base, snapshot.quote]
     .map(oracle => {
       const primary = `${oracle.symbol} ${formatUsdPrice(oracle.priceUsd)} (${oracle.source}, ${oracle.ageSeconds} s old)`;

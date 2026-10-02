@@ -38,7 +38,7 @@ export type PoolInspection = {
   sell: TradeProbe;
 };
 
-type PoolHealth = {
+export type PoolHealth = {
   pool: Address | null;
   poolPriceUsd: number | null;
   oraclePriceUsd: number;

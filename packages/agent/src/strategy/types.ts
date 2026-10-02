@@ -4,8 +4,12 @@ import { type VaultState } from "../vault/read";
 
 export type StrategyId = "rebalance" | "llm" | "manual";
 
-/** A trade the operator asks for explicitly, in USD; `buy` spends the quote token to get the base token. */
-export type ManualAction = { side: "buy" | "sell"; usd: number };
+/**
+ * A trade asked for explicitly, in USD; `buy` spends the quote token to get the base token. A caller that decided on
+ * its own (an external agent, e.g. through the Hedera Agent Kit plugin) passes its `rationale`, published verbatim,
+ * and the `model` that decided. It never passes a price: the vault prices the trade with its oracles.
+ */
+export type ManualAction = { side: "buy" | "sell"; usd: number; rationale?: string; model?: string };
 
 export type StrategyInput = { snapshot: MarketSnapshot; state: VaultState; cfg: AgentConfig };
 

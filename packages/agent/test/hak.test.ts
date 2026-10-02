@@ -134,7 +134,7 @@ describe("autonr HAK plugin", () => {
     expect(deps.runTick).toHaveBeenCalledTimes(1);
     expect(deps.runTick).toHaveBeenCalledWith(cfg, {
       dryRun: true,
-      manual: { side: "sell", usd: 5, rationale: RATIONALE, model: "hak/claude-sonnet-5-5" },
+      manual: { side: "sell", usd: 5, rationale: RATIONALE, source: "hak", model: "hak/claude-sonnet-5-5" },
       onStep,
     });
     expect(result.raw).toMatchObject({ status: "SUCCESS", kind: "trade", hcs: { sequence: 8 }, trade: { tradeId: 4 } });

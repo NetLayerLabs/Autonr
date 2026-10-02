@@ -279,6 +279,7 @@ class ProposeTradeTool extends AutonrTool<typeof proposeTradeInput> {
         side: params.side,
         usd: params.usd,
         rationale: params.rationale,
+        source: "hak",
         ...(this.options.model ? { model: this.options.model.slice(0, MAX_MODEL_LENGTH) } : {}),
       },
       onStep: this.options.onStep,

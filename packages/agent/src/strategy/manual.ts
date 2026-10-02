@@ -7,7 +7,7 @@ export function manualStrategy(action: ManualAction): Strategy {
     throw new RangeError(`a manual ${action.side} needs a positive USD amount, got ${action.usd}`);
   }
   return {
-    id: "manual",
+    id: action.source ?? "manual",
     version: "1",
     decide: async ({ cfg }) => ({
       kind: "trade",

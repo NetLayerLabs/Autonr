@@ -1,0 +1,76 @@
+{
+  "name": "autonr-npm",
+  "description": "Static tier, then the live tier (public testnet reads, no keys, nothing signed). Commands for a project scaffolded with npm. Point validators.commands here and change the baseline commands to npm (see .harness/README.md).",
+  "commands": [
+    {
+      "name": "install",
+      "command": "npm install",
+      "timeoutMs": 900000,
+      "tier": "static",
+      "purpose": "Install the foundry, agent and nextjs workspaces. Keep the name 'install' so the harness can skip it when the dependency fingerprint is unchanged."
+    },
+    {
+      "name": "lint",
+      "command": "npm run lint",
+      "timeoutMs": 300000,
+      "tier": "static",
+      "purpose": "next lint, eslint on the agent (max-warnings 0) and forge fmt --check plus prettier on the foundry scripts."
+    },
+    {
+      "name": "check-types",
+      "command": "npm run check-types",
+      "timeoutMs": 300000,
+      "tier": "static",
+      "purpose": "tsc --noEmit for the dashboard and the agent."
+    },
+    {
+      "name": "foundry-test",
+      "command": "npm run foundry:test",
+      "timeoutMs": 600000,
+      "tier": "static",
+      "purpose": "AgentVault unit, fuzz and invariant tests, including the executeSwap check-order and network-parity tests. Offline; fork tests run only under foundry:test:fork. Needs forge < 1.8 on the host."
+    },
+    {
+      "name": "agent-test",
+      "command": "npm run agent:test",
+      "timeoutMs": 300000,
+      "tier": "static",
+      "purpose": "vitest for strategies, decision encoding, oracle math parity, red-team scenarios and the verifier (honest and tampered fixtures). Offline, no keys."
+    },
+    {
+      "name": "build",
+      "command": "npm run build",
+      "timeoutMs": 900000,
+      "tier": "static",
+      "purpose": "next build of the dashboard with no packages/agent/.env; the build makes no network calls."
+    },
+    {
+      "name": "live-hcs-decisions",
+      "command": "node .harness/checks/live-chain.mjs hcs",
+      "timeoutMs": 120000,
+      "tier": "live",
+      "purpose": "Mirror Node: decision topic 0.0.10821549 has a submit key and holds at least one single-chunk, <= 1024-byte, valid autonr.decision/v1 record citing the vault and paid by the agent it names."
+    },
+    {
+      "name": "live-vault-trade",
+      "command": "node .harness/checks/live-chain.mjs trade",
+      "timeoutMs": 120000,
+      "tier": "live",
+      "purpose": "Mirror Node: vault 0x037b24d59836e1C0cb9Fe571f004409D81eba472 has a SUCCESS executeSwap whose logs include TradeExecuted from the vault, citing topic 0.0.10821549."
+    },
+    {
+      "name": "live-verify",
+      "command": "npm run verify -- 0x61430295e8342246ec6e432921017c0a49fa961fc814ded1e7c2065d9d514158",
+      "timeoutMs": 180000,
+      "tier": "live",
+      "purpose": "The template's own verifier re-checks the reference trade from public Mirror Node data (12 checks: hash match, HCS-before-trade ordering, same key, schema, content and oracle match, atomic trace, execution quality)."
+    },
+    {
+      "name": "live-red-team",
+      "command": "HEDERA_NETWORK=testnet AUTONR_VAULT_ADDRESS=0x037b24d59836e1C0cb9Fe571f004409D81eba472 AUTONR_TOPIC_ID=0.0.10821549 npm run agent:red-team",
+      "timeoutMs": 180000,
+      "tier": "live",
+      "purpose": "eth_call simulations from the agent's address against the live vault: oversize, unlisted token, unapproved fee tier, missing reasoning, replayed reasoning and a non-agent caller must all be refused with their expected custom errors. Nothing is signed. The env prefix pins the reference deployment over any shell value."
+    }
+  ]
+}

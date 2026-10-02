@@ -1,0 +1,48 @@
+{
+  "name": "autonr-npm-offline",
+  "description": "Static tier only (no network): Commands for a project scaffolded with npm. Point validators.commands here and change the baseline commands to npm (see .harness/README.md).",
+  "commands": [
+    {
+      "name": "install",
+      "command": "npm install",
+      "timeoutMs": 900000,
+      "tier": "static",
+      "purpose": "Install the foundry, agent and nextjs workspaces. Keep the name 'install' so the harness can skip it when the dependency fingerprint is unchanged."
+    },
+    {
+      "name": "lint",
+      "command": "npm run lint",
+      "timeoutMs": 300000,
+      "tier": "static",
+      "purpose": "next lint, eslint on the agent (max-warnings 0) and forge fmt --check plus prettier on the foundry scripts."
+    },
+    {
+      "name": "check-types",
+      "command": "npm run check-types",
+      "timeoutMs": 300000,
+      "tier": "static",
+      "purpose": "tsc --noEmit for the dashboard and the agent."
+    },
+    {
+      "name": "foundry-test",
+      "command": "npm run foundry:test",
+      "timeoutMs": 600000,
+      "tier": "static",
+      "purpose": "AgentVault unit, fuzz and invariant tests, including the executeSwap check-order and network-parity tests. Offline; fork tests run only under foundry:test:fork. Needs forge < 1.8 on the host."
+    },
+    {
+      "name": "agent-test",
+      "command": "npm run agent:test",
+      "timeoutMs": 300000,
+      "tier": "static",
+      "purpose": "vitest for strategies, decision encoding, oracle math parity, red-team scenarios and the verifier (honest and tampered fixtures). Offline, no keys."
+    },
+    {
+      "name": "build",
+      "command": "npm run build",
+      "timeoutMs": 900000,
+      "tier": "static",
+      "purpose": "next build of the dashboard with no packages/agent/.env; the build makes no network calls."
+    }
+  ]
+}

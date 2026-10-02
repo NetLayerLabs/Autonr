@@ -1,0 +1,48 @@
+{
+  "name": "autonr-yarn-offline",
+  "description": "Static tier only (no network): Commands for a project scaffolded with yarn.",
+  "commands": [
+    {
+      "name": "install",
+      "command": "yarn install",
+      "timeoutMs": 900000,
+      "tier": "static",
+      "purpose": "Install the foundry, agent and nextjs workspaces. Keep the name 'install' so the harness can skip it when the dependency fingerprint is unchanged."
+    },
+    {
+      "name": "lint",
+      "command": "yarn lint",
+      "timeoutMs": 300000,
+      "tier": "static",
+      "purpose": "next lint, eslint on the agent (max-warnings 0) and forge fmt --check plus prettier on the foundry scripts."
+    },
+    {
+      "name": "check-types",
+      "command": "yarn check-types",
+      "timeoutMs": 300000,
+      "tier": "static",
+      "purpose": "tsc --noEmit for the dashboard and the agent."
+    },
+    {
+      "name": "foundry-test",
+      "command": "yarn foundry:test",
+      "timeoutMs": 600000,
+      "tier": "static",
+      "purpose": "AgentVault unit, fuzz and invariant tests, including the executeSwap check-order and network-parity tests. Offline; fork tests run only under foundry:test:fork. Needs forge < 1.8 on the host."
+    },
+    {
+      "name": "agent-test",
+      "command": "yarn agent:test",
+      "timeoutMs": 300000,
+      "tier": "static",
+      "purpose": "vitest for strategies, decision encoding, oracle math parity, red-team scenarios and the verifier (honest and tampered fixtures). Offline, no keys."
+    },
+    {
+      "name": "build",
+      "command": "yarn build",
+      "timeoutMs": 900000,
+      "tier": "static",
+      "purpose": "next build of the dashboard with no packages/agent/.env; the build makes no network calls."
+    }
+  ]
+}

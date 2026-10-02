@@ -1,0 +1,100 @@
+# Offline variant of spec.yaml for CI and machines without network access: identical except that
+# validators.commands runs only the static tier. Keep the two files in sync.
+schemaVersion: 2
+
+name: autonr-agent-vault-offline
+description: >
+  Autonr: an AI agent trades on SaucerSwap V2 through an on-chain AgentVault on Hedera without being trusted.
+  The vault prices each leg with Chainlink, refuses unless Supra agrees, derives the minimum output itself and
+  enforces the owner's caps; every trade must cite the keccak256 of a decision record the agent published to HCS
+  first, and an independent verifier checks trades from public Mirror Node data only.
+
+# Recipe for hedera-harness 1.2.2 (npm `latest`, schema v2), pinned in the root devDependencies.
+# create-scaffold-hbar copies .harness/ verbatim (no npm rewrite), so these validators use yarn.
+# npm projects: point validators.commands at validators/npm.json and see .harness/README.md.
+agent: claude
+
+prd: .harness/prd.md
+contract: .harness/acceptance-contract.json
+
+skills:
+  - hedera-consensus-service
+  - quality-gates
+
+constraints:
+  packageManager: yarn@3.2.3
+  workspaces:
+    - packages/foundry
+    - packages/agent
+    - packages/nextjs
+  forbiddenWorkspaces:
+    - packages/hardhat
+
+templateMetadata:
+  name: autonr
+  frontend: nextjs-app
+  solidityFramework: foundry
+
+# Host health before the agent touches anything (run only by `run`).
+baseline:
+  commands:
+    - name: install
+      command: yarn install
+      timeoutMs: 900000
+    - name: foundry-test
+      command: yarn foundry:test
+      timeoutMs: 600000
+    - name: agent-test
+      command: yarn agent:test
+      timeoutMs: 300000
+    - name: build
+      command: yarn build
+      timeoutMs: 900000
+
+# Listed explicitly because the default (every workspace's .env) would forbid packages/foundry/.env, which the stock
+# foundry postinstall creates from .env.example on every install and which holds no key (deploys use a keystore).
+# packages/agent/.env holds the operator and agent keys: never run a coding agent next to it. Use a fresh scaffold
+# or a `git worktree`; every validator below is keyless.
+forbiddenFiles:
+  - .env
+  - packages/agent/.env
+  - packages/nextjs/.env
+  - packages/nextjs/.env.local
+  - packages/hardhat
+
+secretScan:
+  failOnFiles:
+    - .env
+    - packages/agent/.env
+    - packages/nextjs/.env
+    - packages/nextjs/.env.local
+  patterns:
+    - name: private-key-assignment
+      pattern: "(PRIVATE_KEY|OPERATOR_KEY|HEDERA_OPERATOR_PRIVATE_KEY|OPERATOR_PRIVATE_KEY|AGENT_PRIVATE_KEY|DEPLOYER_PRIVATE_KEY)\\s*=\\s*['\"]?(0x)?[0-9a-fA-F]{32,}"
+    - name: anthropic-key
+      pattern: "sk-ant-[A-Za-z0-9_\\-]{20,}"
+
+validators:
+  static: .harness/validators/static.json
+  # Static tier only: install, lint, check-types, forge tests, agent tests, build.
+  commands: .harness/validators/yarn.offline.json
+
+# Tier 3: an adversarial agent grades acceptance-contract.json in a browser (`run` / `validate-semantic`).
+validator:
+  enabled: true
+
+# Tier 3.5 stays off: it needs a funded ECDSA operator exported in the shell. The live tier above already proves the
+# on-chain behaviour against the reference deployment without any key.
+# chainValidation:
+#   enabled: true
+#   network: testnet
+#   operator:
+#     accountIdEnv: HEDERA_OPERATOR_ID
+#     privateKeyEnv: HEDERA_OPERATOR_KEY
+#   fundingHbar: 25
+#   sweepBack: true
+#   deploy:
+#     commands:
+#       - name: deploy-testnet
+#         command: yarn deploy:testnet
+#         timeoutMs: 900000

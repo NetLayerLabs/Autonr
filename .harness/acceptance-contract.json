@@ -1,0 +1,84 @@
+{
+  "name": "autonr-acceptance",
+  "template": "autonr",
+  "prd": ".harness/prd.md",
+  "version": 1,
+  "description": "What the Tier 3 validator grades in the running dashboard, with no packages/agent/.env, so every page shows the reference testnet deployment (vault 0x037b24d59836e1C0cb9Fe571f004409D81eba472, topic 0.0.10821549).",
+  "routes": [
+    "/",
+    "/proof/0x61430295e8342246ec6e432921017c0a49fa961fc814ded1e7c2065d9d514158",
+    "/audit",
+    "/playground",
+    "/owner"
+  ],
+  "evaluationRules": {
+    "posture": "adversarial",
+    "failOnUncertainty": "If an assertion cannot be positively verified from the running app or the Mirror Node, mark it FAILED. Absence of evidence is a failure.",
+    "credentials": "The dashboard must load and show live data without a wallet, an env file or an LLM key. Missing credentials never excuse a broken read path.",
+    "walletGatedFlows": "Owner actions are affordance-only: verify the controls and the no-wallet messaging, never submit a transaction.",
+    "onChainVerification": "Cross-check on-chain claims against https://testnet.mirrornode.hedera.com. Poll up to about 30 s for Mirror Node lag.",
+    "evidence": "Every issue cites the route, the element found or missing, console output, and Mirror Node responses for on-chain claims."
+  },
+  "assertions": [
+    {
+      "id": "C1",
+      "journey": "Open the dashboard with no keys",
+      "route": "/",
+      "severity": "critical",
+      "walletRequired": false,
+      "verifiableWithoutCredentials": true,
+      "statement": "The dashboard renders without a wallet or env file: an Oracle consensus panel with live Chainlink and Supra prices, a Vault panel with the reference vault's policy, a Decision log and a Trades table.",
+      "howToVerify": "Navigate to / without connecting a wallet. Confirm the four panels show values, not spinners or error banners, and that the vault address shown is 0x037b24d59836e1C0cb9Fe571f004409D81eba472. Confirm the browser console has no errors."
+    },
+    {
+      "id": "C2",
+      "journey": "Verify the reference trade",
+      "route": "/proof/0x61430295e8342246ec6e432921017c0a49fa961fc814ded1e7c2065d9d514158",
+      "severity": "critical",
+      "walletRequired": false,
+      "verifiableWithoutCredentials": true,
+      "statement": "The proof page reports the trade as verified with all 12 checks passing, and shows that the HCS decision message reached consensus before the trade.",
+      "howToVerify": "Open the route and read the verdict and the Checks list. Confirm 12 checks pass, including the hash match and the ordering check. GET /api/v1/contracts/results/0x61430295e8342246ec6e432921017c0a49fa961fc814ded1e7c2065d9d514158 and /api/v1/topics/0.0.10821549/messages/1 on the testnet Mirror Node and confirm the message's consensus_timestamp is earlier than the trade's timestamp, matching the Timeline panel."
+    },
+    {
+      "id": "C3",
+      "journey": "Tamper with the evidence",
+      "route": "/proof/0x61430295e8342246ec6e432921017c0a49fa961fc814ded1e7c2065d9d514158",
+      "severity": "major",
+      "walletRequired": false,
+      "verifiableWithoutCredentials": true,
+      "statement": "In the Tamper lab, 'Flip one byte of the message' turns the hash-match check red and the verdict to failed; Reset restores the verified verdict.",
+      "howToVerify": "On the proof page press 'Flip one byte of the message'. Confirm the message-hash check fails and the verdict changes. Press Reset and confirm all checks pass again. No network request should be needed for either step."
+    },
+    {
+      "id": "C4",
+      "journey": "Audit the decision log",
+      "route": "/audit",
+      "severity": "major",
+      "walletRequired": false,
+      "verifiableWithoutCredentials": true,
+      "statement": "The Gapless audit maps every trade event to a decision record and reports holds, rejections and invalid messages as counts.",
+      "howToVerify": "Open /audit. Confirm 'Trade events' equals 'Matched to a record' and the counts render. GET /api/v1/topics/0.0.10821549/messages and confirm the number of messages is consistent with the counts shown."
+    },
+    {
+      "id": "C5",
+      "journey": "Ask the vault to break its rules",
+      "route": "/playground",
+      "severity": "critical",
+      "walletRequired": false,
+      "verifiableWithoutCredentials": true,
+      "statement": "Running the guardrail playground against the reference vault refuses every scenario with its expected custom error, without signing anything.",
+      "howToVerify": "Open /playground and press 'Run all 6'. Confirm each card reports a refusal with a named custom error (for example TradeTooLarge, TokenNotAllowed, PoolFeeNotAllowed, ReasoningRequired, ReasoningOutOfOrder, NotAgent; CooldownActive right after a trade also counts as a refusal) and that no wallet prompt appears."
+    },
+    {
+      "id": "C6",
+      "journey": "Owner controls",
+      "route": "/owner",
+      "severity": "minor",
+      "walletRequired": true,
+      "verifiableWithoutCredentials": true,
+      "statement": "Pause, policy, token, agent and withdraw controls are presented as owner-wallet transactions, and the page states that the agent key cannot call them.",
+      "howToVerify": "Open /owner without connecting. Confirm the controls are disabled or ask for a wallet, and that the explanatory text says the agent key cannot call them. Do not submit a transaction."
+    }
+  ]
+}

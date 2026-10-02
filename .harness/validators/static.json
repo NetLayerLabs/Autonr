@@ -1,0 +1,81 @@
+{
+  "name": "autonr-static",
+  "description": "Tier 0: required files, pins, and needles that keep the trust model intact. template.json assertions are skipped where the file is absent (create-scaffold-hbar removes it from scaffolded projects).",
+  "jsonAssertions": [
+    { "file": "package.json", "path": "devDependencies.hedera-harness", "equals": "1.2.2" },
+    { "file": "package.json", "path": "scripts.harness:validate", "equals": "hedera-harness validate .harness/spec.yaml" },
+    { "file": "package.json", "path": "scripts.harness:run", "equals": "hedera-harness run .harness/spec.yaml" },
+    { "file": "template.json", "path": "create-scaffold-hbar.capabilities.solidityFramework", "equals": ["foundry"] },
+    { "file": "template.json", "path": "create-scaffold-hbar.capabilities.frontend", "equals": ["nextjs-app"] }
+  ],
+  "fileAssertions": {
+    "required": [
+      "README.md",
+      "AGENTS.md",
+      "LICENCE",
+      "package.json",
+      "docs/architecture.md",
+      "docs/threat-model.md",
+      "packages/foundry/package.json",
+      "packages/foundry/contracts/AgentVault.sol",
+      "packages/foundry/contracts/interfaces/IAgentVault.sol",
+      "packages/foundry/contracts/libraries/OracleMath.sol",
+      "packages/foundry/test/vectors/oracle-math.json",
+      "packages/agent/package.json",
+      "packages/agent/.env.example",
+      "packages/agent/src/networks.ts",
+      "packages/agent/src/decision/index.ts",
+      "packages/agent/src/abi/agentVault.ts",
+      "packages/agent/src/verify/evaluate.ts",
+      "packages/nextjs/package.json",
+      "packages/nextjs/app/page.tsx",
+      "packages/nextjs/app/proof/[tx]/page.tsx",
+      "packages/nextjs/app/audit/page.tsx",
+      "packages/nextjs/app/playground/page.tsx",
+      "packages/nextjs/app/owner/page.tsx",
+      ".harness/spec.yaml",
+      ".harness/prd.md",
+      ".harness/acceptance-contract.json",
+      ".harness/checks/live-chain.mjs"
+    ],
+    "forbidden": [
+      ".env",
+      "packages/agent/.env",
+      "packages/nextjs/.env",
+      "packages/nextjs/.env.local",
+      "packages/hardhat",
+      "harness-spec.yaml"
+    ]
+  },
+  "textAssertions": [
+    {
+      "file": "packages/foundry/contracts/interfaces/IAgentVault.sol",
+      "contains": ["function executeSwap(", "event TradeExecuted(", "bytes32 reasoningHash", "error ReasoningRequired()"]
+    },
+    {
+      "file": "packages/foundry/contracts/AgentVault.sol",
+      "contains": ["_lastSequenceByTopic", "ReasoningRequired", "Pausable", "ReentrancyGuard"]
+    },
+    {
+      "file": "packages/agent/src/decision/index.ts",
+      "contains": ["\"autonr.decision/v1\"", "MAX_DECISION_BYTES = 1024"]
+    },
+    {
+      "file": "packages/agent/src/networks.ts",
+      "contains": ["0x037b24d59836e1C0cb9Fe571f004409D81eba472", "0.0.10821549"]
+    },
+    {
+      "file": "README.md",
+      "contains": [
+        "0.0.10821549",
+        "0x61430295e8342246ec6e432921017c0a49fa961fc814ded1e7c2065d9d514158",
+        "yarn agent:red-team",
+        "yarn harness:validate"
+      ]
+    },
+    {
+      "file": "AGENTS.md",
+      "contains": ["## Invariants", "yarn harness:validate", ".harness/spec.yaml"]
+    }
+  ]
+}

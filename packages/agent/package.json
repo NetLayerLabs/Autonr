@@ -1,0 +1,53 @@
+{
+  "name": "@sh/agent",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "description": "Autonr agent runtime: Chainlink and Supra price reads, strategies, HCS decision log, AgentVault execution and an independent verifier.",
+  "exports": {
+    ".": "./src/index.ts",
+    "./verify": "./src/verify/index.ts",
+    "./evaluate": "./src/verify/evaluate.ts",
+    "./decision": "./src/decision/index.ts",
+    "./networks": "./src/networks.ts",
+    "./hedera": "./src/hedera.ts",
+    "./abi": "./src/abi/agentVault.ts"
+  },
+  "scripts": {
+    "tick": "tsx src/cli/tick.ts",
+    "dry-run": "tsx src/cli/tick.ts --dry-run",
+    "loop": "tsx src/cli/loop.ts",
+    "verify": "tsx src/cli/verify.ts",
+    "setup": "tsx src/cli/setup.ts",
+    "fund-vault": "tsx src/cli/fund-vault.ts",
+    "inspect-market": "tsx src/cli/inspect-market.ts",
+    "red-team": "tsx src/cli/red-team.ts",
+    "doctor": "tsx src/cli/doctor.ts",
+    "test": "vitest run",
+    "lint": "eslint . --max-warnings=0",
+    "check-types": "tsc --noEmit",
+    "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\""
+  },
+  "dependencies": {
+    "@ai-sdk/anthropic": "3.0.127",
+    "@hiero-ledger/sdk": "2.89.1",
+    "ai": "6.0.299",
+    "dotenv": "16.6.1",
+    "viem": "2.39.0",
+    "zod": "4.6.5"
+  },
+  "devDependencies": {
+    "@eslint/js": "9.39.5",
+    "@types/node": "20.19.43",
+    "eslint": "9.39.5",
+    "prettier": "3.8.1",
+    "tsx": "4.23.15",
+    "typescript": "5.9.3",
+    "typescript-eslint": "8.71.0",
+    "vite": "6.4.3",
+    "vitest": "3.2.7"
+  },
+  "engines": {
+    "node": ">=20.18.3"
+  }
+}

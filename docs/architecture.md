@@ -56,7 +56,7 @@ because only the owner can withdraw.
 
 | Role   | Can                                                                                                              |
 | ------ | ---------------------------------------------------------------------------------------------------------------- |
-| owner  | `setPolicy`, `setAgent`, `setDecisionTopic`, `configureToken`, `removeToken`, `associateToken`, `pause`, `unpause`, `withdraw` (also while paused), two-step ownership transfer. |
+| owner  | `setPolicy`, `setAgent`, `setDecisionTopic`, `configureToken`, `removeToken`, `setPoolFee`, `associateToken`, `pause`, `unpause`, `withdraw` (also while paused), two-step ownership transfer. |
 | agent  | `executeSwap` only. The output always goes to the vault.                                                          |
 | anyone | Views: `quote`, `oracleReading`, `policy`, `tokenConfig`, `allowedTokens`, `remainingDailyUsd`, `nextTradeAt`, `lastReasoningSequence`, ... |
 
@@ -68,7 +68,8 @@ replay can compare error names exactly.
 1. `NotAgent`, `EnforcedPause` (OpenZeppelin), reentrancy guard.
 2. `ReasoningRequired` (zero hash), `DecisionTopicNotSet`, `ReasoningOutOfOrder` (sequence not above the last one on
    the current topic).
-3. `ZeroAmount`, `InvalidPair` (same token twice), `TokenNotAllowed` (tokenIn first).
+3. `ZeroAmount`, `InvalidPair` (same token twice), `TokenNotAllowed` (tokenIn first), `PoolFeeNotAllowed` (the fee
+   tier is not the one the owner approved for the pair).
 4. `CooldownActive`.
 5. Oracles for tokenIn, then tokenOut: `InvalidOraclePrice`, `StalePrice`, `OracleDivergence`.
 6. `ZeroAmount` (too small to price), `TradeTooLarge`, `DailyCapExceeded`.
@@ -117,8 +118,9 @@ the outcome unknown throws instead.
 
 1. **Read.** It reads the market snapshot (Chainlink and Supra in one Multicall3 call) and the vault state. If the
    vault's agent or topic does not match the env, it throws `SetupMismatchError` before anything is published.
-2. **Vault preconditions.** It holds if the vault is paused, the cooldown is running, any price is within 30 s of
-   `maxPriceAge`, or Chainlink and Supra diverge beyond the policy.
+2. **Vault preconditions.** It waits (without publishing) while the cooldown runs, and holds if the vault is paused,
+   the owner has not approved a fee tier for the pair, any price is within 30 s of `maxPriceAge`, or Chainlink and
+   Supra diverge beyond the policy.
 3. **Strategy.** `rebalance` (pure and deterministic, the default) keeps the base token near `AUTONR_TARGET_BASE_WEIGHT`
    with a 5% band. `llm` uses the Vercel AI SDK with a zod-validated structured answer, and any failure becomes a hold.
    `manual` comes from `--buy`/`--sell` or the tick API.
@@ -155,7 +157,8 @@ One record is one HCS message (`packages/agent/src/decision/index.ts`, schema ID
     { "feed": "HBAR / USD", "source": "chainlink", "price": "0.1031", "updatedAt": 1790000000, "crossCheck": "0.1029", "divergenceBps": 19 },
     { "feed": "USDC_USD", "source": "supra", "price": "0.99999", "updatedAt": 1790000000 }
   ],
-  "action": { "side": "sell", "tokenIn": "0x…", "tokenOut": "0x…", "amountIn": "4850000000", "poolFee": 3000, "usd": "5.00" },
+  "action": { "side": "sell", "tokenIn": "0x…", "tokenOut": "0x…", "amountIn": "4850000000", "poolFee": 3000, "usd":
+"5.00" },
   "rationale": "…"
 }
 ```

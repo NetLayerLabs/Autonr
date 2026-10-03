@@ -66,47 +66,50 @@ npx create-scaffold-hbar@latest my-autonr --template NetLayerLabs/Autonr
 cd my-autonr
 ```
 
-The `npm create` form also works, but there every flag written before a bare `--` goes to the package manager, not
-to the scaffold CLI, so `--template` has to come after it:
+The bounty's one-liner uses the package manager's `create` subcommand instead of `npx`. It works the same way, with
+one catch: every flag written before a bare `--` goes to the package manager itself, so `--template` has to come after
+it (`create scaffold-hbar@latest my-autonr -- --template NetLayerLabs/Autonr`).
+
+The CLI asks which package manager to use: npm, or the Berry release the repo pins (3.2.3). To skip the question, pass
+`--package-manager=npm`. With `--yes` the CLI takes the template's default (npm), but it reads that default through
+GitHub's anonymous API; if that call fails or is rate limited it falls back to the other package manager and stops when
+that is not installed, so naming the package manager explicitly is the safe choice in scripts:
 
 ```bash
-npm create scaffold-hbar@latest my-autonr -- --template NetLayerLabs/Autonr
+npx create-scaffold-hbar@latest my-autonr --template NetLayerLabs/Autonr --yes --package-manager=npm
 ```
 
-The CLI asks which package manager to use. To skip the question, add `--package-manager npm` or
-`--package-manager yarn`. With `--yes` the CLI takes the template's default (npm), but it reads that default through
-GitHub's anonymous API; if that call fails or is rate limited it falls back to Yarn and stops when Yarn is not
-installed, so naming the package manager is the safe choice in scripts:
+Commands in this file are shown for the package manager you chose: the scaffold CLI rewrites them into the matching
+form, with flags after `--` (for example `yarn verify -- <tx>`).
+
+Cloning the repository directly also works; the contract libraries are git submodules:
 
 ```bash
-npx create-scaffold-hbar@latest my-autonr --template NetLayerLabs/Autonr --package-manager npm --yes
+git clone --recurse-submodules https://github.com/NetLayerLabs/Autonr.git && cd Autonr && npm install
 ```
-
-Commands in this file are written as `yarn <script>`, with flags after
-`--` (`yarn verify -- <tx>`). If you scaffold with npm, the CLI rewrites them to the `npm run <script> -- <flags>` form.
 
 ### Prerequisites
 
 | Tool        | Version                     | Why                                                                                           |
 | ----------- | --------------------------- | --------------------------------------------------------------------------------------------- |
 | Node.js     | >= 20.18.3                  | Agent, dashboard and scaffold scripts.                                                        |
-| Foundry     | below 1.8: `foundryup -i v1.7.1` | Forge 1.8 and later send block parameters that the Hedera JSON-RPC relay rejects, so deploys and fork tests fail. |
+| Foundry     | 1.4.0 to 1.7.x (`foundryup -i v1.7.1`) | Forge 1.8 and later send block parameters that the Hedera JSON-RPC relay rejects, so deploys and fork tests fail. |
 | git         | with `user.name` and `user.email` set | The scaffold CLI makes the first commit and installs the contract libraries as submodules. |
 | make        | any                         | `yarn deploy` runs the Foundry Makefile.                                                      |
-| Yarn        | only if you pick it         | Node 25 and later no longer bundle corepack, so install it yourself: `npm install -g yarn`.   |
+| Berry 3.2.3 | only if you pick it instead of npm | Node 25 and later no longer bundle corepack; install the classic 1.x launcher globally and it runs the pinned release. |
 | curl        | any                         | Only for the fork tests (`yarn foundry:test:fork`).                                           |
 
 ## Try it with no keys
 
 ```bash
-yarn foundry:test      # 100 unit, fuzz and invariant tests for AgentVault, offline, about 1 s
+yarn foundry:test      # 107 unit, fuzz and invariant tests for AgentVault, offline, about 1 s
 yarn agent:test        # agent, SaucerSwap and verifier tests (vitest)
 yarn start             # dashboard on http://localhost:3000
 yarn market:inspect    # SaucerSwap pool vs oracles: would the vault accept a $1 buy and a $1 sell right now?
 ```
 
-With no env file, the dashboard reads live Chainlink and Supra prices from testnet. Every other panel shows the exact
-command that would fill it. `yarn market:inspect` reads the oracles and the SaucerSwap pool, needs no keys and sends
+With no env file, the dashboard reads live Chainlink and Supra prices from testnet. With no env file the dashboard shows the
+reference testnet deployment; the panels that need an agent of your own show the command that fills them. `yarn market:inspect` reads the oracles and the SaucerSwap pool, needs no keys and sends
 nothing.
 
 `yarn agent:dry-run` asks the agent what it would do right now. It reads the oracles, the vault and the pool, runs the
@@ -122,14 +125,16 @@ so the dry run needs a vault and an agent: step 5 below.
    ```bash
    yarn account:import
    ```
-3. **Deploy the vault**:
+3. **Deploy the vault**. The command asks which keystore to use, then forge asks for its password:
    ```bash
    yarn deploy:testnet
    ```
-   This deploys `AgentVault` with the default policy: $25 per trade, $100 per UTC day, one trade a minute, 3% slippage,
+   For scripts and CI, skip both prompts with `yarn deploy:testnet -- --keystore <name>` and `ETH_PASSWORD` set to the
+   path of a file holding the password (forge reads it from a file, not from the variable itself). This deploys `AgentVault` with the default policy: $25 per trade, $100 per UTC day, one trade a minute, 3% slippage,
    1.5% Chainlink/Supra divergence and prices up to one day old on testnet. It then allows WHBAR (Chainlink HBAR/USD,
    cross-checked by Supra) and USDC (Supra) and associates the vault with both HTS tokens. The vault address is written
-   to `packages/foundry/deployments/296.json`.
+   to `packages/foundry/deployments/296.json` and into the dashboard's contract definitions, replacing the reference
+   deployment: from now on the dashboard shows your vault.
 4. **Write `packages/agent/.env`** (start from `packages/agent/.env.example`):
    ```bash
    cp packages/agent/.env.example packages/agent/.env
@@ -182,7 +187,7 @@ sequenceDiagram
     participant X as Verifier (Mirror Node)
     A->>O: read HBAR/USD, HBAR_USDT, USDC_USD (one Multicall3 call)
     A->>V: read policy, balances, cooldown, last sequence
-    Note over A: strategy decides hold or trade, holds early on stale or diverging prices
+    Note over A: holds early if paused, no approved fee tier, or stale or diverging prices; else the strategy decides
     A->>Q: quote amountIn
     Note over A: hold if the pool pays less than the vault's oracle-derived minimum
     A->>V: eth_call executeSwap at a pinned block
@@ -197,6 +202,9 @@ sequenceDiagram
         V->>R: exactInput(path, recipient = vault, amountOutMinimum)
         R-->>V: tokenOut, balance delta checked
         Note over V: emit TradeExecuted with both oracle readings and the HCS reference
+        opt executeSwap reverts
+            A->>H: publish rejected record citing the trade record's sequence
+        end
     end
     X->>H: message bytes, payer, submit key
     X->>V: receipt, state and oracles at the trade's block, call trace
@@ -267,6 +275,7 @@ set in the shell or on the host win. Private keys are only ever read server-side
 | `HEDERA_NETWORK`            | `testnet`                            | all                         | `testnet` or `mainnet`.                                                                              |
 | `HEDERA_RPC_URL`            | hashio for the network               | all                         | JSON-RPC relay.                                                                                      |
 | `HEDERA_MIRROR_URL`         | public Mirror Node for the network   | all                         | Mirror Node REST root.                                                                               |
+| `HEDERA_GRPC_TRANSPORT`     | `web`                                | HCS, setup, funding         | `web` sends Hedera SDK transactions over HTTPS (port 443); `native` uses gRPC on ports 50211/50212. |
 | `OPERATOR_ACCOUNT_ID`       |                                      | setup, vault:fund           | The vault owner's account (`0.0.x`).                                                                 |
 | `OPERATOR_PRIVATE_KEY`      |                                      | setup, vault:fund           | Its ECDSA key: raw 32-byte hex (with or without `0x`) or the Portal's DER hex.                       |
 | `AGENT_ACCOUNT_ID`          | written by `agent:setup`             | tick, loop, dry-run, doctor | The agent's account.                                                                                 |
@@ -304,8 +313,9 @@ edit it.
 | `/owner`      | Owner console for the connected owner wallet: pause, policy, tokens (configure, associate, remove), agent and withdraw. Everyone else sees it read-only. |
 | `/debug`      | The scaffold's contract debugger for `AgentVault`.                                                                                                  |
 
-The header search box takes a transaction hash or ID and opens its proof. JSON API routes live under `/api` (`health`,
-`market`, `vault`, `decisions`, `trades`, `proof/[tx]`, `audit`, `replay/[sequence]`, `red-team`, `agent/tick`). They
+The header search box takes a transaction hash or ID and opens its proof. JSON API routes live under `/api`: `GET` `health`,
+`market`, `vault`, `decisions`, `trades`, `proof/[tx]`, `audit`, `replay/[sequence]`, `hedera/account` (EVM address to
+account ID), and `POST` `red-team`, `agent/tick`. They
 answer `{ "configured": false, ... }` with the commands to run when nothing is set up, and 502 when an upstream service
 fails. The tick route answers 403 while disabled or for a wrong secret, 415 unless the body is JSON and 409 while a tick
 is already running.
@@ -450,7 +460,8 @@ from a WHBAR-only vault sells first, so the default flow trades on testnet.
 - [AGENTS.md](AGENTS.md): conventions and invariants for AI coding agents (and humans) changing this repo.
 - [.harness/](.harness/README.md): the [Hedera Harness](https://github.com/hedera-dev/hedera-harness) recipe (spec,
   PRD, acceptance contract, validators). `yarn harness:validate` runs the static tier and a keyless live tier against
-  the testnet deployment above.
+  the testnet deployment above. The recipe is written for the Berry workspace; if you scaffolded with the other
+  package manager, follow the section of `.harness/README.md` about projects created with the other package manager first.
 - [docs/architecture.md](docs/architecture.md): components, data flow, units and trust boundaries.
 - [docs/hedera-gotchas.md](docs/hedera-gotchas.md): Hedera behaviour found while building this.
 - [docs/threat-model.md](docs/threat-model.md): each threat, its mitigation and the test that covers it.

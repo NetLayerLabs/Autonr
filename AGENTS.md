@@ -37,8 +37,9 @@ arrives only through HAK. See the README for why Pyth is not used.
 
 ## Invariants: do not break these
 
-1. **`executeSwap` check order.** Caller and pause, then reasoning (hash, topic, sequence), then amount, pair and
-   allow-list, then cooldown, then oracles (tokenIn before tokenOut; Chainlink validity and freshness, then Supra
+1. **`executeSwap` check order.** Caller and pause, then reasoning (hash, topic, sequence), then amount, pair,
+   allow-list and the owner-approved fee tier (`PoolFeeNotAllowed`), then cooldown, then oracles (tokenIn before
+tokenOut; Chainlink validity and freshness, then Supra
    validity, freshness and divergence), then trade size and daily cap, then effects, then the swap. Tests named
    `test_executeSwap_checks*Before*` pin it. Replay compares error names, so reordering changes what historical
    rejections reproduce.
@@ -58,7 +59,9 @@ arrives only through HAK. See the README for why Pyth is not used.
 6. **Every outcome is logged.** Every published `trade` record needs a `TradeExecuted` or an execution-stage
    `rejected` record with `decisionSeq`. A simulation-stage `rejected` record needs `replay { block, from,
    reasoningHash, sequence }`. The agent pays for its own messages. The audit and replay depend on all of this.
-7. **ABI and bytecode regeneration.** After any change to `AgentVault.sol` or `IAgentVault.sol` (even a comment: the verifier's `vault-code` check compares bytecode including the metadata hash), run `yarn foundry:export-abi` and commit
+7. **ABI and bytecode regeneration.** After any change to `AgentVault.sol` or `IAgentVault.sol` (even a comment: the
+   verifier's `vault-code` check compares bytecode including the metadata hash), run `yarn foundry:export-abi` and
+   commit
    `packages/agent/src/abi/agentVault.ts`. An error declared in `AgentVault` but not in the interface must also go into
    `vaultImplementationErrorsAbi` (`packages/agent/src/vault/abi.ts`), or `decodeVaultError` reports it as `Unknown`.
 8. **Browser-safe evaluate module.** `packages/agent/src/verify/evaluate.ts` is pure and runs in the browser (Tamper
@@ -117,8 +120,9 @@ for this repo: the PRD, the acceptance contract and tiered validators. `yarn har
 (install, lint, check-types, forge tests, agent tests, build) and then a keyless live tier against the reference
 testnet deployment (a valid `autonr.decision/v1` message on the topic, a `SUCCESS` `executeSwap` with `TradeExecuted`,
 `yarn verify -- <reference tx>`, and `yarn agent:red-team` all refused). `yarn harness:validate:offline` skips the
-live tier. The recipe forbids `packages/agent/.env`, so run it in a fresh scaffold or a `git worktree`. Keep
-`.harness/` in yarn form: the scaffold CLI copies it without rewriting it for npm. See
+live tier. The recipe forbids `packages/agent/.env`, so run it in a fresh scaffold or a `git worktree`. The recipe
+targets the Berry workspace and the scaffold CLI copies `.harness/` without rewriting it, so a project scaffolded
+with the other package manager first follows the section about projects created with the other package manager in
 [.harness/README.md](.harness/README.md).
 
 ## Recipes

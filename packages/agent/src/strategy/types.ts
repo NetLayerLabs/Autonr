@@ -10,8 +10,8 @@ export type DecisionSource = StrategyId | "hak";
  * A trade asked for explicitly, in USD; `buy` spends the quote token to get the base token. A caller that decided on
  * its own (an external agent, e.g. through the Hedera Agent Kit plugin) passes its `rationale`, published verbatim,
  * and the `model` that decided. It never passes a price: the vault prices the trade with its oracles.
+ * `source` names who asked, which becomes the decision record's strategy id ("manual" when an operator asked).
  */
-/** `source` names who asked, which becomes the decision record's strategy id ("manual" when an operator asked). */
 export type ManualAction = { side: "buy" | "sell"; usd: number; rationale?: string; model?: string; source?: "hak" };
 
 export type StrategyInput = { snapshot: MarketSnapshot; state: VaultState; cfg: AgentConfig };

@@ -40,20 +40,20 @@ await runCli(USAGE, async () => {
     return EXIT.ok;
   }
   const maxSteps = values["max-steps"] === undefined ? DEFAULT_MAX_STEPS : stepsFlag(values["max-steps"]);
-  if (!process.env.ANTHROPIC_API_KEY?.trim()) {
+  const cfg = loadAgentConfig();
+  if (cfg.llm === null) {
     console.error("The HAK example agent needs an LLM: set ANTHROPIC_API_KEY in packages/agent/.env.");
     console.error(`Without one, ${scriptCommand("agent:tick")} trades with the deterministic rebalance strategy.`);
     return EXIT.failure;
   }
-  const cfg = loadAgentConfig();
-  if (!cfg.llm) throw new Error("ANTHROPIC_API_KEY is set but could not be read");
   const dryRun = values["dry-run"];
   console.log(
     `HAK agent on ${cfg.network}: vault ${cfg.vaultAddress}, agent ${cfg.agentAccountId}, model ${cfg.llm.model}` +
       (dryRun ? " (dry run)" : ""),
   );
 
-  // HAK's client signs as the vault's agent over our transport (gRPC-web unless HEDERA_GRPC_TRANSPORT=native).
+  // HederaAgentAPI requires a client, but no Autonr tool uses it: runTick signs with its own. It is built the same
+  // way (agent operator, gRPC-web unless HEDERA_GRPC_TRANSPORT=native) so any HAK tool the host adds behaves alike.
   const client = hederaClient(cfg.network, cfg.agentAccountId, cfg.agentPrivateKey);
   try {
     const tools = hederaAiSdkTools(client, {

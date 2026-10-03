@@ -22,10 +22,11 @@ export function hederaClient(network: NetworkName, accountId: string, privateKey
   const operatorId = AccountId.fromString(accountId);
   const operatorKey = PrivateKey.fromStringECDSA(privateKey);
   // These clients live for one tick or one setup run, so the periodic address-book refresh is not needed.
+  const configuration = { network, scheduleNetworkUpdate: false };
   const client =
     process.env.HEDERA_GRPC_TRANSPORT === "native"
-      ? Client.forName(network, { scheduleNetworkUpdate: false })
-      : (WebClient.forName(network) as unknown as Client);
+      ? Client.forName(network, configuration)
+      : (new WebClient(configuration) as unknown as Client);
   return client.setOperator(operatorId, operatorKey);
 }
 

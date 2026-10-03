@@ -1,12 +1,12 @@
 import { type Address, getAddress, isAddressEqual, keccak256, slice, toBytes, zeroHash } from "viem";
 import { agentVaultAbi } from "../abi/agentVault";
-import { readClient } from "../chain";
+import { type HederaPublicClient, readClient } from "../chain";
 import { type ReadOnlyConfig } from "../config";
 import { longZeroAddress } from "../hedera";
 import { amountForUsd } from "../oracles/math";
 import { vaultToken } from "../strategy/portfolio";
 import { readVaultState } from "../vault/read";
-import { simulateSwap, type SwapCall } from "../vault/simulate";
+import { type SimulationResult, simulateSwap, type SwapCall } from "../vault/simulate";
 import { describeError } from "./log";
 
 export type RedTeamScenarioId =
@@ -174,9 +174,7 @@ export async function runRedTeam(cfg: ReadOnlyConfig, id: RedTeamScenarioId): Pr
     lastReasoningSequence: state.lastReasoningSequence,
   });
 
-  const result = await simulateSwap(client, call, from, blockNumber).catch((error: unknown) => {
-    throw new Error(`the relay could not simulate a call from ${from}: ${describeError(error)}`, { cause: error });
-  });
+  const result = await simulateWithRetry(client, call, from, blockNumber);
   const request = describeRequest(from, call, blockNumber);
   if (result.ok) {
     return {
@@ -216,4 +214,30 @@ function describeRequest(from: Address, { request, reasoning }: SwapCall, blockN
 /** Narrows user input (a CLI flag, a request body) to a scenario id. */
 export function isRedTeamScenarioId(value: unknown): value is RedTeamScenarioId {
   return RED_TEAM_SCENARIOS.some(scenario => scenario.id === value);
+}
+
+/** One pause before a second attempt: the public relay occasionally drops an eth_call under load. Exported for tests. */
+const RETRY_DELAY_MS = 1_500;
+
+/**
+ * A revert is the scenario's answer and comes back as a result; only a transport failure throws. The simulation is
+ * read-only, so it is retried once before the scenario is given up as unreachable.
+ */
+export async function simulateWithRetry(
+  client: HederaPublicClient,
+  call: SwapCall,
+  from: Address,
+  blockNumber: bigint,
+): Promise<SimulationResult> {
+  try {
+    return await simulateSwap(client, call, from, blockNumber);
+  } catch (first: unknown) {
+    await new Promise(resolve => setTimeout(resolve, RETRY_DELAY_MS));
+    return simulateSwap(client, call, from, blockNumber).catch((error: unknown) => {
+      throw new Error(
+        `the relay could not simulate a call from ${from} (twice; first: ${describeError(first)}): ${describeError(error)}`,
+        { cause: error },
+      );
+    });
+  }
 }

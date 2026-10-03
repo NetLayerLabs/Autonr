@@ -1,5 +1,5 @@
 import { zeroHash } from "viem";
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 import { agentVaultAbi } from "../src/abi/agentVault";
 import {
   isRedTeamScenarioId,
@@ -7,8 +7,10 @@ import {
   redTeamCall,
   type RedTeamContext,
   type RedTeamScenarioId,
+  simulateWithRetry,
 } from "../src/agent/red-team";
 import { longZeroAddress } from "../src/hedera";
+import * as simulate from "../src/vault/simulate";
 import { AGENT_ADDRESS, OWNER_ADDRESS, usdc, VAULT_ADDRESS, whbar } from "./fixtures";
 
 const E18 = 10n ** 18n;
@@ -90,5 +92,40 @@ describe("red-team scenarios", () => {
 
   it("impersonates the treasury when the owner is also the agent, since the relay needs a real sender", () => {
     expect(redTeamCall("not-agent", { ...ctx, owner: AGENT_ADDRESS }).from).toBe(longZeroAddress("0.0.2"));
+  });
+});
+
+describe("simulateWithRetry", () => {
+  const call = {
+    vault: VAULT_ADDRESS,
+    request: { tokenIn: whbar.address, tokenOut: usdc.address, poolFee: 3000, amountIn: 1n },
+    reasoning: { hash: zeroHash, sequence: 1n },
+  };
+  const client = {} as Parameters<typeof simulateWithRetry>[0];
+
+  it("retries a transport failure once and returns the second answer", async () => {
+    vi.useFakeTimers();
+    const calls: number[] = [];
+    vi.spyOn(simulate, "simulateSwap").mockImplementation(async () => {
+      calls.push(calls.length);
+      if (calls.length === 1) throw new Error("fetch failed");
+      return { ok: true, amountOut: 7n };
+    });
+    const pending = simulateWithRetry(client, call, AGENT_ADDRESS, 1n);
+    await vi.runAllTimersAsync();
+    await expect(pending).resolves.toEqual({ ok: true, amountOut: 7n });
+    expect(calls).toHaveLength(2);
+    vi.useRealTimers();
+    vi.restoreAllMocks();
+  });
+
+  it("gives up after the second failure and names both errors", async () => {
+    vi.useFakeTimers();
+    vi.spyOn(simulate, "simulateSwap").mockRejectedValue(new Error("fetch failed"));
+    const pending = simulateWithRetry(client, call, AGENT_ADDRESS, 1n);
+    await vi.runAllTimersAsync();
+    await expect(pending).rejects.toThrow(/twice; first: fetch failed/);
+    vi.useRealTimers();
+    vi.restoreAllMocks();
   });
 });

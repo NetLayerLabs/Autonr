@@ -3,7 +3,7 @@ import { type Address, getAddress, type Hex, isAddress } from "viem";
 import { privateKeyToAddress } from "viem/accounts";
 import { z } from "zod";
 import { isEntityId, longZeroAddress } from "./hedera";
-import { getNetwork, type NetworkName, type TokenRef } from "./networks";
+import { getNetwork, MAX_POOL_FEE, type NetworkName, type TokenRef } from "./networks";
 import { type StrategyId } from "./strategy/types";
 
 /** Everything needed to read the market, the vault and the decision log. Contains no secrets. */
@@ -172,7 +172,7 @@ const variables = {
   OPERATOR_PRIVATE_KEY: ecdsaKey,
   AUTONR_BASE_TOKEN: tokenOverride,
   AUTONR_QUOTE_TOKEN: tokenOverride,
-  AUTONR_POOL_FEE: z.coerce.number().int().min(1).max(999_999),
+  AUTONR_POOL_FEE: z.coerce.number().int().min(1).max(MAX_POOL_FEE),
   AUTONR_STRATEGY: z.enum(["rebalance", "llm"], { error: 'expected "rebalance" or "llm"' }),
   AUTONR_TRADE_USD: z.coerce.number().positive(),
   AUTONR_TARGET_BASE_WEIGHT: z.coerce.number().min(0).max(1),

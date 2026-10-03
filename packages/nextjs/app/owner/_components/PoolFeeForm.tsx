@@ -2,6 +2,7 @@
 
 import { type FormEvent, useState } from "react";
 import type { VaultWriter } from "./useVaultWriter";
+import { MAX_POOL_FEE } from "@sh/agent/networks";
 import { Panel } from "~~/components/autonr/Panel";
 import { useHealth } from "~~/hooks/autonr/useAutonrApi";
 import type { VaultToken } from "~~/lib/api/types";
@@ -11,8 +12,6 @@ type PoolFeeFormProps = { tokens: VaultToken[]; poolFee: number; canWrite: boole
 
 /** SaucerSwap V2 fee tiers, in hundredths of a basis point. */
 const FEE_TIERS = [500, 1500, 3000, 10_000];
-/** The router reads the fee as a uint24 from the swap path. */
-const UINT24_MAX = 16_777_215;
 
 /** `poolFee` is the tier approved for the configured base/quote pair, the one the agent trades. */
 export const PoolFeeForm = ({ tokens, poolFee, canWrite, writer }: PoolFeeFormProps) => {
@@ -22,7 +21,7 @@ export const PoolFeeForm = ({ tokens, poolFee, canWrite, writer }: PoolFeeFormPr
   const [fee, setFee] = useState(String(poolFee || 3000));
 
   const feeInput = fee.trim();
-  const feeValue = /^\d+$/.test(feeInput) && Number(feeInput) <= UINT24_MAX ? Number(feeInput) : null;
+  const feeValue = /^\d+$/.test(feeInput) && Number(feeInput) <= MAX_POOL_FEE ? Number(feeInput) : null;
   const a = tokens.find(token => token.address === tokenA);
   const b = tokens.find(token => token.address === tokenB);
   const ready = a !== undefined && b !== undefined && a.address !== b.address && feeValue !== null;

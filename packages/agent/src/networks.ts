@@ -59,6 +59,12 @@ export type NetworkInfo = {
   reference: ReferenceDeployment | null;
 };
 
+/**
+ * Largest SaucerSwap V2 fee tier the agent and the dashboard accept: fees are hundredths of a basis point, so
+ * 1_000_000 would be a 100% fee. The vault stores the tier as a uint24 and checks only that a trade cites it.
+ */
+export const MAX_POOL_FEE = 999_999;
+
 export const NETWORKS: Record<NetworkName, NetworkInfo> = {
   testnet: {
     name: "testnet",

@@ -69,13 +69,13 @@
       "contains": [
         "0.0.10821549",
         "0x61430295e8342246ec6e432921017c0a49fa961fc814ded1e7c2065d9d514158",
-        "yarn agent:red-team",
-        "yarn harness:validate"
+        "agent:red-team",
+        "harness:validate"
       ]
     },
     {
       "file": "AGENTS.md",
-      "contains": ["## Invariants", "yarn harness:validate", ".harness/spec.yaml"]
+      "contains": ["## Invariants", "harness:validate", ".harness/spec.yaml"]
     }
   ]
 }

@@ -75,13 +75,15 @@ function decisionProblems(r) {
   if (!isHexAddress(r.vault)) p.push("vault is not an address");
   if (!isEntityId(r.agent)) p.push("agent is not an entity id");
   if (typeof r.createdAt !== "string" || Number.isNaN(Date.parse(r.createdAt))) p.push("createdAt is not ISO-8601");
-  if (!isObject(r.strategy) || typeof r.strategy.id !== "string" || !r.strategy.id || typeof r.strategy.version !== "string" || !r.strategy.version) {
+  const s = r.strategy;
+  if (!isObject(s) || typeof s.id !== "string" || !s.id || typeof s.version !== "string" || !s.version) {
     p.push("strategy needs id and version");
   }
   if (!Array.isArray(r.market) || r.market.length > 2) p.push("market must be an array of at most 2");
   else {
     for (const m of r.market) {
-      if (!isObject(m) || !["chainlink", "supra"].includes(m.source) || !isDecimalString(m.price) || !isUint(m.updatedAt)) {
+      const sourced = isObject(m) && ["chainlink", "supra"].includes(m.source);
+      if (!sourced || !isDecimalString(m.price) || !isUint(m.updatedAt)) {
         p.push("market entry needs source chainlink|supra, a decimal price and updatedAt");
         break;
       }
@@ -90,15 +92,15 @@ function decisionProblems(r) {
   if (typeof r.rationale !== "string" || r.rationale.length > 400) p.push("rationale must be a string of <= 400 chars");
   if (r.action !== undefined) {
     const a = r.action;
-    if (!isObject(a) || !["buy", "sell"].includes(a.side) || !isHexAddress(a.tokenIn) || !isHexAddress(a.tokenOut) || !isUintString(a.amountIn) || !(Number.isInteger(a.poolFee) && a.poolFee > 0) || !isDecimalString(a.usd)) {
-      p.push("action is malformed");
-    }
+    const legs = isObject(a) && ["buy", "sell"].includes(a.side) && isHexAddress(a.tokenIn) && isHexAddress(a.tokenOut);
+    const size = legs && isUintString(a.amountIn) && Number.isInteger(a.poolFee) && a.poolFee > 0;
+    if (!size || !isDecimalString(a.usd)) p.push("action is malformed");
   }
   if (r.rejection !== undefined) {
     const j = r.rejection;
-    if (!isObject(j) || !["simulation", "execution"].includes(j.stage) || typeof j.error !== "string" || !j.error || typeof j.detail !== "string" || (j.txHash !== undefined && !isHash32(j.txHash))) {
-      p.push("rejection is malformed");
-    }
+    const staged = isObject(j) && ["simulation", "execution"].includes(j.stage);
+    const described = staged && typeof j.error === "string" && j.error && typeof j.detail === "string";
+    if (!described || (j.txHash !== undefined && !isHash32(j.txHash))) p.push("rejection is malformed");
   }
   if (r.kind === "trade" && !r.action) p.push("a trade record needs an action");
   if (r.kind === "trade" && r.rejection) p.push("a trade record cannot carry a rejection");
@@ -126,8 +128,12 @@ async function checkHcs() {
     }
     if (record !== undefined) {
       problems.push(...decisionProblems(record));
-      if (isHexAddress(record.vault) && record.vault.toLowerCase() !== vault) problems.push(`cites vault ${record.vault}`);
-      if (record.agent !== m.payer_account_id) problems.push(`paid by ${m.payer_account_id}, not the agent ${record.agent}`);
+      if (isHexAddress(record.vault) && record.vault.toLowerCase() !== vault) {
+        problems.push(`cites vault ${record.vault}`);
+      }
+      if (record.agent !== m.payer_account_id) {
+        problems.push(`paid by ${m.payer_account_id}, not the agent ${record.agent}`);
+      }
     }
     (problems.length === 0 ? valid : invalid).push({ seq: m.sequence_number, kind: record?.kind, problems });
   }
@@ -154,8 +160,12 @@ async function checkTrade() {
       console.log(`  SKIP  ${hash}: result ${tx.result}, TradeExecuted ${log ? "present" : "absent"}`);
       continue;
     }
-    // TradeReceipt is a static tuple, so it is inline in data; its last three words are reasoningHash, hcsTopicNum, hcsSequence.
+    // TradeReceipt is a static tuple, so it is inline in data; its last three words are reasoningHash, hcsTopicNum
+    // and hcsSequence.
     const words = log.data.slice(2).match(/.{64}/g) ?? [];
+    if (words.length < 3) {
+      throw new Error(`TradeExecuted in ${hash} has ${words.length} data word(s); expected the TradeReceipt tuple`);
+    }
     const [reasoningHash, topicNum, sequence] = words.slice(-3);
     const citedTopic = `0.0.${BigInt(`0x${topicNum}`)}`;
     console.log(`  PASS  ${hash}: SUCCESS executeSwap, TradeExecuted tradeId ${BigInt(log.topics[1])}`);

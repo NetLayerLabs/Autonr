@@ -7,6 +7,8 @@ import {
   type DecisionRecord,
   encodeDecisionFitting,
   type EncodedDecision,
+  MAX_REJECTION_DETAIL_LENGTH,
+  MAX_REJECTION_ERROR_LENGTH,
   type PriceObservation,
   type Rejection,
   type TradeAction,
@@ -73,10 +75,6 @@ export class SetupMismatchError extends Error {
  */
 export const SIMULATION_REASONING_HASH = keccak256(toBytes("autonr:simulation"));
 
-/** Limits of the rejection fields in the decision schema; router messages can be longer. */
-const MAX_ERROR_LENGTH = 64;
-const MAX_DETAIL_LENGTH = 200;
-
 /**
  * A trade executes some seconds after the snapshot (HCS consensus, then the swap's own transaction), so a price this
  * close to the vault's age limit would be stale by then. Holding avoids publishing a trade that is bound to revert.
@@ -126,15 +124,15 @@ export async function tick(cfg: AgentConfig, opts: TickOptions, deps: TickDeps):
   // Waiting out the cooldown is not a decision, so nothing is published: logging it would only spend HBAR on noise.
   // fetchedAt is chain time, which trails the wall clock by a few seconds; the vault enforces the same clock.
   if (snapshot.fetchedAt < state.nextTradeAt) {
-    return run.hold(`The vault's cooldown ends in ${state.nextTradeAt - snapshot.fetchedAt} s.`, undefined, false);
+    return run.hold(`The vault's cooldown ends in ${state.nextTradeAt - snapshot.fetchedAt} s.`, { publish: false });
   }
   const refusal = vaultWouldRefuse(cfg, snapshot, state);
   if (refusal) return run.hold(refusal);
 
   const decision = await strategy.decide({ snapshot, state, cfg });
-  if (decision.kind === "hold") return run.hold(decision.rationale, decision.model);
+  if (decision.kind === "hold") return run.hold(decision.rationale, { model: decision.model });
   run.emit("decision", `${decision.side} ${formatUsd(decision.usd)} of ${cfg.baseToken.symbol}: ${decision.rationale}`);
-  const overruled = (problem: string) => run.hold(`${problem} ${describeWish(decision)}`, decision.model);
+  const overruled = (problem: string) => run.hold(`${problem} ${describeWish(decision)}`, { model: decision.model });
 
   const legs: Legs =
     decision.side === "buy"
@@ -316,7 +314,10 @@ class TickRun {
   }
 
   /** Holds are published only when the operator wants them in the log and the hold is a decision worth recording. */
-  async hold(rationale: string, model?: string, publish = true): Promise<TickResult> {
+  async hold(
+    rationale: string,
+    { model, publish = true }: { model?: string; publish?: boolean } = {},
+  ): Promise<TickResult> {
     const encoded = encodeDecisionFitting(this.record("hold", { rationale, model }));
     this.emit("decision", `hold: ${encoded.record.rationale}`);
     const hcs = publish && this.cfg.logHolds && !this.dryRun ? await this.publish(encoded) : undefined;
@@ -381,7 +382,11 @@ function vaultWouldRefuse(cfg: AgentConfig, snapshot: MarketSnapshot, state: Vau
 }
 
 function rejectionError(error: VaultError): Pick<Rejection, "error" | "detail"> {
-  return { error: error.name.slice(0, MAX_ERROR_LENGTH), detail: error.detail.slice(0, MAX_DETAIL_LENGTH) };
+  // Router messages can be longer than the schema's rejection fields.
+  return {
+    error: error.name.slice(0, MAX_REJECTION_ERROR_LENGTH),
+    detail: error.detail.slice(0, MAX_REJECTION_DETAIL_LENGTH),
+  };
 }
 
 /** What the strategy asked for, appended to a hold the agent imposed so the log keeps both. */

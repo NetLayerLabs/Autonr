@@ -14,6 +14,12 @@ export const DECISION_SCHEMA_ID = "autonr.decision/v1";
 /** HCS splits messages larger than 1024 bytes into chunks with separate sequence numbers. We keep one chunk. */
 export const MAX_DECISION_BYTES = 1024;
 
+/** Field limits of the record, shared with the callers that fill the fields so they never overrun the schema. */
+export const MAX_RATIONALE_LENGTH = 400;
+export const MAX_MODEL_LENGTH = 48;
+export const MAX_REJECTION_ERROR_LENGTH = 64;
+export const MAX_REJECTION_DETAIL_LENGTH = 200;
+
 const hexAddress = z.string().regex(/^0x[0-9a-fA-F]{40}$/, "expected a 0x-prefixed 20-byte address");
 const uintString = z.string().regex(/^\d+$/, "expected an unsigned integer as a decimal string");
 const decimalString = z.string().regex(/^-?\d+(\.\d+)?$/, "expected a decimal number as a string");
@@ -61,8 +67,8 @@ export const rejectionSchema = z.object({
   /** "simulation": the vault refused a dry run, so nothing was sent. "execution": the real transaction reverted. */
   stage: z.enum(["simulation", "execution"]),
   /** Custom error name from IAgentVault (e.g. "DailyCapExceeded"), a router error, or "Unknown". */
-  error: z.string().min(1).max(64),
-  detail: z.string().max(200),
+  error: z.string().min(1).max(MAX_REJECTION_ERROR_LENGTH),
+  detail: z.string().max(MAX_REJECTION_DETAIL_LENGTH),
   /** For execution-stage rejections: the sequence number of the "trade" record this refers to. */
   decisionSeq: z.number().int().positive().optional(),
   /** For execution-stage rejections: the reverted transaction. */
@@ -87,11 +93,11 @@ export const decisionRecordSchema = z
     strategy: z.object({
       id: z.string().min(1).max(32),
       version: z.string().min(1).max(16),
-      model: z.string().max(48).optional(),
+      model: z.string().max(MAX_MODEL_LENGTH).optional(),
     }),
     market: z.array(priceObservationSchema).max(2),
     action: tradeActionSchema.optional(),
-    rationale: z.string().max(400),
+    rationale: z.string().max(MAX_RATIONALE_LENGTH),
     rejection: rejectionSchema.optional(),
   })
   .superRefine((record, ctx) => {
@@ -169,7 +175,7 @@ const utf8 = new TextEncoder();
  * Collapses whitespace and cuts a rationale to at most `max` UTF-16 code units (the unit the schema's length limit
  * counts), never splitting a surrogate pair. Returns "" when `max` leaves no room for any text.
  */
-export function clampRationale(text: string, max = 400): string {
+export function clampRationale(text: string, max = MAX_RATIONALE_LENGTH): string {
   if (max < 1) return "";
   const clean = text.replace(/\s+/g, " ").trim();
   if (clean.length <= max) return clean;

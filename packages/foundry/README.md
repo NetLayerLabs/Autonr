@@ -31,7 +31,8 @@ trusting it with prices or funds:
 1. caller is the agent (`NotAgent`), vault is not paused (`EnforcedPause`), no reentry;
 2. reasoning hash is set (`ReasoningRequired`), a decision topic is set (`DecisionTopicNotSet`), the HCS sequence is
    newer than the last trade's on that topic (`ReasoningOutOfOrder`);
-3. `amountIn > 0` (`ZeroAmount`), two different tokens (`InvalidPair`), both allowed (`TokenNotAllowed`, tokenIn first);
+3. `amountIn > 0` (`ZeroAmount`), two different tokens (`InvalidPair`), both allowed (`TokenNotAllowed`, tokenIn first),
+   the owner-approved fee tier for the pair (`PoolFeeNotAllowed`);
 4. cooldown has passed (`CooldownActive`);
 5. oracles for tokenIn, then tokenOut: positive prices (`InvalidOraclePrice`), not older than `maxPriceAge`
    (`StalePrice`), Chainlink and Supra within `maxOracleDivergenceBps` (`OracleDivergence`);
@@ -87,7 +88,8 @@ need Foundry below 1.8 (`foundryup -i v1.7.1`): newer forge sends block paramete
 `script/DeployAgentVault.s.sol` deploys the vault owned by the deployer with the default policy ($25 per trade, $100 per
 UTC day, one trade a minute, prices at most two hours old (one day on testnet, whose feeds update rarely), 3% slippage,
 1.5% oracle divergence), allows the network's WHBAR (Chainlink HBAR / USD, cross-checked by Supra `HBAR_USDT`) and USDC
-(Supra `USDC_USD`), and on Hedera associates the vault with both. It reads two optional variables from `packages/agent/.env`, the single env file of the template
+(Supra `USDC_USD`), and on Hedera associates the vault with both. It reads two optional variables from
+`packages/agent/.env`, the single env file of the template
 (variables already set in the shell win):
 
 | Variable               | Effect                                                                        |
@@ -96,12 +98,14 @@ UTC day, one trade a minute, prices at most two hours old (one day on testnet, w
 | `AUTONR_TOPIC_ID`      | Decision topic (`0.0.N`). Unset keeps trading disabled until the owner sets it. |
 
 `yarn agent:setup` creates the agent account and its topic and points an existing vault at them, so a fresh deploy
-needs neither. On a local chain the script deploys mock tokens, oracles and a router instead, and funds the vault, so the
+needs neither. On a local chain the script deploys mock tokens, oracles and a router instead, and funds the vault, so
+the
 whole flow works offline.
 
 Each deploy records `deployments/<chainId>.json`; `scripts-js/generateTsAbis.js` merges every file in `deployments/`
-into `packages/nextjs/contracts/deployedContracts.ts`. Only `deployments/296.json` (the reference testnet deployment) is
-committed, so a local deploy never overwrites it.
+into `packages/nextjs/contracts/deployedContracts.ts`. Only `deployments/296.json` is committed; it holds the reference
+testnet deployment until your own `deploy:testnet` replaces it (a local deploy writes `31337.json` and leaves it alone).
+`git checkout packages/foundry/deployments/296.json && yarn foundry:export-abi` restores the reference entry.
 
 ## Tests
 
@@ -126,5 +130,7 @@ committed, so a local deploy never overwrites it.
 HashScan reads verified sources from Sourcify:
 
 ```bash
-forge verify-contract <ADDRESS> contracts/AgentVault.sol:AgentVault --chain-id 296 --verifier sourcify
+yarn foundry:verify:testnet -- <ADDRESS> contracts/AgentVault.sol:AgentVault
 ```
+
+(`foundry:verify:mainnet` for chain 295.) This runs `forge verify-contract ... --verifier sourcify`.

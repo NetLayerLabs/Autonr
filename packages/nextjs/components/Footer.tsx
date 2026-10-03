@@ -23,13 +23,13 @@ export const Footer = () => {
           <div className="flex flex-col md:flex-row gap-2">
             {base && (
               <div>
-                <div
+                <span
                   className="btn btn-primary btn-sm font-normal gap-1 cursor-auto"
                   title={`${base.symbol} from ${base.feed} (${base.source})`}
                 >
                   <CurrencyDollarIcon className="h-4 w-4" />
                   <span>{base.priceUsd.toFixed(4)}</span>
-                </div>
+                </span>
               </div>
             )}
             {isTestnet && <HederaPortalFaucet showIcon />}
@@ -38,7 +38,7 @@ export const Footer = () => {
         </div>
       </div>
       <div className="w-full">
-        <ul className="menu menu-horizontal w-full">
+        <nav className="menu menu-horizontal w-full">
           <div className="flex justify-center items-center gap-3 text-sm w-full text-base-content/60">
             <a
               href="https://github.com/NetLayerLabs/Autonr"
@@ -65,7 +65,7 @@ export const Footer = () => {
               Docs
             </a>
           </div>
-        </ul>
+        </nav>
       </div>
     </div>
   );

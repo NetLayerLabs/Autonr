@@ -30,8 +30,8 @@ export const AgentPanel = () => {
       <QueryBoundary query={health} skeletonLines={6}>
         {data => (
           <div className="flex flex-col gap-4">
-            <DeploymentFacts health={data} />
-            <TickSection health={data} />
+            <DeploymentFacts health={data} reference={reference} />
+            <TickSection health={data} reference={reference} />
           </div>
         )}
       </QueryBoundary>
@@ -51,7 +51,10 @@ const NotSet = ({ name }: { name: string }) => (
   </span>
 );
 
-const DeploymentFacts = ({ health }: { health: HealthResponse }) => {
+/** `reference`: the dashboard shows the built-in reference deployment, not a vault of the operator's own. */
+type SectionProps = { health: HealthResponse; reference: boolean };
+
+const DeploymentFacts = ({ health, reference }: SectionProps) => {
   const { network, vaultAddress, topicId, agentAccountId, agentAddress, baseToken, quoteToken, poolFee, agent } =
     health;
   return (
@@ -105,7 +108,7 @@ const DeploymentFacts = ({ health }: { health: HealthResponse }) => {
           </>
         ) : (
           <span className="text-xs text-base-content/70">
-            {isReferenceDeployment(health) ? "rebalance (reference agent)" : "the agent is not configured yet"}
+            {reference ? "rebalance (reference agent)" : "the agent is not configured yet"}
           </span>
         )}
       </dd>
@@ -113,11 +116,11 @@ const DeploymentFacts = ({ health }: { health: HealthResponse }) => {
   );
 };
 
-const TickSection = ({ health }: { health: HealthResponse }) => {
+const TickSection = ({ health, reference }: SectionProps) => {
   const { agent, tickApiEnabled, tickApiSecretRequired, network, vaultAddress } = health;
   if (!agent.ready) {
     const needsDeploy = vaultAddress === null && network === "testnet";
-    if (isReferenceDeployment(health)) {
+    if (reference) {
       return (
         <div className="border-t border-base-300 pt-4">
           <EmptyState

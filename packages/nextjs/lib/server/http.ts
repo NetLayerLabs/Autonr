@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { describeError } from "@sh/agent";
+import { describeError, redactValues } from "@sh/agent";
 import { VerifyError, type VerifyErrorCode } from "@sh/agent/verify";
 import "server-only";
 import type { ApiErrorBody } from "~~/lib/api/types";
@@ -89,13 +89,5 @@ function publicReason(error: unknown): string {
 }
 
 function redact(text: string): string {
-  let redacted = text;
-  for (const name of SECRET_ENV_VARS) {
-    const value = process.env[name]?.trim();
-    if (!value) continue;
-    for (const form of new Set([value, value.replace(/^0x/i, "")])) {
-      if (form.length >= 8) redacted = redacted.split(form).join(`[${name}]`);
-    }
-  }
-  return redacted;
+  return redactValues(text, Object.fromEntries(SECRET_ENV_VARS.map(name => [name, process.env[name]])));
 }

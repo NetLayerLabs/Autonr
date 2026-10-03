@@ -6,10 +6,11 @@ import {
   type Tool,
 } from "@hashgraph/hedera-agent-kit";
 import { type Client, LedgerId } from "@hiero-ledger/sdk";
-import { type Hex } from "viem";
+import { type Hex, HttpRequestError } from "viem";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { z } from "zod";
 import { type TickOptions, type TickResult } from "../src/agent/tick";
+import { MAX_MODEL_LENGTH } from "../src/decision";
 import {
   type AutonrHakDeps,
   autonrPlugin,
@@ -207,6 +208,23 @@ describe("autonr HAK plugin", () => {
     const { run } = setup({}, { vaultState: vi.fn(async () => null) });
     const result = await run(autonrToolNames.VAULT_STATE, {});
     expect(result.raw.status).toBe("ERROR");
+  });
+
+  it("hides the RPC and Mirror Node URLs in an error shown to the model", async () => {
+    const failure = new HttpRequestError({ url: cfg.rpcUrl, details: "connection refused" });
+    const { run } = setup({}, { snapshot: vi.fn(async () => Promise.reject(failure)) });
+    const result = await run(autonrToolNames.MARKET_SNAPSHOT, {});
+    expect(result.raw.status).toBe("ERROR");
+    expect(result.humanMessage).toContain(
+      "Autonr market snapshot failed: the JSON-RPC relay at [HEDERA_RPC_URL] failed",
+    );
+    expect(result.humanMessage).toContain("connection refused");
+    for (const text of [result.humanMessage, String(result.raw.error)]) expect(text).not.toContain(cfg.rpcUrl);
+  });
+
+  it("refuses a model name the decision record cannot hold", () => {
+    expect(() => autonrPlugin({ model: "m".repeat(MAX_MODEL_LENGTH) })).not.toThrow();
+    expect(() => autonrPlugin({ model: "m".repeat(MAX_MODEL_LENGTH + 1) })).toThrow(RangeError);
   });
 
   it("verifies a trade with the configured network and Mirror Node", async () => {

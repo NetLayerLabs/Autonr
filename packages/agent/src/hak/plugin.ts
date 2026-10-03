@@ -5,13 +5,16 @@ import {
   isCustomMode,
   isReturnBytesMode,
   type Plugin,
+  TOOL_STATUS,
   TOOL_TYPE,
   type ToolType,
 } from "@hashgraph/hedera-agent-kit";
 import { formatUnits } from "viem";
-import { tickSummary } from "../agent/log";
+import { describeError, tickSummary } from "../agent/log";
+import { redactUrls } from "../agent/redact";
 import { describeMarket, runTick, type TickOptions, type TickResult, type TickStep } from "../agent/tick";
 import { type AgentConfig, loadAgentConfig, loadReadOnlyConfig, type ReadOnlyConfig } from "../config";
+import { MAX_MODEL_LENGTH, MAX_RATIONALE_LENGTH } from "../decision";
 import { formatUsd, formatUsdE18 } from "../oracles/math";
 import { fetchMarketSnapshot, type MarketSnapshot } from "../oracles/snapshot";
 import { type PoolHealth, poolHealth } from "../saucerswap";
@@ -27,11 +30,6 @@ export const autonrToolNames = {
   PROPOSE_TRADE: "autonr_propose_trade",
   VERIFY_TRADE: "autonr_verify_trade",
 } as const;
-
-/** Longest `strategy.model` the decision schema accepts. */
-const MAX_MODEL_LENGTH = 48;
-/** Longest rationale the decision schema accepts; it is published verbatim to HCS. */
-const MAX_RATIONALE_LENGTH = 400;
 
 /**
  * Everything the tools do to the outside world: the same @sh/agent functions the CLIs and the dashboard use. Tests
@@ -60,7 +58,10 @@ const defaultDeps: AutonrHakDeps = {
 export type AutonrPluginOptions = {
   /** Decide and simulate only: publish nothing, send nothing. Set by the operator; the model cannot change it. */
   dryRun?: boolean;
-  /** Who decided, recorded as `strategy.model` in each decision record (e.g. "hak/claude-sonnet-5-5"). */
+  /**
+   * Who decided, recorded as `strategy.model` in each decision record (e.g. "hak/claude-sonnet-5-5"). At most
+   * MAX_MODEL_LENGTH characters; `autonrPlugin` throws a RangeError for a longer one.
+   */
   model?: string;
   /** Progress of a proposed trade, one event per tick step. */
   onStep?: (step: TickStep) => void;
@@ -155,6 +156,26 @@ abstract class AutonrTool<I extends z.ZodObject> extends BaseTool<unknown, z.out
   /** The result is final: there is no HAK transaction to sign afterwards. */
   override async shouldSecondaryAction(): Promise<boolean> {
     return false;
+  }
+
+  /**
+   * HAK's default returns the error message verbatim to the model. viem and fetch errors quote the RPC or Mirror Node
+   * URL, which may carry a provider API key, so the message is redacted before it leaves the operator's process; the
+   * full error still goes to the operator's log.
+   */
+  override async handleError(error: unknown): Promise<ToolOutput> {
+    console.error(`[${this.method}] ${this.name} failed:`, error);
+    const message = redactUrls(describeError(error), this.knownUrls());
+    return { raw: { status: TOOL_STATUS.ERROR, error: message }, humanMessage: `${this.name} failed: ${message}` };
+  }
+
+  /** Reading the configuration can itself be what failed; then there are no URLs to hide. */
+  private knownUrls(): Pick<ReadOnlyConfig, "rpcUrl" | "mirrorUrl"> {
+    try {
+      return this.deps.readOnlyConfig();
+    } catch {
+      return { rpcUrl: "", mirrorUrl: "" };
+    }
   }
 
   abstract override coreAction(params: z.output<I>, context: Context): Promise<ToolOutput>;
@@ -280,7 +301,7 @@ class ProposeTradeTool extends AutonrTool<typeof proposeTradeInput> {
         usd: params.usd,
         rationale: params.rationale,
         source: "hak",
-        ...(this.options.model ? { model: this.options.model.slice(0, MAX_MODEL_LENGTH) } : {}),
+        ...(this.options.model ? { model: this.options.model } : {}),
       },
       onStep: this.options.onStep,
     });
@@ -327,6 +348,11 @@ class VerifyTradeTool extends AutonrTool<typeof verifyTradeInput> {
  * reasoning is a precondition the vault enforces, and a trade without it reverts.
  */
 export function autonrPlugin(options: AutonrPluginOptions = {}): Plugin {
+  if (options.model !== undefined && options.model.length > MAX_MODEL_LENGTH) {
+    throw new RangeError(
+      `model "${options.model}" is longer than the ${MAX_MODEL_LENGTH} characters a decision record holds`,
+    );
+  }
   const deps: AutonrHakDeps = { ...defaultDeps, ...options.deps };
   return {
     name: "autonr",

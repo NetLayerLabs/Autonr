@@ -122,9 +122,12 @@ describe("simulateWithRetry", () => {
   it("gives up after the second failure and names both errors", async () => {
     vi.useFakeTimers();
     vi.spyOn(simulate, "simulateSwap").mockRejectedValue(new Error("fetch failed"));
-    const pending = simulateWithRetry(client, call, AGENT_ADDRESS, 1n);
+    // The expectation attaches its handler before the timers advance; otherwise the rejection lands unhandled first.
+    const expectation = expect(simulateWithRetry(client, call, AGENT_ADDRESS, 1n)).rejects.toThrow(
+      /twice; first: fetch failed/,
+    );
     await vi.runAllTimersAsync();
-    await expect(pending).rejects.toThrow(/twice; first: fetch failed/);
+    await expectation;
     vi.useRealTimers();
     vi.restoreAllMocks();
   });

@@ -1,0 +1,24 @@
+{
+  "name": "autonr-video",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "prestudio": "node scripts/clips-manifest.mjs",
+    "studio": "remotion studio src/index.ts",
+    "capture": "node scripts/capture.mjs",
+    "vo": "node vo-gen.js",
+    "prerender": "node scripts/clips-manifest.mjs",
+    "render": "remotion render src/index.ts Autonr out/autonr-demo.mp4 --browser-executable \"/Applications/Google Chrome.app/Contents/MacOS/Google Chrome\" --codec h264 --crf 14 --x264-preset slow --image-format png --pixel-format yuv420p --color-space bt709 --audio-codec aac --audio-bitrate 320k --overwrite && node scripts/finish.mjs out/autonr-demo.mp4",
+    "still": "remotion still src/index.ts Autonr out/frame.png --image-format png --overwrite --browser-executable \"/Applications/Google Chrome.app/Contents/MacOS/Google Chrome\""
+  },
+  "dependencies": {
+    "@remotion/cli": "^4.0.376",
+    "@remotion/google-fonts": "^4.0.376",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "remotion": "^4.0.376"
+  },
+  "devDependencies": {
+    "playwright": "1.58"
+  }
+}

@@ -1,0 +1,23 @@
+Autonr trade #8 on testnet
+  tx        0xa5d79bc371a83602877b87a6d66112131b003140ee33c2b84d40fea6cf7a2b7c (0.0.7314364-1791064472-010563922)
+  block     41320898, consensus 1791064477.878055104
+  vault     0x037b24d59836e1C0cb9Fe571f004409D81eba472
+  decision  topic 0.0.10821549, message 19
+
+  PASS  Trade transaction succeeded                       vault 0x037b24d59836e1C0cb9Fe571f004409D81eba472 executed trade #8 and emitted TradeExecuted
+  PASS  Emitter is a genuine AgentVault                   0x037b24d59836e1C0cb9Fe571f004409D81eba472 runs AgentVault's compiled code (12286 bytes, immutables masked), wired to testnet's SaucerSwap router and Supra oracle
+  PASS  Receipt names the vault's decision topic          topic 0.0.10821549 was the vault's decision topic at block 41320898
+  PASS  Decision message exists                           message 19 on topic 0.0.10821549, paid by 0.0.10821548
+  PASS  Message bytes match the committed hash            keccak256 of the 686 message bytes is 0x6b0b…9c71, as committed
+  PASS  Decision published before the trade               published 3.840112 s before the trade reached consensus
+  PASS  One key signed the decision and the trade         agent 0.0.10821548 holds topic 0.0.10821549's submit key 031067…d228, sent the trade and paid for the message
+  PASS  Decision is a valid trade record                  autonr.decision/v1 trade record from strategy manual 1
+  PASS  Decision matches the executed trade               sell 48.9668005 WHBAR for USDC in the 3000 fee tier, as recorded
+  PASS  Oracle readings match the chain                   the oracles re-read at block 41320898 give the receipt's readings: WHBAR $0.10211 (Supra $0.1025845, 46 bps apart); USDC $0.99997
+  PASS  Oracles read before the swap, in one transaction  in one transaction the vault read Chainlink 0x59bC…2B4a, Supra pair 75, Supra pair 89, then swapped on SaucerSwap (call 12)
+  PASS  Execution within the slippage policy              received 92.424532 USDC, 174843 bps above the oracle-fair 5.000149 USDC
+
+VERIFIED: 12 checks passed
+  trade     https://hashscan.io/testnet/transaction/0xa5d79bc371a83602877b87a6d66112131b003140ee33c2b84d40fea6cf7a2b7c
+  decision  https://hashscan.io/testnet/transaction/1791064474.037943104/message
+  vault     https://hashscan.io/testnet/contract/0x037b24d59836e1C0cb9Fe571f004409D81eba472

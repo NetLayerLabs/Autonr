@@ -1,0 +1,32 @@
+{
+ "audit": {
+  "duration": 13.07,
+  "width": 3200,
+  "height": 1800
+ },
+ "home": {
+  "duration": 27.83,
+  "width": 3200,
+  "height": 1800
+ },
+ "owner": {
+  "duration": 13.03,
+  "width": 3200,
+  "height": 1800
+ },
+ "playground": {
+  "duration": 24.37,
+  "width": 3200,
+  "height": 1800
+ },
+ "proof": {
+  "duration": 27.6,
+  "width": 3200,
+  "height": 1800
+ },
+ "tamper": {
+  "duration": 15.33,
+  "width": 3200,
+  "height": 1800
+ }
+}

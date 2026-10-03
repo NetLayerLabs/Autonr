@@ -36,6 +36,12 @@ dashboard shows it with no keys configured.
 | Refused buy (the testnet pool prices HBAR about 20x above the oracles) | [message 3](https://hashscan.io/testnet/transaction/1790925377.082255638/message): the pool would pay 1.00 WHBAR where the vault's oracle-derived minimum is 18.61, so the agent held instead of trading |
 | Vault rules enforced on-chain | `yarn agent:red-team`: all six rule-breaking calls refused with their expected custom errors |
 
+## Demo video
+
+A three-minute walkthrough of one decision, from the agent's reasoning on HCS to the verified trade:
+[watch the demo](https://github.com/NetLayerLabs/Autonr#demo-video). The film is built from real screen capture of a
+fresh scaffold and the real CLI output; [demo/remotion](demo/remotion/README.md) has the source and the narration script.
+
 ## Screenshots
 
 Mission control: oracle consensus, the vault's policy and balances, the HCS decision log and every trade.

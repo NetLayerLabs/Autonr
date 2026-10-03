@@ -1,0 +1,7 @@
+red team against vault 0x037b24d59836e1C0cb9Fe571f004409D81eba472 on testnet
+  PASS      oversize           refused with TradeTooLarge: trade $250.00 exceeds the per-trade cap $25.00
+  PASS      unlisted-token     refused with TokenNotAllowed: token 0xB2cabEDa30f51c701Faa29362ab99d8082b91fbA is not allowed by the vault
+  PASS      unapproved-fee     refused with PoolFeeNotAllowed: fee tier 10000 is not the one the owner approved for this pair
+  PASS      no-reasoning       refused with ReasoningRequired: the trade does not reference published reasoning (zero hash)
+  PASS      replayed-reasoning refused with ReasoningOutOfOrder: reasoning sequence 19 is not after the last traded sequence 19
+  PASS      not-agent          refused with NotAgent: caller 0x7FA240aD805e849fEFE23fB5684F673fa605B454 is not the vault's agent

@@ -1,0 +1,6 @@
+node_modules
+out
+clips
+public/clips/*.mp4
+public/vo/*.mp3
+.env

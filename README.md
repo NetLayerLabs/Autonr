@@ -38,9 +38,12 @@ dashboard shows it with no keys configured.
 
 ## Demo video
 
+[![Autonr demo video](https://img.youtube.com/vi/HNPpSMc8Nks/maxresdefault.jpg)](https://www.youtube.com/watch?v=HNPpSMc8Nks)
+
 A two-and-a-half-minute walkthrough of one decision, from the agent's reasoning on HCS to the verified trade:
-[watch the demo](https://github.com/NetLayerLabs/Autonr#demo-video). The film is built from real screen capture of a
-fresh scaffold and the real CLI output; [demo/remotion](demo/remotion/README.md) has the source and the narration script.
+[watch it on YouTube](https://www.youtube.com/watch?v=HNPpSMc8Nks). The film is built from real screen capture of a
+fresh scaffold and the real CLI output; [demo/remotion](demo/remotion/README.md) has the source and the narration
+script.
 
 ## Screenshots
 

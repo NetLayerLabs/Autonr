@@ -34,11 +34,11 @@ export function QueryBoundary<T>({ query, children, skeletonLines = 3 }: QueryBo
 }
 
 export const ErrorNotice = ({ message, onRetry }: { message: string; onRetry?: () => void }) => (
-  <div role="alert" className="flex items-start gap-2 rounded-box border border-error/40 bg-error/10 p-3 text-sm">
-    <ExclamationTriangleIcon className="mt-0.5 h-4 w-4 shrink-0 text-error" aria-hidden />
+  <div role="alert" className="tone-rose flex items-start gap-2 rounded-xl p-3 text-sm">
+    <ExclamationTriangleIcon className="mt-0.5 h-4 w-4 shrink-0" aria-hidden />
     <p className="m-0 min-w-0 grow break-words">{message}</p>
     {onRetry && (
-      <button type="button" className="btn btn-xs" onClick={onRetry}>
+      <button type="button" className="btn btn-xs text-white" onClick={onRetry}>
         Retry
       </button>
     )}

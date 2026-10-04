@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -42,9 +42,7 @@ const HeaderMenuLinks = () => {
             <Link
               href={href}
               aria-current={isActive ? "page" : undefined}
-              className={`${
-                isActive ? "bg-primary/10 text-primary font-semibold" : "hover:bg-primary/5"
-              } py-1.5 px-3 text-sm rounded-full gap-2 grid grid-flow-col transition-colors whitespace-nowrap`}
+              className={`nav-link ${isActive ? "liquid-glass" : ""}`}
             >
               {icon}
               <span>{label}</span>
@@ -64,37 +62,49 @@ export const Header = () => {
   const closeBurgerMenu = () => burgerMenuRef.current?.removeAttribute("open");
   useOutsideClick(burgerMenuRef, closeBurgerMenu);
 
+  // The bar is transparent over the page top and frosts once content scrolls under it.
+  const [scrolled, setScrolled] = useState(false);
+  useEffect(() => {
+    const update = () => setScrolled(window.scrollY > 8);
+    update();
+    window.addEventListener("scroll", update, { passive: true });
+    return () => window.removeEventListener("scroll", update);
+  }, []);
+
   return (
-    <div className="sticky xl:static top-0 navbar bg-base-100 min-h-0 shrink-0 justify-between gap-2 z-20 shadow-sm border-b border-base-300 px-0 sm:px-2">
+    <div
+      className={`site-nav sticky top-0 navbar min-h-0 shrink-0 justify-between gap-2 z-20 px-2 py-3 sm:px-4 ${
+        scrolled ? "is-scrolled" : ""
+      }`}
+    >
       <div className="navbar-start w-auto">
         <details className="dropdown" ref={burgerMenuRef}>
-          <summary className="ml-1 btn btn-ghost xl:hidden hover:bg-transparent" aria-label="Open navigation">
-            <Bars3Icon className="h-1/2" />
+          <summary
+            className="btn btn-ghost btn-sm h-10 min-h-10 w-10 p-0 xl:hidden hover:bg-transparent"
+            aria-label="Open navigation"
+          >
+            <Bars3Icon className="h-5 w-5" />
           </summary>
-          <div className="dropdown-content mt-3 flex w-72 flex-col gap-2 rounded-box bg-base-100 p-2 shadow-sm">
+          <div className="nav-sheet dropdown-content mt-3 flex w-72 flex-col gap-2 p-2.5">
             <ProofSearch className="md:hidden" onNavigate={closeBurgerMenu} />
-            <ul className="menu menu-compact w-full p-0" onClick={closeBurgerMenu}>
+            <ul className="menu menu-compact w-full gap-0.5 p-0" onClick={closeBurgerMenu}>
               <HeaderMenuLinks />
             </ul>
           </div>
         </details>
-        <Link href="/" className="hidden sm:flex items-center gap-3 ml-2 xl:ml-4 mr-4 shrink-0">
-          <div className="flex relative w-9 h-9">
-            <Image alt="Hedera icon" className="cursor-pointer dark:hidden" fill src="/Hedera-Icon-Dark.svg" />
-            <Image alt="Hedera icon" className="cursor-pointer hidden dark:block" fill src="/Hedera-Icon-White.svg" />
-          </div>
-          <div className="flex flex-col">
-            <span className="font-bold leading-tight text-base">Autonr</span>
-            <span className="text-[10px] tracking-wider uppercase text-base-content/60 font-medium">
-              Built on Hedera
-            </span>
-          </div>
+        <Link
+          href="/"
+          aria-label="Autonr home"
+          className="flex items-center gap-2.5 ml-1 xl:ml-2 mr-2 sm:mr-6 shrink-0"
+        >
+          <Image alt="" src="/autonr-mark.svg" width={29} height={28} priority className="h-7 w-auto" />
+          <Image alt="Autonr" src="/autonr-word.png" width={78} height={18} priority className="h-[18px] w-auto" />
         </Link>
-        <ul className="hidden xl:flex xl:flex-nowrap menu menu-horizontal px-1 gap-1">
+        <ul className="hidden xl:flex xl:flex-nowrap items-center gap-1 m-0 p-0 list-none">
           <HeaderMenuLinks />
         </ul>
       </div>
-      <div className="navbar-end grow gap-3 mr-4">
+      <div className="navbar-end grow gap-3">
         <ProofSearch className="hidden md:block xl:hidden 2xl:block w-full max-w-72" />
         <RainbowKitCustomConnectButton />
       </div>

@@ -16,13 +16,13 @@ const HEDERA_CHAIN_IDS: Set<number> = new Set([chains.hedera.id, chains.hederaTe
 
 export const NETWORKS_EXTRA_DATA: Record<string, ChainAttributes> = {
   [chains.mainnet.id]: {
-    color: "#ff8b9e",
+    color: "#a6a6a6",
   },
   [chains.hedera.id]: {
-    color: "#8259EF",
+    color: "#a6a6a6",
   },
   [chains.hederaTestnet.id]: {
-    color: ["#8259EF", "#A98AFF"],
+    color: "#a6a6a6",
   },
 };
 

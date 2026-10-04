@@ -25,7 +25,6 @@ export const AgentPanel = () => {
           ? "The Autonr reference deployment on testnet, shown read-only until you configure your own."
           : "Read from packages/agent/.env on the server."
       }
-      className="shadow-lg"
     >
       <QueryBoundary query={health} skeletonLines={6}>
         {data => (

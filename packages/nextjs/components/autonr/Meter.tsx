@@ -10,11 +10,11 @@ type MeterProps = {
 
 type Severity = "ok" | "near" | "over";
 
-// Fill and track come from the same hue so the bar's state reads across its whole length.
+// Within the limit reads as enforced (the accent), near it neutral, over it rose; the track stays quiet.
 const TONES: Record<Severity, { fill: string; track: string }> = {
-  ok: { fill: "fill-primary", track: "fill-primary/15" },
-  near: { fill: "fill-warning", track: "fill-warning/25" },
-  over: { fill: "fill-error", track: "fill-error/20" },
+  ok: { fill: "fill-success", track: "fill-white/[0.06]" },
+  near: { fill: "fill-warning", track: "fill-white/[0.06]" },
+  over: { fill: "fill-error", track: "fill-error/15" },
 };
 
 const NEAR_LIMIT = 0.8;
@@ -30,10 +30,10 @@ export const Meter = ({ label, value, limit, scaleMax = limit, valueText, limitT
   return (
     <div className="flex flex-col gap-1.5">
       <div className="flex items-baseline justify-between gap-2 text-xs">
-        <span className="text-base-content/70">{label}</span>
-        <span className="tabular-nums">
-          <span className="font-semibold">{valueText}</span>
-          <span className="text-base-content/60"> / {limitText}</span>
+        <span className="text-[#a6a6a6]">{label}</span>
+        <span className="font-mono tabular-nums">
+          <span className="font-medium text-white">{valueText}</span>
+          <span className="text-[#7a7a7a]"> / {limitText}</span>
         </span>
       </div>
       <svg
@@ -44,13 +44,13 @@ export const Meter = ({ label, value, limit, scaleMax = limit, valueText, limitT
         aria-valuenow={value}
         aria-valuetext={`${valueText} of ${limitText}`}
         width="100%"
-        height="8"
+        height="6"
         className="block overflow-visible"
       >
-        <rect width="100%" height="8" rx="4" className={tone.track} />
-        {value > 0 && <rect width={`${Math.max(fill, 1.5)}%`} height="8" rx="4" className={tone.fill} />}
+        <rect width="100%" height="6" rx="3" className={tone.track} />
+        {value > 0 && <rect width={`${Math.max(fill, 1.5)}%`} height="6" rx="3" className={tone.fill} />}
         {marker < 100 && (
-          <line x1={`${marker}%`} x2={`${marker}%`} y1="-3" y2="11" strokeWidth="2" className="stroke-base-content" />
+          <line x1={`${marker}%`} x2={`${marker}%`} y1="-3" y2="9" strokeWidth="1.5" className="stroke-white/70" />
         )}
       </svg>
     </div>

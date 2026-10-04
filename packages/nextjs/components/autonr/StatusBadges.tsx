@@ -1,43 +1,30 @@
-import {
-  ArrowsRightLeftIcon,
-  CheckCircleIcon,
-  ExclamationTriangleIcon,
-  MinusCircleIcon,
-  NoSymbolIcon,
-  PauseCircleIcon,
-  QuestionMarkCircleIcon,
-  XCircleIcon,
-} from "@heroicons/react/16/solid";
 import type { CheckStatus, DecisionKind, TradeProof } from "~~/lib/api/types";
 
-type BadgeStyle = { className: string; Icon: typeof CheckCircleIcon; label: string };
+type BadgeStyle = { className: string; label: string };
 
-// Every badge pairs its color with an icon and a word, so state never depends on color alone.
+// Every badge carries a word as well as a tone, so state never depends on color alone.
 const DECISION_STYLES: Record<DecisionKind | "invalid", BadgeStyle> = {
-  trade: { className: "badge-primary", Icon: ArrowsRightLeftIcon, label: "trade" },
-  hold: { className: "badge-ghost", Icon: PauseCircleIcon, label: "hold" },
-  rejected: { className: "badge-error", Icon: NoSymbolIcon, label: "rejected" },
-  invalid: { className: "badge-warning", Icon: QuestionMarkCircleIcon, label: "invalid" },
+  trade: { className: "badge-neutral", label: "trade" },
+  hold: { className: "badge-ghost", label: "hold" },
+  rejected: { className: "badge-error", label: "rejected" },
+  invalid: { className: "badge-warning", label: "invalid" },
 };
 
 const CHECK_STYLES: Record<CheckStatus, BadgeStyle> = {
-  pass: { className: "badge-success", Icon: CheckCircleIcon, label: "pass" },
-  fail: { className: "badge-error", Icon: XCircleIcon, label: "fail" },
-  warn: { className: "badge-warning", Icon: ExclamationTriangleIcon, label: "warn" },
-  skip: { className: "badge-ghost", Icon: MinusCircleIcon, label: "skip" },
+  pass: { className: "badge-success", label: "pass" },
+  fail: { className: "badge-error", label: "fail" },
+  warn: { className: "badge-warning", label: "warn" },
+  skip: { className: "badge-ghost", label: "skip" },
 };
 
 const VERDICT_STYLES: Record<TradeProof["verdict"], BadgeStyle> = {
-  verified: { className: "badge-success", Icon: CheckCircleIcon, label: "verified" },
-  failed: { className: "badge-error", Icon: XCircleIcon, label: "failed" },
-  incomplete: { className: "badge-warning", Icon: ExclamationTriangleIcon, label: "incomplete" },
+  verified: { className: "badge-success", label: "verified" },
+  failed: { className: "badge-error", label: "failed" },
+  incomplete: { className: "badge-warning", label: "incomplete" },
 };
 
-const Badge = ({ style: { className, Icon, label } }: { style: BadgeStyle }) => (
-  <span className={`badge badge-sm gap-1 whitespace-nowrap font-medium ${className}`}>
-    <Icon className="h-3.5 w-3.5" aria-hidden />
-    {label}
-  </span>
+const Badge = ({ style: { className, label } }: { style: BadgeStyle }) => (
+  <span className={`badge badge-sm ${className}`}>{label}</span>
 );
 
 export const DecisionKindBadge = ({ kind }: { kind: DecisionKind | "invalid" }) => (

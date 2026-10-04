@@ -1,4 +1,5 @@
 import { ProofView } from "./_components/ProofView";
+import { PageTitle } from "~~/components/autonr/PageTitle";
 import { Panel } from "~~/components/autonr/Panel";
 import { TX_FORMAT_HINT, parseTx } from "~~/lib/server/proof";
 import { getMetadata } from "~~/utils/scaffold-hbar/getMetadata";
@@ -18,7 +19,13 @@ export default async function ProofPage({ params, searchParams }: ProofPageProps
   const { network } = await searchParams;
 
   return (
-    <div className="mx-auto flex w-full max-w-7xl flex-col gap-4 px-4 py-6 sm:px-6">
+    <div className="page">
+      <PageTitle title="Trade proof">
+        <p className="m-0">
+          An independent re-check of one trade from public Hedera Mirror Node data: the decision the agent published,
+          the prices the vault saw and the swap it made.
+        </p>
+      </PageTitle>
       {tx ? (
         <ProofView tx={tx} network={typeof network === "string" ? network : null} />
       ) : (

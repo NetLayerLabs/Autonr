@@ -53,9 +53,7 @@ const AuditReportView = ({ report }: { report: AuditReport }) => {
     <div className="flex flex-col gap-5">
       <div
         role="status"
-        className={`flex items-start gap-2 rounded-box border p-3 text-sm ${
-          report.ok ? "border-success/50 bg-success/10" : "border-error/50 bg-error/10"
-        }`}
+        className={`flex items-start gap-2 rounded-xl p-3 text-sm text-white ${report.ok ? "tone-accent" : "tone-rose"}`}
       >
         {report.ok ? (
           <CheckCircleIcon className="mt-0.5 h-5 w-5 shrink-0 text-success" aria-hidden />
@@ -74,9 +72,9 @@ const AuditReportView = ({ report }: { report: AuditReport }) => {
 
       <dl className="m-0 grid grid-cols-2 gap-3 sm:grid-cols-4 lg:grid-cols-7">
         {tiles.map(tile => (
-          <div key={tile.label} className="rounded-box bg-base-200 px-3 py-2">
-            <dt className="text-xs text-base-content/70">{tile.label}</dt>
-            <dd className="m-0 text-xl font-semibold">{tile.value.toLocaleString("en-US")}</dd>
+          <div key={tile.label} className="code-block px-3.5 py-3">
+            <dt className="data-label">{tile.label}</dt>
+            <dd className="big-number m-0 mt-1 text-[24px]">{tile.value.toLocaleString("en-US")}</dd>
           </div>
         ))}
       </dl>

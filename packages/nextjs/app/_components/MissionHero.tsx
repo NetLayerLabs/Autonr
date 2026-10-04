@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import { PageTitle } from "~~/components/autonr/PageTitle";
 
 const FLOW = [
   { step: "Decide", detail: "The strategy picks trade or hold." },
@@ -11,28 +12,32 @@ const FLOW = [
 
 /** Pitch and flow on the left, the live deployment card (passed in) on the right. */
 export const MissionHero = ({ aside }: { aside: ReactNode }) => (
-  <div className="hedera-gradient dark:bg-none dark:bg-hedera-charcoal w-full px-4 sm:px-6 pt-8 pb-14">
-    <div className="mx-auto grid max-w-7xl items-start gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,26rem)]">
-      <div className="min-w-0 text-white">
-        <p className="m-0 text-xs font-medium uppercase tracking-widest">Autonr on Hedera</p>
-        <h1 className="m-0 mt-2 text-3xl font-bold leading-tight sm:text-4xl">Let an AI trade without trusting it.</h1>
-        <p className="m-0 mt-3 max-w-2xl text-sm leading-relaxed sm:text-base">
+  <div className="grid items-start gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,27rem)] lg:gap-12">
+    <div className="min-w-0">
+      <PageTitle title="Mission control" eyebrow={<p className="tagline">Autonomy, enforced.</p>}>
+        <p className="hero-subtitle m-0 text-[20px] font-medium leading-snug tracking-[-0.01em] sm:text-[22px]">
+          Let an AI trade without trusting it.
+        </p>
+        <p className="m-0 mt-4">
           The agent only decides whether to trade. Two independent oracle networks decide at what price: Chainlink
           prices each leg and Supra must agree. The vault derives the minimum output itself, swaps on SaucerSwap V2 and
           only accepts trades whose reasoning was published to HCS first.
         </p>
-        <ol className="m-0 mt-5 grid list-none grid-cols-2 gap-2 p-0 sm:grid-cols-3">
-          {FLOW.map(({ step, detail }, index) => (
-            <li key={step} className="rounded-box bg-black/20 px-3 py-2 dark:bg-white/5">
-              <p className="m-0 text-xs font-semibold">
-                <span className="tabular-nums">{index + 1}.</span> {step}
-              </p>
-              <p className="m-0 mt-0.5 text-xs leading-snug">{detail}</p>
-            </li>
-          ))}
-        </ol>
-      </div>
-      {aside}
+      </PageTitle>
+      <ol className="m-0 mt-10 grid list-none grid-cols-1 gap-3 p-0 min-[480px]:grid-cols-2 sm:grid-cols-3">
+        {FLOW.map(({ step, detail }, index) => (
+          <li key={step} className="surface-card px-4 py-3.5">
+            <p className="m-0 flex items-baseline gap-2.5 text-[14px] font-semibold text-white">
+              <span className="font-mono text-[11.5px] font-medium text-[#7a7a7a]">
+                {String(index + 1).padStart(2, "0")}
+              </span>
+              {step}
+            </p>
+            <p className="m-0 mt-1 text-[13px] leading-snug">{detail}</p>
+          </li>
+        ))}
+      </ol>
     </div>
+    {aside}
   </div>
 );

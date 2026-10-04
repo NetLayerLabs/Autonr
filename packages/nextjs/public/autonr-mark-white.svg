@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="226 236 802 783">
+  <!-- Autonr mark: two gate brackets holding a bar. Traced from autonr-logo.png and made symmetric. -->
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="0.35" y2="1">
+      <stop offset="0" stop-color="#6A40FB"/>
+      <stop offset="1" stop-color="#4A18FD"/>
+    </linearGradient>
+    <linearGradient id="facetL" x1="1" y1="0" x2="0.35" y2="0.75">
+      <stop offset="0" stop-color="#FFFFFF" stop-opacity=".16"/>
+      <stop offset="1" stop-color="#FFFFFF" stop-opacity=".05"/>
+    </linearGradient>
+    <linearGradient id="facetR" x1="0" y1="0" x2="0.65" y2="0.75">
+      <stop offset="0" stop-color="#FFFFFF" stop-opacity=".16"/>
+      <stop offset="1" stop-color="#FFFFFF" stop-opacity=".05"/>
+    </linearGradient>
+    <linearGradient id="bar" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#7B52FB"/>
+      <stop offset="1" stop-color="#4511FB"/>
+    </linearGradient>
+  </defs>
+  <g stroke-linejoin="round">
+    <!-- left bracket -->
+    <path d="M448 256 V462.5 L387 498.5 V756.5 L448 792.5 V999 L246 877 V378 Z" fill="#FFFFFF" stroke="#FFFFFF" stroke-width="14"/>
+        <!-- right bracket -->
+    <path d="M806 256 V462.5 L867 498.5 V756.5 L806 792.5 V999 L1008 877 V378 Z" fill="#FFFFFF" stroke="#FFFFFF" stroke-width="14"/>
+        <!-- the bar -->
+    <rect x="448" y="572" width="359" height="110" rx="9" fill="#FFFFFF"/>
+  </g>
+</svg>

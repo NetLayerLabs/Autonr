@@ -7,16 +7,14 @@ import { VaultPanel } from "./_components/VaultPanel";
 
 export default function MissionControl() {
   return (
-    <>
+    <div className="page">
       <MissionHero aside={<AgentPanel />} />
-      <div className="mx-auto -mt-8 flex w-full max-w-7xl flex-col gap-4 px-4 pb-12 sm:px-6">
-        <div className="grid items-start gap-4 lg:grid-cols-2">
-          <OracleConsensusPanel />
-          <VaultPanel />
-        </div>
-        <DecisionLog />
-        <TradesTable />
+      <div className="grid items-start gap-6 lg:grid-cols-2">
+        <OracleConsensusPanel />
+        <VaultPanel />
       </div>
-    </>
+      <DecisionLog />
+      <TradesTable />
+    </div>
   );
 }

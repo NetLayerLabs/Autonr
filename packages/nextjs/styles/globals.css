@@ -1,106 +1,163 @@
-/* CSS only honours @import before any other rule, so the font import must stay above the @font-face block. */
-@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap");
+/* CSS only honours @import before any other rule, so the font import must stay first. */
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500;600&display=swap");
 @import "tailwindcss";
 
-/* Styrene A Web – Hedera brand font (fallback: Montserrat per brand.hedera.com) */
-@font-face {
-  font-family: "Styrene A Web";
-  src:
-    url("https://db.onlinewebfonts.com/t/819f612977ba7ba86c14b739b908c73f.woff2") format("woff2"),
-    url("https://db.onlinewebfonts.com/t/819f612977ba7ba86c14b739b908c73f.woff") format("woff");
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-
+/* The dashboard is dark only: the dark variant applies everywhere data-theme is set. */
 @custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
 
 @theme {
   --shadow-center: 0 0 12px -2px rgb(0 0 0 / 0.05);
   --animate-pulse-fast: pulse 1s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-  --font-sans: "Styrene A Web", "Montserrat", ui-sans-serif, system-ui, sans-serif;
-  --color-hedera-ultraviolet: #8259ef;
-  --color-hedera-azure: #0031ff;
-  --color-hedera-charcoal: #11151d;
-  --color-hedera-indigo: #00156e;
-  --color-hedera-cobalt: #2d84eb;
-  --color-hedera-violet: #4f46e5;
-  --color-hedera-smoke: #9b9b9d;
+  --font-sans: "Inter", "Helvetica Neue", Arial, system-ui, sans-serif;
+  --font-serif: "Instrument Serif", Georgia, serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+  --ease-veir: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 @plugin "daisyui" {
   themes:
-    light,
-    dark --prefersdark;
+    dark --default --prefersdark,
+    light;
+}
+
+/* Both themes carry the same values, so no route can render light even if something sets data-theme="light". */
+@plugin "daisyui/theme" {
+  name: "dark";
+  color-scheme: dark;
+
+  --color-primary: #ffffff;
+  --color-primary-content: #000000;
+  --color-secondary: #1f1f1f;
+  --color-secondary-content: #ffffff;
+  --color-accent: #262626;
+  --color-accent-content: #ffffff;
+  --color-neutral: #1f1f1f;
+  --color-neutral-content: #ffffff;
+  --color-base-100: #0d0d0d;
+  --color-base-200: #000000;
+  --color-base-300: #1f1f1f;
+  --color-base-content: #ffffff;
+  --color-info: #a6a6a6;
+  --color-info-content: #000000;
+  --color-success: hsl(250 38% 78%);
+  --color-success-content: #000000;
+  --color-warning: hsl(0 0% 82%);
+  --color-warning-content: #000000;
+  --color-error: hsl(0 30% 76%);
+  --color-error-content: #000000;
+
+  --radius-selector: 999px;
+  --radius-field: 999px;
+  --radius-box: 16px;
+  --border: 1px;
+  --depth: 0;
+  --noise: 0;
+  --tt-tailw: 6px;
 }
 
 @plugin "daisyui/theme" {
   name: "light";
+  color-scheme: dark;
 
-  --color-primary: #4f46e5;
-  --color-primary-content: #ffffff;
-  --color-secondary: #8259ef;
+  --color-primary: #ffffff;
+  --color-primary-content: #000000;
+  --color-secondary: #1f1f1f;
   --color-secondary-content: #ffffff;
-  --color-accent: #2d84eb;
+  --color-accent: #262626;
   --color-accent-content: #ffffff;
-  --color-neutral: #11151d;
+  --color-neutral: #1f1f1f;
   --color-neutral-content: #ffffff;
-  --color-base-100: #ffffff;
-  --color-base-200: #f7f7f8;
-  --color-base-300: #e8e8ec;
-  --color-base-content: #11151d;
-  --color-info: #2d84eb;
-  --color-success: #34eeb6;
-  --color-warning: #ffcf72;
-  --color-error: #ff8863;
+  --color-base-100: #0d0d0d;
+  --color-base-200: #000000;
+  --color-base-300: #1f1f1f;
+  --color-base-content: #ffffff;
+  --color-info: #a6a6a6;
+  --color-info-content: #000000;
+  --color-success: hsl(250 38% 78%);
+  --color-success-content: #000000;
+  --color-warning: hsl(0 0% 82%);
+  --color-warning-content: #000000;
+  --color-error: hsl(0 30% 76%);
+  --color-error-content: #000000;
 
-  --radius-field: 9999rem;
-  --radius-box: 1rem;
+  --radius-selector: 999px;
+  --radius-field: 999px;
+  --radius-box: 16px;
+  --border: 1px;
+  --depth: 0;
+  --noise: 0;
   --tt-tailw: 6px;
 }
 
-@plugin "daisyui/theme" {
-  name: "dark";
+:root {
+  --veir-sans: "Inter", "Helvetica Neue", Arial, system-ui, sans-serif;
+  --veir-serif: "Instrument Serif", Georgia, serif;
+  --veir-mono: "JetBrains Mono", ui-monospace, monospace;
+  --veir-ease: cubic-bezier(0.22, 1, 0.36, 1);
 
-  --color-primary: #8259ef;
-  --color-primary-content: #ffffff;
-  --color-secondary: #4f46e5;
-  --color-secondary-content: #ffffff;
-  --color-accent: #2d84eb;
-  --color-accent-content: #ffffff;
-  --color-neutral: #ffffff;
-  --color-neutral-content: #11151d;
-  --color-base-100: #181c27;
-  --color-base-200: #11151d;
-  --color-base-300: #0a0d14;
-  --color-base-content: #f0f0f2;
-  --color-info: #2d84eb;
-  --color-success: #34eeb6;
-  --color-warning: #ffcf72;
-  --color-error: #ff8863;
+  --veir-card: linear-gradient(180deg, hsl(0 0% 5.5%), hsl(0 0% 4%));
+  --veir-line: hsl(0 0% 20% / 0.5);
+  --veir-rule: hsl(0 0% 20% / 0.3);
+  --veir-kv-rule: hsl(0 0% 20% / 0.45);
+  --veir-float: 0 30px 80px rgba(0, 0, 0, 0.45);
 
-  --radius-field: 9999rem;
-  --radius-box: 1rem;
+  --veir-heading: #ffffff;
+  --veir-body: #a6a6a6;
+  --veir-label: #7a7a7a;
+  --veir-disabled: #474747;
+  --veir-subtitle: #f1f3f5;
 
-  --tt-tailw: 6px;
-  --tt-bg: var(--color-primary);
+  --veir-accent: hsl(250 38% 78%);
+  --veir-accent-bg: hsl(250 35% 55% / 0.16);
+  --veir-accent-ring: hsl(250 40% 72% / 0.4);
+  --veir-accent-dot: hsl(250 45% 74%);
+  --veir-rose: hsl(0 30% 76%);
+  --veir-rose-bg: hsl(0 26% 70% / 0.12);
+  --veir-rose-ring: hsl(0 26% 70% / 0.28);
+  --veir-neutral: hsl(0 0% 82%);
+  --veir-neutral-bg: rgba(255, 255, 255, 0.06);
+  --veir-neutral-ring: rgba(255, 255, 255, 0.14);
 }
 
-/*
-  The default border color has changed to `currentColor` in Tailwind CSS v4,
-  so we've added these compatibility styles to make sure everything still
-  looks the same as it did with Tailwind CSS v3.
+/* The scaffold-hbar-ui packages (faucet button, debug contracts) theme themselves through these variables. */
+:root[data-theme],
+:root[data-theme] * {
+  /* The packages draw primary-content as text on dark surfaces, so it stays white and primary stays a muted grey. */
+  --color-sui-primary: #262626;
+  --color-sui-primary-subtle: #1f1f1f;
+  --color-sui-primary-neutral: #141414;
+  --color-sui-primary-content: #ffffff;
+  --color-sui-accent: #a6a6a6;
+  --color-sui-base-content: #ffffff;
+  --color-sui-base-100: #0d0d0d;
+  --color-sui-neutral: #ffffff;
+  --color-sui-neutral-content: #000000;
+  --color-sui-warning: hsl(0 0% 82%);
+  --color-sui-error: hsl(0 30% 76%);
+  --color-sui-input-text: #ffffff;
+  --color-sui-input-placeholder: #7a7a7a;
+  --color-sui-input-border: #2e2e2e;
+  --color-sui-input-border-error: hsl(0 30% 76%);
+  --color-sui-input-border-disabled: #262626;
+  --color-sui-input-background: rgba(255, 255, 255, 0.04);
+  --color-sui-skeleton-base: #1f1f1f;
+  --color-sui-skeleton-highlight: #262626;
+  --font-sui-family: var(--veir-sans);
+}
 
-  If we ever want to remove these styles, we need to add an explicit border
-  color utility to any element that depends on these defaults.
-*/
 @layer base {
   *,
   ::after,
   ::before,
   ::backdrop,
   ::file-selector-button {
-    border-color: var(--color-gray-200, currentColor);
+    border-color: var(--veir-line);
+  }
+
+  :root,
+  [data-theme] {
+    background: #000;
+    color-scheme: dark;
   }
 
   p {
@@ -109,7 +166,16 @@
 
   body {
     min-height: 100vh;
-    font-family: "Styrene A Web", "Montserrat", ui-sans-serif, system-ui, sans-serif;
+    background: #000;
+    color: var(--veir-body);
+    font-family: var(--veir-sans);
+    font-size: 15px;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-feature-settings:
+      "kern" 1,
+      "calt" 1;
   }
 
   h1,
@@ -117,38 +183,574 @@
   h3,
   h4 {
     margin-bottom: 0.5rem;
-    line-height: 1;
+    line-height: 1.1;
+    color: var(--veir-heading);
+    letter-spacing: -0.01em;
+  }
+
+  /* Values read white against muted labels, as in Veir's key/value rows. */
+  dd,
+  td,
+  strong,
+  b,
+  legend {
+    color: var(--veir-heading);
+  }
+
+  code,
+  kbd,
+  pre,
+  samp {
+    font-family: var(--veir-mono);
+    font-variant-numeric: tabular-nums;
+  }
+
+  ::selection {
+    background: #fff;
+    color: #000;
   }
 }
 
-:root,
-[data-theme] {
-  background: var(--color-base-200);
+/* Custom classes sit in the components layer so Tailwind utilities can still override them. */
+@layer components {
+  /* ------------------------------------------------------------------ type */
+
+  .serif-accent {
+    font-family: var(--veir-serif);
+    font-style: italic;
+    font-weight: 400;
+    letter-spacing: -0.02em;
+  }
+
+  .page-title {
+    margin: 0;
+    color: #fff;
+    font-family: var(--veir-sans);
+    font-size: 40px;
+    font-weight: 500;
+    line-height: 1.04;
+    letter-spacing: -1.6px;
+  }
+
+  @media (min-width: 1024px) {
+    .page-title {
+      font-size: 60px;
+    }
+  }
+
+  .page-sub {
+    margin: 18px 0 0;
+    max-width: 46rem;
+    color: var(--veir-body);
+    font-size: 16px;
+    line-height: 1.6;
+  }
+
+  .hero-subtitle {
+    color: var(--veir-subtitle);
+  }
+
+  .eyebrow {
+    margin: 0;
+    color: var(--veir-body);
+    font-family: var(--veir-sans);
+    font-size: 11.5px;
+    font-weight: 500;
+    letter-spacing: 2.6px;
+    text-transform: uppercase;
+  }
+
+  .tagline {
+    margin: 0;
+    color: var(--veir-label);
+    font-family: var(--veir-mono);
+    font-size: 11.5px;
+    font-weight: 500;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+  }
+
+  .data-label {
+    color: var(--veir-label);
+    font-family: var(--veir-sans);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+  }
+
+  .big-number {
+    color: #fff;
+    font-family: var(--veir-mono);
+    font-weight: 500;
+    letter-spacing: -0.03em;
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* ------------------------------------------------------------------ surfaces */
+
+  .page {
+    margin-inline: auto;
+    display: flex;
+    width: 100%;
+    max-width: 80rem;
+    flex-direction: column;
+    gap: 48px;
+    padding: 56px 16px 64px;
+  }
+
+  @media (min-width: 640px) {
+    .page {
+      padding-inline: 24px;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .page {
+      padding-top: 64px;
+      gap: 56px;
+    }
+  }
+
+  .surface-card {
+    border: 1px solid var(--veir-line);
+    border-radius: 16px;
+    background: var(--veir-card);
+  }
+
+  .surface-rule {
+    border-color: var(--veir-rule);
+  }
+
+  a.surface-card,
+  .surface-card.is-link {
+    transition:
+      transform 0.25s var(--veir-ease),
+      border-color 0.2s ease;
+  }
+
+  a.surface-card:hover,
+  .surface-card.is-link:hover {
+    transform: translateY(-3px);
+    border-color: hsl(0 0% 30% / 0.6);
+  }
+
+  .liquid-glass {
+    position: relative;
+    background: rgba(255, 255, 255, 0.01);
+    box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.1);
+  }
+
+  .liquid-glass::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1.4px;
+    background: linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.45) 0%,
+      rgba(255, 255, 255, 0.15) 20%,
+      rgba(255, 255, 255, 0) 40%,
+      rgba(255, 255, 255, 0) 60%,
+      rgba(255, 255, 255, 0.15) 80%,
+      rgba(255, 255, 255, 0.45) 100%
+    );
+    -webkit-mask:
+      linear-gradient(#fff 0 0) content-box,
+      linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+  }
+
+  .code-block {
+    border: 1px solid var(--veir-kv-rule);
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.035);
+    color: #fff;
+    font-family: var(--veir-mono);
+    font-size: 12.5px;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .tone-accent {
+    color: var(--veir-accent);
+    background: var(--veir-accent-bg);
+    box-shadow: inset 0 0 0 1px var(--veir-accent-ring);
+  }
+
+  .tone-rose {
+    color: var(--veir-rose);
+    background: var(--veir-rose-bg);
+    box-shadow: inset 0 0 0 1px var(--veir-rose-ring);
+  }
+
+  .tone-neutral {
+    color: var(--veir-neutral);
+    background: var(--veir-neutral-bg);
+    box-shadow: inset 0 0 0 1px var(--veir-neutral-ring);
+  }
+
+  .status-dot {
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    border-radius: 999px;
+    background: var(--veir-accent-dot);
+    box-shadow: 0 0 10px hsl(250 45% 74% / 0.6);
+  }
+
+  /* ------------------------------------------------------------------ nav */
+
+  .site-nav {
+    background: transparent;
+    transition:
+      background-color 0.3s ease,
+      backdrop-filter 0.3s ease;
+  }
+
+  .site-nav.is-scrolled {
+    background: rgba(0, 0, 0, 0.55);
+    -webkit-backdrop-filter: blur(14px);
+    backdrop-filter: blur(14px);
+  }
+
+  .nav-link {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    border-radius: 999px;
+    padding: 7px 14px;
+    color: var(--veir-body);
+    font-size: 14px;
+    white-space: nowrap;
+    transition: color 0.2s ease;
+  }
+
+  .nav-link:hover {
+    color: #fff;
+  }
+
+  .nav-link[aria-current="page"] {
+    color: #fff;
+  }
+
+  .nav-sheet {
+    border-radius: 16px;
+    background: rgba(10, 10, 10, 0.85);
+    -webkit-backdrop-filter: blur(14px);
+    backdrop-filter: blur(14px);
+    box-shadow:
+      inset 0 1px 1px rgba(255, 255, 255, 0.1),
+      var(--veir-float);
+  }
 }
 
-.btn {
-  @apply shadow-md;
+/* Mono is for raw data only: addresses, hashes, amounts, prices, block numbers and commands. */
+.font-mono {
+  font-family: var(--veir-mono);
+  font-variant-numeric: tabular-nums;
 }
 
-.btn.btn-ghost {
-  @apply shadow-none;
+/* ------------------------------------------------------------------ daisyUI components */
+
+/*
+  daisyUI 5 nests its components in a layer inside `utilities`, so these overrides live in `utilities` too (which beats
+  that nested layer) and use :where() so Tailwind utility classes on the same element still win.
+*/
+@layer utilities {
+  :where(.link) {
+    color: hsl(0 0% 86%);
+    text-underline-offset: 3px;
+    transition: color 0.2s ease;
+  }
+
+  :where(.link:hover) {
+    color: #fff;
+  }
+
+  :where(.btn) {
+    position: relative;
+    height: 44px;
+    min-height: 44px;
+    padding-inline: 22px;
+    border: 0;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.01);
+    box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.1);
+    color: #fff;
+    font-family: var(--veir-sans);
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: -0.1px;
+    transition:
+      transform 0.18s ease,
+      background-color 0.18s ease,
+      opacity 0.18s ease;
+  }
+
+  :where(.btn:hover) {
+    background: rgba(255, 255, 255, 0.06);
+  }
+
+  /* Secondary buttons are liquid glass: the same rim ring as .liquid-glass. */
+  :where(.btn:not(.btn-primary, .btn-error, .btn-ghost, .btn-link))::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1.4px;
+    background: linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.45) 0%,
+      rgba(255, 255, 255, 0.15) 20%,
+      rgba(255, 255, 255, 0) 40%,
+      rgba(255, 255, 255, 0) 60%,
+      rgba(255, 255, 255, 0.15) 80%,
+      rgba(255, 255, 255, 0.45) 100%
+    );
+    -webkit-mask:
+      linear-gradient(#fff 0 0) content-box,
+      linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+  }
+
+  :where(.btn-sm) {
+    height: 32px;
+    min-height: 32px;
+    padding-inline: 14px;
+    font-size: 12.5px;
+  }
+
+  :where(.btn-xs) {
+    height: 26px;
+    min-height: 26px;
+    padding-inline: 11px;
+    font-size: 12px;
+  }
+
+  :where(.btn-primary),
+  :where(.btn-primary:hover) {
+    background: #fff;
+    color: #000;
+    box-shadow: none;
+  }
+
+  :where(.btn-primary:hover) {
+    transform: scale(1.03);
+  }
+
+  :where(.btn-primary:active) {
+    transform: scale(0.98);
+  }
+
+  :where(.btn-error) {
+    background: hsl(0 30% 76%);
+    color: #000;
+    box-shadow: none;
+  }
+
+  :where(.btn-error:hover) {
+    background: hsl(0 30% 82%);
+  }
+
+  :where(.btn-ghost) {
+    background: transparent;
+    box-shadow: none;
+  }
+
+  :where(.btn-ghost:hover) {
+    background: rgba(255, 255, 255, 0.06);
+  }
+
+  :where(.btn:disabled),
+  :where(.btn[disabled]),
+  :where(.btn-disabled) {
+    opacity: 0.38;
+    background: rgba(255, 255, 255, 0.01);
+    color: #fff;
+  }
+
+  :where(.btn-primary:disabled),
+  :where(.btn-primary[disabled]) {
+    background: #fff;
+    color: #000;
+    transform: none;
+  }
+
+  :where(.badge) {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    height: auto;
+    padding: 4px 10px;
+    border: 0;
+    border-radius: 999px;
+    color: var(--veir-neutral);
+    background: var(--veir-neutral-bg);
+    box-shadow: inset 0 0 0 1px var(--veir-neutral-ring);
+    font: 500 11.5px/1.2 var(--veir-sans);
+    letter-spacing: 0;
+    white-space: nowrap;
+  }
+
+  :where(.badge)::before {
+    content: "";
+    width: 6px;
+    height: 6px;
+    flex: none;
+    border-radius: 50%;
+    background: currentColor;
+    opacity: 0.9;
+  }
+
+  :where(.badge:has(> svg))::before {
+    display: none;
+  }
+
+  :where(.badge-xs) {
+    padding: 2px 8px;
+    font-size: 10.5px;
+  }
+
+  :where(.badge-success) {
+    color: var(--veir-accent);
+    background: var(--veir-accent-bg);
+    box-shadow: inset 0 0 0 1px var(--veir-accent-ring);
+  }
+
+  :where(.badge-error) {
+    color: var(--veir-rose);
+    background: var(--veir-rose-bg);
+    box-shadow: inset 0 0 0 1px var(--veir-rose-ring);
+  }
+
+  :where(.badge-neutral),
+  :where(.badge-warning),
+  :where(.badge-outline),
+  :where(.badge-primary),
+  :where(.badge-info) {
+    color: var(--veir-neutral);
+    background: var(--veir-neutral-bg);
+    box-shadow: inset 0 0 0 1px var(--veir-neutral-ring);
+  }
+
+  :where(.badge-ghost) {
+    color: var(--veir-body);
+    background: rgba(255, 255, 255, 0.03);
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+  }
+
+  :where(.input),
+  :where(.select),
+  :where(.textarea) {
+    border: 1px solid #2e2e2e;
+    background-color: rgba(255, 255, 255, 0.04);
+    color: #fff;
+    box-shadow: none;
+    transition: border-color 0.18s ease;
+  }
+
+  :where(.input:focus),
+  :where(.input:focus-within),
+  :where(.select:focus),
+  :where(.select:focus-within),
+  :where(.textarea:focus) {
+    border-color: rgba(255, 255, 255, 0.6);
+    outline: none;
+    box-shadow: none;
+  }
+
+  :where(.input-error),
+  :where(.input-error:focus),
+  :where(.input-error:focus-within) {
+    border-color: hsl(0 26% 70% / 0.6);
+  }
+
+  :where(.table) {
+    font-size: 13.5px;
+  }
+
+  :where(.table thead tr),
+  :where(.table thead th) {
+    height: 36px;
+    border-bottom: 1px solid hsl(0 0% 20% / 0.35);
+    background: rgba(255, 255, 255, 0.015);
+    color: hsl(0 0% 42%);
+    font-size: 11.5px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  :where(.table tbody tr) {
+    height: 56px;
+    border-bottom: 1px solid var(--veir-rule);
+    transition: background-color 0.15s ease;
+  }
+
+  :where(.table tbody tr:last-child) {
+    border-bottom: 0;
+  }
+
+  :where(.table tbody tr:hover) {
+    background: rgba(255, 255, 255, 0.035);
+  }
+
+  :where(.table tfoot tr) {
+    border-top: 1px solid var(--veir-rule);
+    color: var(--veir-label);
+  }
+
+  :where(.menu li > a:hover),
+  :where(.menu li > button:hover) {
+    background: rgba(255, 255, 255, 0.06);
+    color: #fff;
+  }
+
+  :where(.dropdown-content),
+  :where(.modal-box) {
+    box-shadow: var(--veir-float);
+  }
+
+  :where(.modal-box) {
+    border: 1px solid var(--veir-line);
+    background: var(--veir-card);
+  }
+
+  :where(.tooltip) {
+    --tt-bg: #1f1f1f;
+  }
+
+  :where(.tooltip > .tooltip-content),
+  :where(.tooltip[data-tip])::before {
+    color: #fff;
+    font-family: var(--veir-sans);
+    font-size: 12px;
+  }
+
+  :where(.skeleton) {
+    background-color: #1a1a1a;
+  }
 }
 
-.link {
-  text-underline-offset: 2px;
-}
+@media (prefers-reduced-motion: reduce) {
+  *,
+  ::before,
+  ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 
-.link:hover {
-  opacity: 80%;
-}
-
-.hedera-gradient {
-  background: linear-gradient(135deg, #8259ef 0%, #0031ff 100%);
-}
-
-.hedera-gradient-text {
-  background: linear-gradient(135deg, #8259ef 0%, #0031ff 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  .btn-primary:hover,
+  a.surface-card:hover,
+  .surface-card.is-link:hover {
+    transform: none;
+  }
 }

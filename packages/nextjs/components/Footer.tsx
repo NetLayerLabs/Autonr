@@ -1,10 +1,14 @@
 import React from "react";
+import Image from "next/image";
 import { HederaPortalFaucet } from "@scaffold-hbar-ui/components";
 import { hedera } from "viem/chains";
-import { CurrencyDollarIcon } from "@heroicons/react/24/outline";
-import { SwitchTheme } from "~~/components/SwitchTheme";
 import { useMarket } from "~~/hooks/autonr/useAutonrApi";
 import { useTargetNetwork } from "~~/hooks/scaffold-hbar/useTargetNetwork";
+
+const FOOTER_LINKS = [
+  { label: "GitHub", href: "https://github.com/NetLayerLabs/Autonr" },
+  { label: "Hedera docs", href: "https://docs.hedera.com/" },
+];
 
 /**
  * Site footer
@@ -16,57 +20,44 @@ export const Footer = () => {
   const base = useMarket().data?.snapshot.base;
 
   return (
-    <div className="min-h-0 py-5 px-4">
-      {/* In the page flow rather than fixed to the viewport: the dashboard's tables run the full height of the page. */}
-      <div>
-        <div className="flex flex-wrap justify-between items-center gap-2 w-full pb-2">
-          <div className="flex flex-col md:flex-row gap-2">
-            {base && (
-              <div>
-                <span
-                  className="btn btn-primary btn-sm font-normal gap-1 cursor-auto"
-                  title={`${base.symbol} from ${base.feed} (${base.source})`}
-                >
-                  <CurrencyDollarIcon className="h-4 w-4" />
-                  <span>{base.priceUsd.toFixed(4)}</span>
-                </span>
-              </div>
-            )}
-            {isTestnet && <HederaPortalFaucet showIcon />}
-          </div>
-          <SwitchTheme />
+    // In the page flow rather than fixed to the viewport: the dashboard's tables run the full height of the page.
+    <footer className="mx-auto mt-8 w-full max-w-7xl px-4 pb-10 sm:px-6">
+      <div className="surface-rule flex flex-wrap items-center justify-between gap-x-6 gap-y-4 border-t pt-7">
+        <div className="flex min-w-0 items-center gap-3">
+          <Image alt="" src="/autonr-mark.svg" width={21} height={20} className="h-5 w-auto" />
+          <p className="tagline">Autonomy, enforced.</p>
         </div>
-      </div>
-      <div className="w-full">
-        <nav className="menu menu-horizontal w-full">
-          <div className="flex justify-center items-center gap-3 text-sm w-full text-base-content/60">
+        <div className="flex flex-wrap items-center gap-3">
+          {base && (
+            <span
+              className="liquid-glass inline-flex h-8 items-center gap-2 rounded-full px-3.5 text-[12.5px]"
+              title={`${base.symbol} from ${base.feed} (${base.source})`}
+            >
+              <span className="text-[#7a7a7a]">{base.symbol}</span>
+              <span className="font-mono text-white">${base.priceUsd.toFixed(4)}</span>
+            </span>
+          )}
+          {isTestnet && <HederaPortalFaucet showIcon />}
+        </div>
+        <nav aria-label="Footer" className="flex flex-wrap items-center gap-x-5 gap-y-2 text-[13px] text-[#a6a6a6]">
+          {FOOTER_LINKS.map(({ label, href }) => (
+            <a key={href} href={href} target="_blank" rel="noreferrer" className="transition-colors hover:text-white">
+              {label}
+            </a>
+          ))}
+          <span className="text-[#7a7a7a]">
+            Built on{" "}
             <a
-              href="https://github.com/NetLayerLabs/Autonr"
+              href="https://hedera.com/"
               target="_blank"
               rel="noreferrer"
-              className="link hover:text-primary"
+              className="transition-colors hover:text-white"
             >
-              GitHub
+              Hedera
             </a>
-            <span className="opacity-30">|</span>
-            <span>
-              Built on{" "}
-              <a
-                href="https://hedera.com/"
-                target="_blank"
-                rel="noreferrer"
-                className="font-semibold link hover:text-primary"
-              >
-                Hedera
-              </a>
-            </span>
-            <span className="opacity-30">|</span>
-            <a href="https://docs.hedera.com/" target="_blank" rel="noreferrer" className="link hover:text-primary">
-              Docs
-            </a>
-          </div>
+          </span>
         </nav>
       </div>
-    </div>
+    </footer>
   );
 };

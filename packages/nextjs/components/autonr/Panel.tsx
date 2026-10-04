@@ -10,14 +10,14 @@ type PanelProps = {
 
 /** The console's card: a titled section with an optional action area on the right. */
 export const Panel = ({ title, description, actions, children, className = "" }: PanelProps) => (
-  <section aria-label={title} className={`min-w-0 rounded-box border border-base-300 bg-base-100 ${className}`}>
-    <header className="flex flex-wrap items-start justify-between gap-x-4 gap-y-2 border-b border-base-300 px-4 py-3">
+  <section aria-label={title} className={`surface-card min-w-0 ${className}`}>
+    <header className="surface-rule flex flex-wrap items-start justify-between gap-x-4 gap-y-2 border-b px-5 py-4">
       <div className="min-w-0">
-        <h2 className="m-0 text-sm font-semibold leading-snug">{title}</h2>
-        {description && <p className="m-0 mt-0.5 text-xs leading-snug text-base-content/70">{description}</p>}
+        <h2 className="m-0 text-[17px] font-semibold leading-snug tracking-[-0.01em] text-white">{title}</h2>
+        {description && <p className="m-0 mt-1 text-[13px] leading-snug text-[#a6a6a6]">{description}</p>}
       </div>
       {actions && <div className="flex shrink-0 items-center gap-2">{actions}</div>}
     </header>
-    <div className="p-4">{children}</div>
+    <div className="p-5">{children}</div>
   </section>
 );

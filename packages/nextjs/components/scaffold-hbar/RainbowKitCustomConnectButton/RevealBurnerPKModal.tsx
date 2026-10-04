@@ -34,7 +34,7 @@ export const RevealBurnerPKModal = () => {
     <div>
       <input type="checkbox" id="reveal-burner-pk-modal" className="modal-toggle" ref={modalCheckboxRef} />
       <label htmlFor="reveal-burner-pk-modal" className="modal cursor-pointer">
-        <label className="modal-box relative bg-base-100 border border-base-300 rounded-2xl shadow-xl p-6 max-w-md">
+        <label className="modal-box relative rounded-2xl p-6 max-w-md">
           <input className="h-0 w-0 absolute top-0 left-0" />
 
           <label
@@ -45,7 +45,7 @@ export const RevealBurnerPKModal = () => {
           </label>
 
           <div className="flex items-center gap-3 mb-5">
-            <div className="p-2 rounded-xl hedera-gradient">
+            <div className="liquid-glass p-2 rounded-xl">
               <KeyIcon className="h-5 w-5 text-white" />
             </div>
             <h3 className="text-base font-semibold text-base-content m-0">Burner Wallet Private Key</h3>

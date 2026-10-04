@@ -1,5 +1,5 @@
 {
-  "name": "Scaffold-HBAR 2 DApp",
-  "description": "A DApp built with Scaffold-HBAR",
-  "iconPath": "logo.svg"
+  "name": "Autonr",
+  "description": "Autonomy, enforced. An AI agent trades on SaucerSwap through a vault that prices every trade from Chainlink and Supra, with its reasoning on HCS first.",
+  "iconPath": "favicon.png"
 }

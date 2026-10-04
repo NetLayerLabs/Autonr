@@ -49,7 +49,7 @@ export const ProofSearch = ({ className = "", onNavigate }: { className?: string
         <p
           id={errorId}
           role="alert"
-          className="absolute left-0 right-0 top-full z-30 m-0 mt-1 rounded-box border border-base-300 bg-base-100 px-3 py-2 text-xs shadow-md"
+          className="nav-sheet absolute left-0 right-0 top-full z-30 m-0 mt-1 px-3 py-2 text-xs text-white"
         >
           Enter a 0x transaction hash (64 hex characters) or a Hedera transaction id such as 0.0.1234@1727800000.1.
         </p>

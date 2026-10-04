@@ -4,7 +4,6 @@ import Link from "next/link";
 import { hashscanUrl } from "@sh/agent/hedera";
 import type { NetworkName } from "@sh/agent/networks";
 import { formatUnits } from "viem";
-import { CheckCircleIcon, PauseCircleIcon } from "@heroicons/react/16/solid";
 import { EmptyState } from "~~/components/autonr/EmptyState";
 import { EntityId } from "~~/components/autonr/EntityId";
 import { Meter } from "~~/components/autonr/Meter";
@@ -44,15 +43,9 @@ export const VaultPanel = () => {
 
 const PausedBadge = ({ paused }: { paused: boolean }) =>
   paused ? (
-    <span className="badge badge-error badge-sm gap-1">
-      <PauseCircleIcon className="h-3.5 w-3.5" aria-hidden />
-      paused
-    </span>
+    <span className="badge badge-error badge-sm">paused</span>
   ) : (
-    <span className="badge badge-success badge-sm gap-1">
-      <CheckCircleIcon className="h-3.5 w-3.5" aria-hidden />
-      active
-    </span>
+    <span className="badge badge-success badge-sm">active</span>
   );
 
 const VaultDetails = ({ network, vault }: { network: NetworkName; vault: VaultState }) => {

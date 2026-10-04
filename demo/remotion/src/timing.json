@@ -1,0 +1,1508 @@
+{
+ "fps": 30,
+ "totalFrames": 4690,
+ "scenes": [
+  {
+   "id": "hook",
+   "from": 0,
+   "durationInFrames": 210,
+   "voFrom": 36,
+   "voFrames": 116,
+   "words": [
+    {
+     "word": "An",
+     "start": 36,
+     "end": 40
+    },
+    {
+     "word": "AI",
+     "start": 42,
+     "end": 50
+    },
+    {
+     "word": "agent",
+     "start": 52,
+     "end": 61
+    },
+    {
+     "word": "can",
+     "start": 62,
+     "end": 66
+    },
+    {
+     "word": "trade",
+     "start": 67,
+     "end": 75
+    },
+    {
+     "word": "for",
+     "start": 76,
+     "end": 79
+    },
+    {
+     "word": "you.",
+     "start": 81,
+     "end": 89
+    },
+    {
+     "word": "The",
+     "start": 95,
+     "end": 98
+    },
+    {
+     "word": "hard",
+     "start": 100,
+     "end": 106
+    },
+    {
+     "word": "part",
+     "start": 108,
+     "end": 114
+    },
+    {
+     "word": "is",
+     "start": 116,
+     "end": 118
+    },
+    {
+     "word": "trusting",
+     "start": 121,
+     "end": 135
+    },
+    {
+     "word": "it.",
+     "start": 137,
+     "end": 152
+    }
+   ]
+  },
+  {
+   "id": "problem",
+   "from": 210,
+   "durationInFrames": 274,
+   "voFrom": 12,
+   "voFrames": 226,
+   "words": [
+    {
+     "word": "Give",
+     "start": 12,
+     "end": 20
+    },
+    {
+     "word": "it",
+     "start": 20,
+     "end": 22
+    },
+    {
+     "word": "the",
+     "start": 23,
+     "end": 26
+    },
+    {
+     "word": "keys,",
+     "start": 28,
+     "end": 41
+    },
+    {
+     "word": "and",
+     "start": 42,
+     "end": 45
+    },
+    {
+     "word": "one",
+     "start": 49,
+     "end": 55
+    },
+    {
+     "word": "bad",
+     "start": 56,
+     "end": 62
+    },
+    {
+     "word": "answer",
+     "start": 63,
+     "end": 71
+    },
+    {
+     "word": "can",
+     "start": 73,
+     "end": 77
+    },
+    {
+     "word": "empty",
+     "start": 78,
+     "end": 85
+    },
+    {
+     "word": "the",
+     "start": 87,
+     "end": 89
+    },
+    {
+     "word": "vault.",
+     "start": 91,
+     "end": 107
+    },
+    {
+     "word": "Afterwards,",
+     "start": 131,
+     "end": 154
+    },
+    {
+     "word": "all",
+     "start": 155,
+     "end": 161
+    },
+    {
+     "word": "you",
+     "start": 162,
+     "end": 165
+    },
+    {
+     "word": "have",
+     "start": 167,
+     "end": 174
+    },
+    {
+     "word": "is",
+     "start": 175,
+     "end": 177
+    },
+    {
+     "word": "its",
+     "start": 179,
+     "end": 183
+    },
+    {
+     "word": "word",
+     "start": 184,
+     "end": 191
+    },
+    {
+     "word": "for",
+     "start": 193,
+     "end": 197
+    },
+    {
+     "word": "why",
+     "start": 199,
+     "end": 206
+    },
+    {
+     "word": "it",
+     "start": 208,
+     "end": 211
+    },
+    {
+     "word": "traded.",
+     "start": 212,
+     "end": 238
+    }
+   ]
+  },
+  {
+   "id": "answer",
+   "from": 484,
+   "durationInFrames": 481,
+   "voFrom": 12,
+   "voFrames": 398,
+   "words": [
+    {
+     "word": "Autonr",
+     "start": 12,
+     "end": 29
+    },
+    {
+     "word": "splits",
+     "start": 32,
+     "end": 44
+    },
+    {
+     "word": "the",
+     "start": 45,
+     "end": 47
+    },
+    {
+     "word": "job",
+     "start": 50,
+     "end": 58
+    },
+    {
+     "word": "in",
+     "start": 59,
+     "end": 61
+    },
+    {
+     "word": "three.",
+     "start": 64,
+     "end": 85
+    },
+    {
+     "word": "The",
+     "start": 93,
+     "end": 96
+    },
+    {
+     "word": "agent",
+     "start": 99,
+     "end": 107
+    },
+    {
+     "word": "decides",
+     "start": 108,
+     "end": 121
+    },
+    {
+     "word": "whether",
+     "start": 122,
+     "end": 130
+    },
+    {
+     "word": "to",
+     "start": 132,
+     "end": 134
+    },
+    {
+     "word": "trade.",
+     "start": 136,
+     "end": 158
+    },
+    {
+     "word": "Chainlink",
+     "start": 170,
+     "end": 189
+    },
+    {
+     "word": "and",
+     "start": 190,
+     "end": 192
+    },
+    {
+     "word": "Supra",
+     "start": 195,
+     "end": 209
+    },
+    {
+     "word": "decide",
+     "start": 212,
+     "end": 222
+    },
+    {
+     "word": "the",
+     "start": 223,
+     "end": 225
+    },
+    {
+     "word": "price.",
+     "start": 227,
+     "end": 245
+    },
+    {
+     "word": "And",
+     "start": 258,
+     "end": 264
+    },
+    {
+     "word": "a",
+     "start": 266,
+     "end": 267
+    },
+    {
+     "word": "vault",
+     "start": 269,
+     "end": 278
+    },
+    {
+     "word": "on",
+     "start": 280,
+     "end": 283
+    },
+    {
+     "word": "Hedera",
+     "start": 285,
+     "end": 297
+    },
+    {
+     "word": "enforces",
+     "start": 298,
+     "end": 316
+    },
+    {
+     "word": "both,",
+     "start": 320,
+     "end": 338
+    },
+    {
+     "word": "before",
+     "start": 345,
+     "end": 356
+    },
+    {
+     "word": "a",
+     "start": 357,
+     "end": 358
+    },
+    {
+     "word": "single",
+     "start": 361,
+     "end": 372
+    },
+    {
+     "word": "token",
+     "start": 374,
+     "end": 384
+    },
+    {
+     "word": "moves.",
+     "start": 386,
+     "end": 409
+    }
+   ]
+  },
+  {
+   "id": "record",
+   "from": 965,
+   "durationInFrames": 401,
+   "voFrom": 12,
+   "voFrames": 311,
+   "words": [
+    {
+     "word": "Before",
+     "start": 12,
+     "end": 26
+    },
+    {
+     "word": "every",
+     "start": 29,
+     "end": 36
+    },
+    {
+     "word": "trade,",
+     "start": 38,
+     "end": 50
+    },
+    {
+     "word": "the",
+     "start": 51,
+     "end": 53
+    },
+    {
+     "word": "agent",
+     "start": 56,
+     "end": 65
+    },
+    {
+     "word": "writes",
+     "start": 66,
+     "end": 73
+    },
+    {
+     "word": "down",
+     "start": 74,
+     "end": 82
+    },
+    {
+     "word": "why.",
+     "start": 85,
+     "end": 104
+    },
+    {
+     "word": "It",
+     "start": 115,
+     "end": 120
+    },
+    {
+     "word": "publishes",
+     "start": 122,
+     "end": 137
+    },
+    {
+     "word": "that",
+     "start": 139,
+     "end": 144
+    },
+    {
+     "word": "reasoning",
+     "start": 146,
+     "end": 158
+    },
+    {
+     "word": "to",
+     "start": 160,
+     "end": 162
+    },
+    {
+     "word": "a",
+     "start": 166,
+     "end": 167
+    },
+    {
+     "word": "Hedera",
+     "start": 170,
+     "end": 182
+    },
+    {
+     "word": "Consensus",
+     "start": 184,
+     "end": 202
+    },
+    {
+     "word": "Service",
+     "start": 204,
+     "end": 215
+    },
+    {
+     "word": "topic",
+     "start": 216,
+     "end": 226
+    },
+    {
+     "word": "first.",
+     "start": 229,
+     "end": 248
+    },
+    {
+     "word": "Only",
+     "start": 258,
+     "end": 266
+    },
+    {
+     "word": "its",
+     "start": 268,
+     "end": 271
+    },
+    {
+     "word": "own",
+     "start": 273,
+     "end": 278
+    },
+    {
+     "word": "key",
+     "start": 281,
+     "end": 289
+    },
+    {
+     "word": "can",
+     "start": 291,
+     "end": 294
+    },
+    {
+     "word": "write",
+     "start": 296,
+     "end": 302
+    },
+    {
+     "word": "there.",
+     "start": 303,
+     "end": 323
+    }
+   ]
+  },
+  {
+   "id": "vault",
+   "from": 1366,
+   "durationInFrames": 512,
+   "voFrom": 12,
+   "voFrames": 441,
+   "words": [
+    {
+     "word": "Then",
+     "start": 12,
+     "end": 18
+    },
+    {
+     "word": "it",
+     "start": 19,
+     "end": 21
+    },
+    {
+     "word": "asks",
+     "start": 23,
+     "end": 30
+    },
+    {
+     "word": "the",
+     "start": 31,
+     "end": 33
+    },
+    {
+     "word": "vault",
+     "start": 36,
+     "end": 45
+    },
+    {
+     "word": "to",
+     "start": 46,
+     "end": 48
+    },
+    {
+     "word": "trade,",
+     "start": 50,
+     "end": 64
+    },
+    {
+     "word": "and",
+     "start": 65,
+     "end": 68
+    },
+    {
+     "word": "cites",
+     "start": 71,
+     "end": 81
+    },
+    {
+     "word": "that",
+     "start": 82,
+     "end": 87
+    },
+    {
+     "word": "message:",
+     "start": 89,
+     "end": 108
+    },
+    {
+     "word": "its",
+     "start": 112,
+     "end": 118
+    },
+    {
+     "word": "hash,",
+     "start": 121,
+     "end": 136
+    },
+    {
+     "word": "and",
+     "start": 137,
+     "end": 142
+    },
+    {
+     "word": "its",
+     "start": 143,
+     "end": 147
+    },
+    {
+     "word": "number.",
+     "start": 150,
+     "end": 169
+    },
+    {
+     "word": "The",
+     "start": 193,
+     "end": 196
+    },
+    {
+     "word": "vault",
+     "start": 198,
+     "end": 206
+    },
+    {
+     "word": "reads",
+     "start": 208,
+     "end": 216
+    },
+    {
+     "word": "both",
+     "start": 218,
+     "end": 226
+    },
+    {
+     "word": "oracles",
+     "start": 229,
+     "end": 244
+    },
+    {
+     "word": "itself,",
+     "start": 246,
+     "end": 265
+    },
+    {
+     "word": "checks",
+     "start": 266,
+     "end": 275
+    },
+    {
+     "word": "its",
+     "start": 276,
+     "end": 281
+    },
+    {
+     "word": "limits,",
+     "start": 285,
+     "end": 299
+    },
+    {
+     "word": "and",
+     "start": 300,
+     "end": 304
+    },
+    {
+     "word": "sets",
+     "start": 306,
+     "end": 314
+    },
+    {
+     "word": "the",
+     "start": 316,
+     "end": 318
+    },
+    {
+     "word": "minimum",
+     "start": 320,
+     "end": 331
+    },
+    {
+     "word": "it",
+     "start": 333,
+     "end": 335
+    },
+    {
+     "word": "will",
+     "start": 336,
+     "end": 340
+    },
+    {
+     "word": "accept.",
+     "start": 342,
+     "end": 361
+    },
+    {
+     "word": "The",
+     "start": 385,
+     "end": 389
+    },
+    {
+     "word": "agent",
+     "start": 391,
+     "end": 401
+    },
+    {
+     "word": "never",
+     "start": 405,
+     "end": 413
+    },
+    {
+     "word": "names",
+     "start": 415,
+     "end": 423
+    },
+    {
+     "word": "a",
+     "start": 425,
+     "end": 426
+    },
+    {
+     "word": "price.",
+     "start": 428,
+     "end": 452
+    }
+   ]
+  },
+  {
+   "id": "swap",
+   "from": 1878,
+   "durationInFrames": 259,
+   "voFrom": 12,
+   "voFrames": 169,
+   "words": [
+    {
+     "word": "On",
+     "start": 12,
+     "end": 17
+    },
+    {
+     "word": "testnet,",
+     "start": 19,
+     "end": 37
+    },
+    {
+     "word": "the",
+     "start": 37,
+     "end": 40
+    },
+    {
+     "word": "vault",
+     "start": 41,
+     "end": 48
+    },
+    {
+     "word": "sold",
+     "start": 49,
+     "end": 58
+    },
+    {
+     "word": "five",
+     "start": 60,
+     "end": 68
+    },
+    {
+     "word": "dollars",
+     "start": 69,
+     "end": 79
+    },
+    {
+     "word": "of",
+     "start": 80,
+     "end": 81
+    },
+    {
+     "word": "HBAR",
+     "start": 83,
+     "end": 97
+    },
+    {
+     "word": "on",
+     "start": 100,
+     "end": 103
+    },
+    {
+     "word": "SaucerSwap.",
+     "start": 106,
+     "end": 135
+    },
+    {
+     "word": "Trade",
+     "start": 143,
+     "end": 152
+    },
+    {
+     "word": "number",
+     "start": 153,
+     "end": 160
+    },
+    {
+     "word": "eight.",
+     "start": 162,
+     "end": 181
+    }
+   ]
+  },
+  {
+   "id": "proof",
+   "from": 2137,
+   "durationInFrames": 473,
+   "voFrom": 12,
+   "voFrames": 371,
+   "words": [
+    {
+     "word": "Anyone",
+     "start": 12,
+     "end": 25
+    },
+    {
+     "word": "can",
+     "start": 26,
+     "end": 29
+    },
+    {
+     "word": "check",
+     "start": 31,
+     "end": 38
+    },
+    {
+     "word": "it,",
+     "start": 39,
+     "end": 42
+    },
+    {
+     "word": "from",
+     "start": 43,
+     "end": 48
+    },
+    {
+     "word": "public",
+     "start": 51,
+     "end": 63
+    },
+    {
+     "word": "data",
+     "start": 65,
+     "end": 74
+    },
+    {
+     "word": "alone.",
+     "start": 76,
+     "end": 94
+    },
+    {
+     "word": "Twelve",
+     "start": 105,
+     "end": 118
+    },
+    {
+     "word": "checks.",
+     "start": 119,
+     "end": 138
+    },
+    {
+     "word": "The",
+     "start": 149,
+     "end": 152
+    },
+    {
+     "word": "message",
+     "start": 154,
+     "end": 166
+    },
+    {
+     "word": "matches",
+     "start": 168,
+     "end": 177
+    },
+    {
+     "word": "its",
+     "start": 180,
+     "end": 184
+    },
+    {
+     "word": "hash.",
+     "start": 187,
+     "end": 206
+    },
+    {
+     "word": "It",
+     "start": 230,
+     "end": 235
+    },
+    {
+     "word": "reached",
+     "start": 237,
+     "end": 244
+    },
+    {
+     "word": "consensus",
+     "start": 245,
+     "end": 266
+    },
+    {
+     "word": "four",
+     "start": 269,
+     "end": 275
+    },
+    {
+     "word": "seconds",
+     "start": 278,
+     "end": 288
+    },
+    {
+     "word": "before",
+     "start": 291,
+     "end": 300
+    },
+    {
+     "word": "the",
+     "start": 301,
+     "end": 303
+    },
+    {
+     "word": "trade.",
+     "start": 304,
+     "end": 322
+    },
+    {
+     "word": "One",
+     "start": 331,
+     "end": 339
+    },
+    {
+     "word": "key",
+     "start": 341,
+     "end": 347
+    },
+    {
+     "word": "signed",
+     "start": 349,
+     "end": 358
+    },
+    {
+     "word": "both.",
+     "start": 360,
+     "end": 383
+    }
+   ]
+  },
+  {
+   "id": "tamper",
+   "from": 2610,
+   "durationInFrames": 234,
+   "voFrom": 12,
+   "voFrames": 97,
+   "words": [
+    {
+     "word": "Change",
+     "start": 12,
+     "end": 26
+    },
+    {
+     "word": "one",
+     "start": 28,
+     "end": 34
+    },
+    {
+     "word": "letter",
+     "start": 35,
+     "end": 41
+    },
+    {
+     "word": "of",
+     "start": 42,
+     "end": 44
+    },
+    {
+     "word": "the",
+     "start": 45,
+     "end": 48
+    },
+    {
+     "word": "reasoning,",
+     "start": 50,
+     "end": 64
+    },
+    {
+     "word": "and",
+     "start": 65,
+     "end": 67
+    },
+    {
+     "word": "the",
+     "start": 69,
+     "end": 71
+    },
+    {
+     "word": "proof",
+     "start": 73,
+     "end": 82
+    },
+    {
+     "word": "fails.",
+     "start": 84,
+     "end": 108
+    }
+   ]
+  },
+  {
+   "id": "guard",
+   "from": 2844,
+   "durationInFrames": 461,
+   "voFrom": 12,
+   "voFrames": 371,
+   "words": [
+    {
+     "word": "Now",
+     "start": 12,
+     "end": 21
+    },
+    {
+     "word": "ask",
+     "start": 24,
+     "end": 31
+    },
+    {
+     "word": "the",
+     "start": 33,
+     "end": 35
+    },
+    {
+     "word": "vault",
+     "start": 38,
+     "end": 46
+    },
+    {
+     "word": "to",
+     "start": 47,
+     "end": 49
+    },
+    {
+     "word": "break",
+     "start": 51,
+     "end": 58
+    },
+    {
+     "word": "its",
+     "start": 59,
+     "end": 62
+    },
+    {
+     "word": "own",
+     "start": 64,
+     "end": 68
+    },
+    {
+     "word": "rules.",
+     "start": 70,
+     "end": 87
+    },
+    {
+     "word": "Too",
+     "start": 95,
+     "end": 102
+    },
+    {
+     "word": "large.",
+     "start": 105,
+     "end": 120
+    },
+    {
+     "word": "Wrong",
+     "start": 126,
+     "end": 135
+    },
+    {
+     "word": "token.",
+     "start": 138,
+     "end": 153
+    },
+    {
+     "word": "Wrong",
+     "start": 157,
+     "end": 166
+    },
+    {
+     "word": "pool.",
+     "start": 168,
+     "end": 185
+    },
+    {
+     "word": "No",
+     "start": 198,
+     "end": 203
+    },
+    {
+     "word": "reasoning.",
+     "start": 205,
+     "end": 223
+    },
+    {
+     "word": "Old",
+     "start": 230,
+     "end": 238
+    },
+    {
+     "word": "reasoning.",
+     "start": 240,
+     "end": 258
+    },
+    {
+     "word": "Wrong",
+     "start": 266,
+     "end": 275
+    },
+    {
+     "word": "caller.",
+     "start": 277,
+     "end": 294
+    },
+    {
+     "word": "Six",
+     "start": 304,
+     "end": 312
+    },
+    {
+     "word": "requests,",
+     "start": 314,
+     "end": 336
+    },
+    {
+     "word": "six",
+     "start": 340,
+     "end": 348
+    },
+    {
+     "word": "refusals.",
+     "start": 351,
+     "end": 383
+    }
+   ]
+  },
+  {
+   "id": "reality",
+   "from": 3305,
+   "durationInFrames": 337,
+   "voFrom": 12,
+   "voFrames": 265,
+   "words": [
+    {
+     "word": "The",
+     "start": 12,
+     "end": 17
+    },
+    {
+     "word": "testnet",
+     "start": 19,
+     "end": 33
+    },
+    {
+     "word": "pool",
+     "start": 35,
+     "end": 42
+    },
+    {
+     "word": "prices",
+     "start": 45,
+     "end": 59
+    },
+    {
+     "word": "HBAR",
+     "start": 63,
+     "end": 77
+    },
+    {
+     "word": "nearly",
+     "start": 79,
+     "end": 88
+    },
+    {
+     "word": "twenty",
+     "start": 91,
+     "end": 100
+    },
+    {
+     "word": "times",
+     "start": 102,
+     "end": 110
+    },
+    {
+     "word": "above",
+     "start": 111,
+     "end": 118
+    },
+    {
+     "word": "the",
+     "start": 118,
+     "end": 120
+    },
+    {
+     "word": "market.",
+     "start": 122,
+     "end": 139
+    },
+    {
+     "word": "Sells",
+     "start": 150,
+     "end": 161
+    },
+    {
+     "word": "pass.",
+     "start": 163,
+     "end": 180
+    },
+    {
+     "word": "Buys",
+     "start": 184,
+     "end": 193
+    },
+    {
+     "word": "are",
+     "start": 194,
+     "end": 197
+    },
+    {
+     "word": "refused,",
+     "start": 198,
+     "end": 216
+    },
+    {
+     "word": "because",
+     "start": 217,
+     "end": 226
+    },
+    {
+     "word": "the",
+     "start": 227,
+     "end": 229
+    },
+    {
+     "word": "oracles",
+     "start": 232,
+     "end": 245
+    },
+    {
+     "word": "say",
+     "start": 247,
+     "end": 252
+    },
+    {
+     "word": "no.",
+     "start": 255,
+     "end": 277
+    }
+   ]
+  },
+  {
+   "id": "audit",
+   "from": 3642,
+   "durationInFrames": 298,
+   "voFrom": 12,
+   "voFrames": 208,
+   "words": [
+    {
+     "word": "And",
+     "start": 12,
+     "end": 17
+    },
+    {
+     "word": "the",
+     "start": 18,
+     "end": 20
+    },
+    {
+     "word": "log",
+     "start": 21,
+     "end": 29
+    },
+    {
+     "word": "has",
+     "start": 31,
+     "end": 37
+    },
+    {
+     "word": "no",
+     "start": 41,
+     "end": 45
+    },
+    {
+     "word": "gaps.",
+     "start": 48,
+     "end": 66
+    },
+    {
+     "word": "Every",
+     "start": 79,
+     "end": 87
+    },
+    {
+     "word": "trade",
+     "start": 89,
+     "end": 100
+    },
+    {
+     "word": "traces",
+     "start": 101,
+     "end": 113
+    },
+    {
+     "word": "back",
+     "start": 115,
+     "end": 120
+    },
+    {
+     "word": "to",
+     "start": 122,
+     "end": 124
+    },
+    {
+     "word": "exactly",
+     "start": 127,
+     "end": 145
+    },
+    {
+     "word": "one",
+     "start": 149,
+     "end": 155
+    },
+    {
+     "word": "decision,",
+     "start": 156,
+     "end": 175
+    },
+    {
+     "word": "published",
+     "start": 179,
+     "end": 192
+    },
+    {
+     "word": "first.",
+     "start": 195,
+     "end": 220
+    }
+   ]
+  },
+  {
+   "id": "stack",
+   "from": 3940,
+   "durationInFrames": 450,
+   "voFrom": 12,
+   "voFrames": 372,
+   "words": [
+    {
+     "word": "The",
+     "start": 12,
+     "end": 17
+    },
+    {
+     "word": "Consensus",
+     "start": 19,
+     "end": 37
+    },
+    {
+     "word": "Service",
+     "start": 38,
+     "end": 50
+    },
+    {
+     "word": "holds",
+     "start": 51,
+     "end": 61
+    },
+    {
+     "word": "the",
+     "start": 62,
+     "end": 64
+    },
+    {
+     "word": "reasoning.",
+     "start": 67,
+     "end": 86
+    },
+    {
+     "word": "A",
+     "start": 98,
+     "end": 101
+    },
+    {
+     "word": "smart",
+     "start": 104,
+     "end": 113
+    },
+    {
+     "word": "contract",
+     "start": 115,
+     "end": 133
+    },
+    {
+     "word": "enforces",
+     "start": 135,
+     "end": 153
+    },
+    {
+     "word": "the",
+     "start": 154,
+     "end": 156
+    },
+    {
+     "word": "policy.",
+     "start": 158,
+     "end": 180
+    },
+    {
+     "word": "The",
+     "start": 188,
+     "end": 191
+    },
+    {
+     "word": "Token",
+     "start": 193,
+     "end": 203
+    },
+    {
+     "word": "Service",
+     "start": 205,
+     "end": 215
+    },
+    {
+     "word": "moves",
+     "start": 218,
+     "end": 225
+    },
+    {
+     "word": "the",
+     "start": 227,
+     "end": 229
+    },
+    {
+     "word": "funds.",
+     "start": 231,
+     "end": 249
+    },
+    {
+     "word": "And",
+     "start": 260,
+     "end": 266
+    },
+    {
+     "word": "any",
+     "start": 268,
+     "end": 273
+    },
+    {
+     "word": "agent",
+     "start": 275,
+     "end": 285
+    },
+    {
+     "word": "built",
+     "start": 286,
+     "end": 292
+    },
+    {
+     "word": "with",
+     "start": 293,
+     "end": 297
+    },
+    {
+     "word": "the",
+     "start": 298,
+     "end": 300
+    },
+    {
+     "word": "Hedera",
+     "start": 302,
+     "end": 313
+    },
+    {
+     "word": "Agent",
+     "start": 316,
+     "end": 326
+    },
+    {
+     "word": "Kit",
+     "start": 328,
+     "end": 339
+    },
+    {
+     "word": "can",
+     "start": 341,
+     "end": 346
+    },
+    {
+     "word": "trade",
+     "start": 348,
+     "end": 357
+    },
+    {
+     "word": "this",
+     "start": 358,
+     "end": 362
+    },
+    {
+     "word": "way.",
+     "start": 364,
+     "end": 384
+    }
+   ]
+  },
+  {
+   "id": "close",
+   "from": 4390,
+   "durationInFrames": 300,
+   "voFrom": 24,
+   "voFrames": 85,
+   "words": [
+    {
+     "word": "Autonr.",
+     "start": 24,
+     "end": 50
+    },
+    {
+     "word": "Autonomy,",
+     "start": 56,
+     "end": 76
+    },
+    {
+     "word": "enforced.",
+     "start": 77,
+     "end": 109
+    }
+   ]
+  }
+ ]
+}

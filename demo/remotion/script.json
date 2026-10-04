@@ -1,0 +1,71 @@
+{
+  "voice": "CwhRBWXzGAHq8TQ4Fs17",
+  "model": "eleven_multilingual_v2",
+  "settings": {
+    "stability": 0.55,
+    "similarity_boost": 0.8,
+    "style": 0.12,
+    "use_speaker_boost": true,
+    "speed": 0.9
+  },
+  "scenes": [
+    {
+      "id": "hook",
+      "text": "An AI agent can trade for you. The hard part is trusting it.",
+      "minFrames": 210
+    },
+    {
+      "id": "problem",
+      "text": "Give it the keys, and one bad answer can empty the vault. Afterwards, all you have is its word for why it traded."
+    },
+    {
+      "id": "answer",
+      "text": "Autonr splits the job in three. The agent decides whether to trade. Chainlink and Supra decide the price. And a vault on Hedera enforces both, before a single token moves.",
+      "say": "Autoner splits the job in three. The agent decides whether to trade. Chainlink and Supra decide the price. And a vault on Hedera enforces both, before a single token moves."
+    },
+    {
+      "id": "record",
+      "text": "Before every trade, the agent writes down why. It publishes that reasoning to a Hedera Consensus Service topic first. Only its own key can write there."
+    },
+    {
+      "id": "vault",
+      "text": "Then it asks the vault to trade, and cites that message: its hash, and its number. The vault reads both oracles itself, checks its limits, and sets the minimum it will accept. The agent never names a price."
+    },
+    {
+      "id": "swap",
+      "text": "On testnet, the vault sold five dollars of HBAR on SaucerSwap. Trade number eight.",
+      "say": "On testnet, the vault sold five dollars of H-bar on SaucerSwap. Trade number eight."
+    },
+    {
+      "id": "proof",
+      "text": "Anyone can check it, from public data alone. Twelve checks. The message matches its hash. It reached consensus four seconds before the trade. One key signed both."
+    },
+    {
+      "id": "tamper",
+      "text": "Change one letter of the reasoning, and the proof fails."
+    },
+    {
+      "id": "guard",
+      "text": "Now ask the vault to break its own rules. Too large. Wrong token. Wrong pool. No reasoning. Old reasoning. Wrong caller. Six requests, six refusals."
+    },
+    {
+      "id": "reality",
+      "text": "The testnet pool prices HBAR nearly twenty times above the market. Sells pass. Buys are refused, because the oracles say no.",
+      "say": "The testnet pool prices H-bar nearly twenty times above the market. Sells pass. Buys are refused, because the oracles say no."
+    },
+    {
+      "id": "audit",
+      "text": "And the log has no gaps. Every trade traces back to exactly one decision, published first."
+    },
+    {
+      "id": "stack",
+      "text": "The Consensus Service holds the reasoning. A smart contract enforces the policy. The Token Service moves the funds. And any agent built with the Hedera Agent Kit can trade this way."
+    },
+    {
+      "id": "close",
+      "text": "Autonr. Autonomy, enforced.",
+      "say": "Autoner. Autonomy, enforced.",
+      "minFrames": 300
+    }
+  ]
+}

@@ -45,6 +45,7 @@ for (const dir of [TMP, OUT, PUBLIC_CLIPS]) fs.mkdirSync(dir, { recursive: true 
 // can never clobber the frames a real take left behind (`recut` finds the matching one).
 const sessionDir = (beat) => path.join(TMP, 'sessions', `${TARGET}${DPR === 1 ? '' : `-dpr${DPR}`}-${beat}`)
 
+const HEADLESS_SHELL = `${process.env.HOME}/Library/Caches/ms-playwright/chromium_headless_shell-1234/chrome-headless-shell-mac-arm64/chrome-headless-shell`
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms))
 const readJson = (file, fallback) => (fs.existsSync(file) ? JSON.parse(fs.readFileSync(file, 'utf8')) : fallback)
 const writeJson = (file, value) => fs.writeFileSync(file, JSON.stringify(value, null, 1))
@@ -70,11 +71,11 @@ function pointerScript() {
   el.setAttribute('aria-hidden', 'true')
   el.style.cssText =
     'position:fixed;left:0;top:0;width:26px;height:26px;z-index:2147483647;pointer-events:none;' +
-    'will-change:transform;filter:drop-shadow(0 2px 3px rgba(28,38,33,.35));'
+    'will-change:transform;filter:drop-shadow(0 2px 4px rgba(0,0,0,.6));'
   el.innerHTML =
     '<svg width="26" height="26" viewBox="0 0 26 26" xmlns="http://www.w3.org/2000/svg">' +
     '<path d="M4 2.5 L4 20.5 L8.9 16.2 L12.2 23.6 L15.4 22.2 L12.2 14.9 L18.8 14.6 Z" ' +
-    'fill="#111827" stroke="#ffffff" stroke-width="1.6" stroke-linejoin="round"/></svg>'
+    'fill="#ffffff" stroke="#000000" stroke-width="1.6" stroke-linejoin="round"/></svg>'
   const place = () => (el.style.transform = `translate(${x - 4}px, ${y - 2.5}px)`)
   place()
   const attach = () => {
@@ -90,7 +91,7 @@ function pointerScript() {
     const ring = document.createElement('div')
     ring.style.cssText =
       `position:fixed;left:${rx - 22}px;top:${ry - 22}px;width:44px;height:44px;border-radius:50%;` +
-      'border:3px solid #8259ef;background:rgba(130,89,239,.18);z-index:2147483646;pointer-events:none;'
+      'border:2px solid rgba(255,255,255,.85);background:rgba(255,255,255,.10);z-index:2147483646;pointer-events:none;'
     document.documentElement.appendChild(ring)
     ring
       .animate(
@@ -168,8 +169,10 @@ async function openSession(beat, { auth = true } = {}) {
   // so the extra detail is thrown away before it reaches us. Forcing the scale factor at launch
   // makes the screencast itself 3200x1800. Measured on the dev site: both flags -> 3200x1800 at
   // ~60 fps; deviceScaleFactor alone, at any maxWidth -> 1600x900.
+  // Chrome 154's own headless mode hands the DevTools screencast a frame 87 px shorter than the viewport,
+  // which the cutter would then stretch. Playwright's headless shell delivers the whole surface.
   const browser = await chromium.launch({
-    channel: 'chrome',
+    executablePath: process.env.CAPTURE_BROWSER || HEADLESS_SHELL,
     headless: true,
     args: ['--lang=en-US', ...(DPR === 1 ? [] : [`--force-device-scale-factor=${DPR}`])],
   })
@@ -178,6 +181,7 @@ async function openSession(beat, { auth = true } = {}) {
     deviceScaleFactor: DPR,
     locale: 'en-US',
     timezoneId: 'Europe/Rome',
+    colorScheme: 'dark',
     storageState: auth && fs.existsSync(AUTH) ? AUTH : undefined,
   })
   await ctx.addInitScript(pointerScript)

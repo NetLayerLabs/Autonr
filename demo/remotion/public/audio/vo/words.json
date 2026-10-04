@@ -1,0 +1,1452 @@
+{
+ "hook": {
+  "duration": 3.855,
+  "words": [
+   {
+    "w": "An",
+    "start": 0,
+    "end": 0.128
+   },
+   {
+    "w": "AI",
+    "start": 0.197,
+    "end": 0.476
+   },
+   {
+    "w": "agent",
+    "start": 0.546,
+    "end": 0.848
+   },
+   {
+    "w": "can",
+    "start": 0.882,
+    "end": 0.998
+   },
+   {
+    "w": "trade",
+    "start": 1.045,
+    "end": 1.3
+   },
+   {
+    "w": "for",
+    "start": 1.335,
+    "end": 1.44
+   },
+   {
+    "w": "you.",
+    "start": 1.509,
+    "end": 1.776
+   },
+   {
+    "w": "The",
+    "start": 1.974,
+    "end": 2.067
+   },
+   {
+    "w": "hard",
+    "start": 2.136,
+    "end": 2.334
+   },
+   {
+    "w": "part",
+    "start": 2.403,
+    "end": 2.612
+   },
+   {
+    "w": "is",
+    "start": 2.659,
+    "end": 2.74
+   },
+   {
+    "w": "trusting",
+    "start": 2.821,
+    "end": 3.286
+   },
+   {
+    "w": "it.",
+    "start": 3.355,
+    "end": 3.855
+   }
+  ]
+ },
+ "problem": {
+  "duration": 7.523,
+  "words": [
+   {
+    "w": "Give",
+    "start": 0,
+    "end": 0.255
+   },
+   {
+    "w": "it",
+    "start": 0.279,
+    "end": 0.348
+   },
+   {
+    "w": "the",
+    "start": 0.383,
+    "end": 0.453
+   },
+   {
+    "w": "keys,",
+    "start": 0.522,
+    "end": 0.975
+   },
+   {
+    "w": "and",
+    "start": 0.998,
+    "end": 1.115
+   },
+   {
+    "w": "one",
+    "start": 1.219,
+    "end": 1.428
+   },
+   {
+    "w": "bad",
+    "start": 1.463,
+    "end": 1.66
+   },
+   {
+    "w": "answer",
+    "start": 1.707,
+    "end": 1.974
+   },
+   {
+    "w": "can",
+    "start": 2.043,
+    "end": 2.159
+   },
+   {
+    "w": "empty",
+    "start": 2.206,
+    "end": 2.438
+   },
+   {
+    "w": "the",
+    "start": 2.485,
+    "end": 2.554
+   },
+   {
+    "w": "vault.",
+    "start": 2.624,
+    "end": 3.181
+   },
+   {
+    "w": "Afterwards,",
+    "start": 3.959,
+    "end": 4.725
+   },
+   {
+    "w": "all",
+    "start": 4.76,
+    "end": 4.969
+   },
+   {
+    "w": "you",
+    "start": 5.016,
+    "end": 5.097
+   },
+   {
+    "w": "have",
+    "start": 5.178,
+    "end": 5.387
+   },
+   {
+    "w": "is",
+    "start": 5.422,
+    "end": 5.503
+   },
+   {
+    "w": "its",
+    "start": 5.573,
+    "end": 5.701
+   },
+   {
+    "w": "word",
+    "start": 5.735,
+    "end": 5.979
+   },
+   {
+    "w": "for",
+    "start": 6.049,
+    "end": 6.165
+   },
+   {
+    "w": "why",
+    "start": 6.235,
+    "end": 6.467
+   },
+   {
+    "w": "it",
+    "start": 6.536,
+    "end": 6.618
+   },
+   {
+    "w": "traded.",
+    "start": 6.653,
+    "end": 7.523
+   }
+  ]
+ },
+ "answer": {
+  "duration": 13.235,
+  "words": [
+   {
+    "w": "Autonr",
+    "start": 0,
+    "end": 0.569
+   },
+   {
+    "w": "splits",
+    "start": 0.662,
+    "end": 1.057
+   },
+   {
+    "w": "the",
+    "start": 1.103,
+    "end": 1.173
+   },
+   {
+    "w": "job",
+    "start": 1.254,
+    "end": 1.521
+   },
+   {
+    "w": "in",
+    "start": 1.567,
+    "end": 1.625
+   },
+   {
+    "w": "three.",
+    "start": 1.73,
+    "end": 2.426
+   },
+   {
+    "w": "The",
+    "start": 2.694,
+    "end": 2.81
+   },
+   {
+    "w": "agent",
+    "start": 2.891,
+    "end": 3.17
+   },
+   {
+    "w": "decides",
+    "start": 3.216,
+    "end": 3.646
+   },
+   {
+    "w": "whether",
+    "start": 3.68,
+    "end": 3.924
+   },
+   {
+    "w": "to",
+    "start": 3.994,
+    "end": 4.052
+   },
+   {
+    "w": "trade.",
+    "start": 4.133,
+    "end": 4.853
+   },
+   {
+    "w": "Chainlink",
+    "start": 5.283,
+    "end": 5.886
+   },
+   {
+    "w": "and",
+    "start": 5.933,
+    "end": 6.002
+   },
+   {
+    "w": "Supra",
+    "start": 6.084,
+    "end": 6.56
+   },
+   {
+    "w": "decide",
+    "start": 6.653,
+    "end": 7.012
+   },
+   {
+    "w": "the",
+    "start": 7.036,
+    "end": 7.105
+   },
+   {
+    "w": "price.",
+    "start": 7.152,
+    "end": 7.779
+   },
+   {
+    "w": "And",
+    "start": 8.208,
+    "end": 8.406
+   },
+   {
+    "w": "a",
+    "start": 8.475,
+    "end": 8.499
+   },
+   {
+    "w": "vault",
+    "start": 8.58,
+    "end": 8.87
+   },
+   {
+    "w": "on",
+    "start": 8.94,
+    "end": 9.021
+   },
+   {
+    "w": "Hedera",
+    "start": 9.091,
+    "end": 9.497
+   },
+   {
+    "w": "enforces",
+    "start": 9.543,
+    "end": 10.136
+   },
+   {
+    "w": "both,",
+    "start": 10.263,
+    "end": 10.867
+   },
+   {
+    "w": "before",
+    "start": 11.099,
+    "end": 11.471
+   },
+   {
+    "w": "a",
+    "start": 11.505,
+    "end": 11.54
+   },
+   {
+    "w": "single",
+    "start": 11.633,
+    "end": 12.005
+   },
+   {
+    "w": "token",
+    "start": 12.051,
+    "end": 12.411
+   },
+   {
+    "w": "moves.",
+    "start": 12.481,
+    "end": 13.235
+   }
+  ]
+ },
+ "record": {
+  "duration": 10.356,
+  "words": [
+   {
+    "w": "Before",
+    "start": 0,
+    "end": 0.476
+   },
+   {
+    "w": "every",
+    "start": 0.557,
+    "end": 0.801
+   },
+   {
+    "w": "trade,",
+    "start": 0.871,
+    "end": 1.265
+   },
+   {
+    "w": "the",
+    "start": 1.289,
+    "end": 1.37
+   },
+   {
+    "w": "agent",
+    "start": 1.451,
+    "end": 1.765
+   },
+   {
+    "w": "writes",
+    "start": 1.8,
+    "end": 2.032
+   },
+   {
+    "w": "down",
+    "start": 2.078,
+    "end": 2.322
+   },
+   {
+    "w": "why.",
+    "start": 2.426,
+    "end": 3.065
+   },
+   {
+    "w": "It",
+    "start": 3.425,
+    "end": 3.587
+   },
+   {
+    "w": "publishes",
+    "start": 3.657,
+    "end": 4.168
+   },
+   {
+    "w": "that",
+    "start": 4.238,
+    "end": 4.389
+   },
+   {
+    "w": "reasoning",
+    "start": 4.47,
+    "end": 4.865
+   },
+   {
+    "w": "to",
+    "start": 4.934,
+    "end": 5.016
+   },
+   {
+    "w": "a",
+    "start": 5.143,
+    "end": 5.166
+   },
+   {
+    "w": "Hedera",
+    "start": 5.259,
+    "end": 5.666
+   },
+   {
+    "w": "Consensus",
+    "start": 5.735,
+    "end": 6.339
+   },
+   {
+    "w": "Service",
+    "start": 6.409,
+    "end": 6.769
+   },
+   {
+    "w": "topic",
+    "start": 6.803,
+    "end": 7.14
+   },
+   {
+    "w": "first.",
+    "start": 7.245,
+    "end": 7.872
+   },
+   {
+    "w": "Only",
+    "start": 8.185,
+    "end": 8.452
+   },
+   {
+    "w": "its",
+    "start": 8.522,
+    "end": 8.649
+   },
+   {
+    "w": "own",
+    "start": 8.696,
+    "end": 8.882
+   },
+   {
+    "w": "key",
+    "start": 8.975,
+    "end": 9.23
+   },
+   {
+    "w": "can",
+    "start": 9.3,
+    "end": 9.416
+   },
+   {
+    "w": "write",
+    "start": 9.462,
+    "end": 9.671
+   },
+   {
+    "w": "there.",
+    "start": 9.706,
+    "end": 10.356
+   }
+  ]
+ },
+ "vault": {
+  "duration": 14.675,
+  "words": [
+   {
+    "w": "Then",
+    "start": 0,
+    "end": 0.197
+   },
+   {
+    "w": "it",
+    "start": 0.244,
+    "end": 0.313
+   },
+   {
+    "w": "asks",
+    "start": 0.36,
+    "end": 0.592
+   },
+   {
+    "w": "the",
+    "start": 0.639,
+    "end": 0.708
+   },
+   {
+    "w": "vault",
+    "start": 0.801,
+    "end": 1.103
+   },
+   {
+    "w": "to",
+    "start": 1.126,
+    "end": 1.196
+   },
+   {
+    "w": "trade,",
+    "start": 1.265,
+    "end": 1.741
+   },
+   {
+    "w": "and",
+    "start": 1.765,
+    "end": 1.869
+   },
+   {
+    "w": "cites",
+    "start": 1.962,
+    "end": 2.299
+   },
+   {
+    "w": "that",
+    "start": 2.345,
+    "end": 2.496
+   },
+   {
+    "w": "message:",
+    "start": 2.577,
+    "end": 3.204
+   },
+   {
+    "w": "its",
+    "start": 3.332,
+    "end": 3.541
+   },
+   {
+    "w": "hash,",
+    "start": 3.622,
+    "end": 4.145
+   },
+   {
+    "w": "and",
+    "start": 4.168,
+    "end": 4.319
+   },
+   {
+    "w": "its",
+    "start": 4.365,
+    "end": 4.493
+   },
+   {
+    "w": "number.",
+    "start": 4.586,
+    "end": 5.248
+   },
+   {
+    "w": "The",
+    "start": 6.026,
+    "end": 6.142
+   },
+   {
+    "w": "vault",
+    "start": 6.211,
+    "end": 6.455
+   },
+   {
+    "w": "reads",
+    "start": 6.525,
+    "end": 6.792
+   },
+   {
+    "w": "both",
+    "start": 6.873,
+    "end": 7.14
+   },
+   {
+    "w": "oracles",
+    "start": 7.233,
+    "end": 7.721
+   },
+   {
+    "w": "itself,",
+    "start": 7.79,
+    "end": 8.429
+   },
+   {
+    "w": "checks",
+    "start": 8.464,
+    "end": 8.766
+   },
+   {
+    "w": "its",
+    "start": 8.812,
+    "end": 8.963
+   },
+   {
+    "w": "limits,",
+    "start": 9.091,
+    "end": 9.567
+   },
+   {
+    "w": "and",
+    "start": 9.601,
+    "end": 9.718
+   },
+   {
+    "w": "sets",
+    "start": 9.81,
+    "end": 10.077
+   },
+   {
+    "w": "the",
+    "start": 10.124,
+    "end": 10.194
+   },
+   {
+    "w": "minimum",
+    "start": 10.275,
+    "end": 10.646
+   },
+   {
+    "w": "it",
+    "start": 10.693,
+    "end": 10.751
+   },
+   {
+    "w": "will",
+    "start": 10.797,
+    "end": 10.948
+   },
+   {
+    "w": "accept.",
+    "start": 10.995,
+    "end": 11.645
+   },
+   {
+    "w": "The",
+    "start": 12.423,
+    "end": 12.55
+   },
+   {
+    "w": "agent",
+    "start": 12.62,
+    "end": 12.957
+   },
+   {
+    "w": "never",
+    "start": 13.084,
+    "end": 13.351
+   },
+   {
+    "w": "names",
+    "start": 13.433,
+    "end": 13.711
+   },
+   {
+    "w": "a",
+    "start": 13.758,
+    "end": 13.793
+   },
+   {
+    "w": "price.",
+    "start": 13.862,
+    "end": 14.675
+   }
+  ]
+ },
+ "swap": {
+  "duration": 5.619,
+  "words": [
+   {
+    "w": "On",
+    "start": 0,
+    "end": 0.174
+   },
+   {
+    "w": "testnet,",
+    "start": 0.244,
+    "end": 0.824
+   },
+   {
+    "w": "the",
+    "start": 0.848,
+    "end": 0.917
+   },
+   {
+    "w": "vault",
+    "start": 0.964,
+    "end": 1.196
+   },
+   {
+    "w": "sold",
+    "start": 1.242,
+    "end": 1.521
+   },
+   {
+    "w": "five",
+    "start": 1.602,
+    "end": 1.881
+   },
+   {
+    "w": "dollars",
+    "start": 1.916,
+    "end": 2.218
+   },
+   {
+    "w": "of",
+    "start": 2.252,
+    "end": 2.31
+   },
+   {
+    "w": "HBAR",
+    "start": 2.38,
+    "end": 2.844
+   },
+   {
+    "w": "on",
+    "start": 2.926,
+    "end": 3.019
+   },
+   {
+    "w": "SaucerSwap.",
+    "start": 3.146,
+    "end": 4.098
+   },
+   {
+    "w": "Trade",
+    "start": 4.365,
+    "end": 4.667
+   },
+   {
+    "w": "number",
+    "start": 4.702,
+    "end": 4.923
+   },
+   {
+    "w": "eight.",
+    "start": 4.992,
+    "end": 5.619
+   }
+  ]
+ },
+ "proof": {
+  "duration": 12.353,
+  "words": [
+   {
+    "w": "Anyone",
+    "start": 0,
+    "end": 0.418
+   },
+   {
+    "w": "can",
+    "start": 0.453,
+    "end": 0.569
+   },
+   {
+    "w": "check",
+    "start": 0.639,
+    "end": 0.859
+   },
+   {
+    "w": "it,",
+    "start": 0.906,
+    "end": 0.998
+   },
+   {
+    "w": "from",
+    "start": 1.022,
+    "end": 1.184
+   },
+   {
+    "w": "public",
+    "start": 1.312,
+    "end": 1.695
+   },
+   {
+    "w": "data",
+    "start": 1.765,
+    "end": 2.055
+   },
+   {
+    "w": "alone.",
+    "start": 2.125,
+    "end": 2.728
+   },
+   {
+    "w": "Twelve",
+    "start": 3.088,
+    "end": 3.518
+   },
+   {
+    "w": "checks.",
+    "start": 3.564,
+    "end": 4.203
+   },
+   {
+    "w": "The",
+    "start": 4.563,
+    "end": 4.679
+   },
+   {
+    "w": "message",
+    "start": 4.725,
+    "end": 5.12
+   },
+   {
+    "w": "matches",
+    "start": 5.19,
+    "end": 5.515
+   },
+   {
+    "w": "its",
+    "start": 5.584,
+    "end": 5.735
+   },
+   {
+    "w": "hash.",
+    "start": 5.817,
+    "end": 6.478
+   },
+   {
+    "w": "It",
+    "start": 7.256,
+    "end": 7.419
+   },
+   {
+    "w": "reached",
+    "start": 7.5,
+    "end": 7.732
+   },
+   {
+    "w": "consensus",
+    "start": 7.767,
+    "end": 8.464
+   },
+   {
+    "w": "four",
+    "start": 8.557,
+    "end": 8.777
+   },
+   {
+    "w": "seconds",
+    "start": 8.858,
+    "end": 9.207
+   },
+   {
+    "w": "before",
+    "start": 9.288,
+    "end": 9.59
+   },
+   {
+    "w": "the",
+    "start": 9.625,
+    "end": 9.694
+   },
+   {
+    "w": "trade.",
+    "start": 9.741,
+    "end": 10.333
+   },
+   {
+    "w": "One",
+    "start": 10.646,
+    "end": 10.902
+   },
+   {
+    "w": "key",
+    "start": 10.971,
+    "end": 11.157
+   },
+   {
+    "w": "signed",
+    "start": 11.238,
+    "end": 11.54
+   },
+   {
+    "w": "both.",
+    "start": 11.587,
+    "end": 12.353
+   }
+  ]
+ },
+ "tamper": {
+  "duration": 3.204,
+  "words": [
+   {
+    "w": "Change",
+    "start": 0,
+    "end": 0.453
+   },
+   {
+    "w": "one",
+    "start": 0.522,
+    "end": 0.72
+   },
+   {
+    "w": "letter",
+    "start": 0.755,
+    "end": 0.964
+   },
+   {
+    "w": "of",
+    "start": 1.01,
+    "end": 1.068
+   },
+   {
+    "w": "the",
+    "start": 1.115,
+    "end": 1.184
+   },
+   {
+    "w": "reasoning,",
+    "start": 1.265,
+    "end": 1.73
+   },
+   {
+    "w": "and",
+    "start": 1.753,
+    "end": 1.846
+   },
+   {
+    "w": "the",
+    "start": 1.892,
+    "end": 1.962
+   },
+   {
+    "w": "proof",
+    "start": 2.032,
+    "end": 2.322
+   },
+   {
+    "w": "fails.",
+    "start": 2.392,
+    "end": 3.204
+   }
+  ]
+ },
+ "guard": {
+  "duration": 12.353,
+  "words": [
+   {
+    "w": "Now",
+    "start": 0,
+    "end": 0.302
+   },
+   {
+    "w": "ask",
+    "start": 0.395,
+    "end": 0.627
+   },
+   {
+    "w": "the",
+    "start": 0.708,
+    "end": 0.778
+   },
+   {
+    "w": "vault",
+    "start": 0.859,
+    "end": 1.138
+   },
+   {
+    "w": "to",
+    "start": 1.161,
+    "end": 1.219
+   },
+   {
+    "w": "break",
+    "start": 1.3,
+    "end": 1.521
+   },
+   {
+    "w": "its",
+    "start": 1.567,
+    "end": 1.683
+   },
+   {
+    "w": "own",
+    "start": 1.73,
+    "end": 1.869
+   },
+   {
+    "w": "rules.",
+    "start": 1.939,
+    "end": 2.496
+   },
+   {
+    "w": "Too",
+    "start": 2.763,
+    "end": 3.007
+   },
+   {
+    "w": "large.",
+    "start": 3.088,
+    "end": 3.599
+   },
+   {
+    "w": "Wrong",
+    "start": 3.796,
+    "end": 4.11
+   },
+   {
+    "w": "token.",
+    "start": 4.191,
+    "end": 4.714
+   },
+   {
+    "w": "Wrong",
+    "start": 4.818,
+    "end": 5.12
+   },
+   {
+    "w": "pool.",
+    "start": 5.201,
+    "end": 5.759
+   },
+   {
+    "w": "No",
+    "start": 6.188,
+    "end": 6.351
+   },
+   {
+    "w": "reasoning.",
+    "start": 6.432,
+    "end": 7.036
+   },
+   {
+    "w": "Old",
+    "start": 7.268,
+    "end": 7.523
+   },
+   {
+    "w": "reasoning.",
+    "start": 7.605,
+    "end": 8.185
+   },
+   {
+    "w": "Wrong",
+    "start": 8.452,
+    "end": 8.754
+   },
+   {
+    "w": "caller.",
+    "start": 8.835,
+    "end": 9.404
+   },
+   {
+    "w": "Six",
+    "start": 9.718,
+    "end": 9.996
+   },
+   {
+    "w": "requests,",
+    "start": 10.077,
+    "end": 10.797
+   },
+   {
+    "w": "six",
+    "start": 10.925,
+    "end": 11.192
+   },
+   {
+    "w": "refusals.",
+    "start": 11.285,
+    "end": 12.353
+   }
+  ]
+ },
+ "reality": {
+  "duration": 8.824,
+  "words": [
+   {
+    "w": "The",
+    "start": 0,
+    "end": 0.163
+   },
+   {
+    "w": "testnet",
+    "start": 0.232,
+    "end": 0.708
+   },
+   {
+    "w": "pool",
+    "start": 0.778,
+    "end": 1.01
+   },
+   {
+    "w": "prices",
+    "start": 1.091,
+    "end": 1.579
+   },
+   {
+    "w": "HBAR",
+    "start": 1.707,
+    "end": 2.171
+   },
+   {
+    "w": "nearly",
+    "start": 2.241,
+    "end": 2.543
+   },
+   {
+    "w": "twenty",
+    "start": 2.635,
+    "end": 2.937
+   },
+   {
+    "w": "times",
+    "start": 3.007,
+    "end": 3.274
+   },
+   {
+    "w": "above",
+    "start": 3.309,
+    "end": 3.518
+   },
+   {
+    "w": "the",
+    "start": 3.541,
+    "end": 3.611
+   },
+   {
+    "w": "market.",
+    "start": 3.657,
+    "end": 4.238
+   },
+   {
+    "w": "Sells",
+    "start": 4.598,
+    "end": 4.957
+   },
+   {
+    "w": "pass.",
+    "start": 5.039,
+    "end": 5.608
+   },
+   {
+    "w": "Buys",
+    "start": 5.735,
+    "end": 6.037
+   },
+   {
+    "w": "are",
+    "start": 6.072,
+    "end": 6.165
+   },
+   {
+    "w": "refused,",
+    "start": 6.2,
+    "end": 6.815
+   },
+   {
+    "w": "because",
+    "start": 6.838,
+    "end": 7.14
+   },
+   {
+    "w": "the",
+    "start": 7.163,
+    "end": 7.245
+   },
+   {
+    "w": "oracles",
+    "start": 7.326,
+    "end": 7.779
+   },
+   {
+    "w": "say",
+    "start": 7.825,
+    "end": 7.999
+   },
+   {
+    "w": "no.",
+    "start": 8.092,
+    "end": 8.824
+   }
+  ]
+ },
+ "audit": {
+  "duration": 6.92,
+  "words": [
+   {
+    "w": "And",
+    "start": 0,
+    "end": 0.151
+   },
+   {
+    "w": "the",
+    "start": 0.197,
+    "end": 0.267
+   },
+   {
+    "w": "log",
+    "start": 0.313,
+    "end": 0.557
+   },
+   {
+    "w": "has",
+    "start": 0.627,
+    "end": 0.824
+   },
+   {
+    "w": "no",
+    "start": 0.952,
+    "end": 1.115
+   },
+   {
+    "w": "gaps.",
+    "start": 1.196,
+    "end": 1.8
+   },
+   {
+    "w": "Every",
+    "start": 2.229,
+    "end": 2.508
+   },
+   {
+    "w": "trade",
+    "start": 2.577,
+    "end": 2.926
+   },
+   {
+    "w": "traces",
+    "start": 2.961,
+    "end": 3.355
+   },
+   {
+    "w": "back",
+    "start": 3.437,
+    "end": 3.611
+   },
+   {
+    "w": "to",
+    "start": 3.657,
+    "end": 3.727
+   },
+   {
+    "w": "exactly",
+    "start": 3.831,
+    "end": 4.423
+   },
+   {
+    "w": "one",
+    "start": 4.551,
+    "end": 4.76
+   },
+   {
+    "w": "decision,",
+    "start": 4.795,
+    "end": 5.433
+   },
+   {
+    "w": "published",
+    "start": 5.561,
+    "end": 6.002
+   },
+   {
+    "w": "first.",
+    "start": 6.084,
+    "end": 6.92
+   }
+  ]
+ },
+ "stack": {
+  "duration": 12.399,
+  "words": [
+   {
+    "w": "The",
+    "start": 0,
+    "end": 0.163
+   },
+   {
+    "w": "Consensus",
+    "start": 0.232,
+    "end": 0.836
+   },
+   {
+    "w": "Service",
+    "start": 0.882,
+    "end": 1.265
+   },
+   {
+    "w": "holds",
+    "start": 1.312,
+    "end": 1.625
+   },
+   {
+    "w": "the",
+    "start": 1.672,
+    "end": 1.741
+   },
+   {
+    "w": "reasoning.",
+    "start": 1.823,
+    "end": 2.45
+   },
+   {
+    "w": "A",
+    "start": 2.879,
+    "end": 2.972
+   },
+   {
+    "w": "smart",
+    "start": 3.065,
+    "end": 3.379
+   },
+   {
+    "w": "contract",
+    "start": 3.448,
+    "end": 4.04
+   },
+   {
+    "w": "enforces",
+    "start": 4.11,
+    "end": 4.69
+   },
+   {
+    "w": "the",
+    "start": 4.737,
+    "end": 4.807
+   },
+   {
+    "w": "policy.",
+    "start": 4.853,
+    "end": 5.596
+   },
+   {
+    "w": "The",
+    "start": 5.863,
+    "end": 5.979
+   },
+   {
+    "w": "Token",
+    "start": 6.026,
+    "end": 6.351
+   },
+   {
+    "w": "Service",
+    "start": 6.42,
+    "end": 6.78
+   },
+   {
+    "w": "moves",
+    "start": 6.85,
+    "end": 7.105
+   },
+   {
+    "w": "the",
+    "start": 7.152,
+    "end": 7.221
+   },
+   {
+    "w": "funds.",
+    "start": 7.303,
+    "end": 7.906
+   },
+   {
+    "w": "And",
+    "start": 8.266,
+    "end": 8.464
+   },
+   {
+    "w": "any",
+    "start": 8.533,
+    "end": 8.707
+   },
+   {
+    "w": "agent",
+    "start": 8.777,
+    "end": 9.102
+   },
+   {
+    "w": "built",
+    "start": 9.149,
+    "end": 9.346
+   },
+   {
+    "w": "with",
+    "start": 9.381,
+    "end": 9.509
+   },
+   {
+    "w": "the",
+    "start": 9.543,
+    "end": 9.613
+   },
+   {
+    "w": "Hedera",
+    "start": 9.683,
+    "end": 10.043
+   },
+   {
+    "w": "Agent",
+    "start": 10.124,
+    "end": 10.461
+   },
+   {
+    "w": "Kit",
+    "start": 10.53,
+    "end": 10.89
+   },
+   {
+    "w": "can",
+    "start": 10.96,
+    "end": 11.122
+   },
+   {
+    "w": "trade",
+    "start": 11.192,
+    "end": 11.494
+   },
+   {
+    "w": "this",
+    "start": 11.517,
+    "end": 11.656
+   },
+   {
+    "w": "way.",
+    "start": 11.749,
+    "end": 12.399
+   }
+  ]
+ },
+ "close": {
+  "duration": 2.833,
+  "words": [
+   {
+    "w": "Autonr.",
+    "start": 0,
+    "end": 0.859
+   },
+   {
+    "w": "Autonomy,",
+    "start": 1.057,
+    "end": 1.73
+   },
+   {
+    "w": "enforced.",
+    "start": 1.765,
+    "end": 2.833
+   }
+  ]
+ }
+}

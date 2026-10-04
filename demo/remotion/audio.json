@@ -1,0 +1,17 @@
+{
+  "music": {
+    "model": "music_v1",
+    "bpm": 88,
+    "lufs": -22,
+    "prefix": "Cinematic minimal instrumental score for a calm, premium product film about trust and proof. Felt piano, soft glass marimba, warm analog pads, a round synth bass, very light brushed percussion. About 88 BPM, in A minor resolving to C major. Calm, precise, quietly confident; never ominous, never epic, never hacker-movie.",
+    "negative": ["vocals", "choir", "risers", "chimes", "bells", "EDM", "trailer drums", "epic orchestral hits", "dark ominous drones", "hacker synths", "dubstep", "glitch", "heartbeat kicks"],
+    "parts": [
+      { "from": "hook", "name": "opening", "styles": ["a low A pedal", "sparse, spacious felt-piano notes", "no drums", "lots of air"] },
+      { "from": "answer", "name": "the split", "styles": ["a soft round synth-bass pulse in eighth notes enters", "felt piano continues", "curious, steady"] },
+      { "from": "record", "name": "the record", "styles": ["a steady minimal ostinato in felt piano and glass marimba", "round bass pulse", "very light brushed hats", "low and supportive, sits under a voice"] },
+      { "from": "proof", "name": "the proof", "styles": ["thin out: the ostinato only, focused and exact", "a held warm pad underneath", "no drums", "a brief suspended pause near the end"] },
+      { "from": "guard", "name": "the guard", "styles": ["the pulse returns with quiet confidence", "light brushed percussion", "builds gently in layers", "no riser"] },
+      { "from": "stack", "name": "resolve", "styles": ["the fullest, warmest statement of the theme", "moves to C major", "settles into a clean final chord with a short natural decay"] }
+    ]
+  }
+}

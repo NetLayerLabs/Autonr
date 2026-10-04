@@ -1,0 +1,116 @@
+{
+ "about": "Beat clips for the Autonr demo. Times are seconds within each clip.",
+ "clips": {
+  "home": {
+   "file": "clips/home.mp4",
+   "duration": 28.63,
+   "size": "3200x1800",
+   "fps": 30,
+   "dpr": 2,
+   "sourceSpace": "1600x900 CSS pixels (FOCUS rectangles use these)",
+   "recordedOn": "a fresh npm scaffold of NetLayerLabs/Autonr, served with next start, showing the live testnet reference deployment",
+   "shows": "Mission control: oracle consensus, vault panel, decision log, trades, pointer on Verify.",
+   "spedUp": [],
+   "moments": {
+    "oracle panel": 4.09,
+    "vault panel": 9.64,
+    "decision log": 15.02,
+    "trades table": 21.04,
+    "pointer on Verify": 25.56
+   },
+   "regions": {
+    "vault": {
+     "x": 812,
+     "y": 133,
+     "w": 604,
+     "h": 759,
+     "validFrom": 8.73
+    }
+   },
+   "notes": []
+  },
+  "proof": {
+   "file": "clips/proof.mp4",
+   "duration": 27.37,
+   "size": "3200x1800",
+   "fps": 30,
+   "dpr": 2,
+   "sourceSpace": "1600x900 CSS pixels (FOCUS rectangles use these)",
+   "recordedOn": "a fresh npm scaffold of NetLayerLabs/Autonr, served with next start, showing the live testnet reference deployment",
+   "shows": "Proof page: verified banner, the checks, the Trade X-ray call trace.",
+   "spedUp": [],
+   "moments": {
+    "checks list": 4.78,
+    "more checks": 11.71,
+    "x-ray": 16.58
+   },
+   "regions": {},
+   "notes": []
+  },
+  "tamper": {
+   "file": "clips/tamper.mp4",
+   "duration": 15.43,
+   "size": "3200x1800",
+   "fps": 30,
+   "dpr": 2,
+   "sourceSpace": "1600x900 CSS pixels (FOCUS rectangles use these)",
+   "recordedOn": "a fresh npm scaffold of NetLayerLabs/Autonr, served with next start, showing the live testnet reference deployment",
+   "shows": "Tamper lab: Flip one byte, the verdict turns from verified to failed on hash-match.",
+   "spedUp": [],
+   "moments": {
+    "flipped one byte": 4.5
+   },
+   "regions": {},
+   "notes": []
+  },
+  "playground": {
+   "file": "clips/playground.mp4",
+   "duration": 28.57,
+   "size": "3200x1800",
+   "fps": 30,
+   "dpr": 2,
+   "sourceSpace": "1600x900 CSS pixels (FOCUS rectangles use these)",
+   "recordedOn": "a fresh npm scaffold of NetLayerLabs/Autonr, served with next start, showing the live testnet reference deployment",
+   "shows": "Guardrail playground: Run all 6, each card refused with its custom error, live from the vault.",
+   "spedUp": [],
+   "moments": {
+    "run all": 3.92,
+    "all six refused": 19.27
+   },
+   "regions": {},
+   "notes": []
+  },
+  "audit": {
+   "file": "clips/audit.mp4",
+   "duration": 12.97,
+   "size": "3200x1800",
+   "fps": 30,
+   "dpr": 2,
+   "sourceSpace": "1600x900 CSS pixels (FOCUS rectangles use these)",
+   "recordedOn": "a fresh npm scaffold of NetLayerLabs/Autonr, served with next start, showing the live testnet reference deployment",
+   "shows": "Audit page: no gaps, trade events matched to decision records.",
+   "spedUp": [],
+   "moments": {
+    "no gaps": 2.9
+   },
+   "regions": {},
+   "notes": []
+  },
+  "owner": {
+   "file": "clips/owner.mp4",
+   "duration": 13.03,
+   "size": "3200x1800",
+   "fps": 30,
+   "dpr": 2,
+   "sourceSpace": "1600x900 CSS pixels (FOCUS rectangles use these)",
+   "recordedOn": "a fresh npm scaffold of NetLayerLabs/Autonr, served with next start, showing the live testnet reference deployment",
+   "shows": "Owner console: pause switch, risk policy, tokens, pool fee tier.",
+   "spedUp": [],
+   "moments": {
+    "policy": 3.08
+   },
+   "regions": {},
+   "notes": []
+  }
+ }
+}

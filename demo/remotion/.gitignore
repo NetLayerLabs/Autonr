@@ -1,6 +1,8 @@
 node_modules
 out
-clips
+/clips
+.cache
 public/clips/*.mp4
-public/vo/*.mp3
+public/audio/**/*.mp3
+public/audio/*.mp3
 .env

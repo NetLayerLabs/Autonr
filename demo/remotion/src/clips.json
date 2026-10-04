@@ -1,11 +1,11 @@
 {
  "audit": {
-  "duration": 13.07,
+  "duration": 12.97,
   "width": 3200,
   "height": 1800
  },
  "home": {
-  "duration": 27.83,
+  "duration": 28.63,
   "width": 3200,
   "height": 1800
  },
@@ -15,17 +15,17 @@
   "height": 1800
  },
  "playground": {
-  "duration": 24.37,
+  "duration": 28.57,
   "width": 3200,
   "height": 1800
  },
  "proof": {
-  "duration": 27.6,
+  "duration": 27.37,
   "width": 3200,
   "height": 1800
  },
  "tamper": {
-  "duration": 15.33,
+  "duration": 15.43,
   "width": 3200,
   "height": 1800
  }

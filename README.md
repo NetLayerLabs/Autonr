@@ -38,7 +38,7 @@ dashboard shows it with no keys configured.
 
 ## Demo video
 
-A three-minute walkthrough of one decision, from the agent's reasoning on HCS to the verified trade:
+A two-and-a-half-minute walkthrough of one decision, from the agent's reasoning on HCS to the verified trade:
 [watch the demo](https://github.com/NetLayerLabs/Autonr#demo-video). The film is built from real screen capture of a
 fresh scaffold and the real CLI output; [demo/remotion](demo/remotion/README.md) has the source and the narration script.
 
